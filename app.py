@@ -16,12 +16,15 @@ def calculate_entropy(password):
     entropy = len(password) * math.log2(pool_size)
     return entropy
 
-def get_random_separator(separator_type):
+def get_random_separator(separator_type, user_defined_separator=''):
     if separator_type == "number":
         return str(secrets.choice(string.digits))
     elif separator_type == "special":
         return secrets.choice(special_characters)
-    return ' ' 
+    elif separator_type == "single_character":
+        return user_defined_separator
+    return '-' 
+
 
 def generate_passphrase(word_count=4, capitalize=False, separator_type='space', max_word_length=12, user_defined_separator=''):
     filtered_word_list = [word for word in word_list if len(word) <= max_word_length]
@@ -29,7 +32,7 @@ def generate_passphrase(word_count=4, capitalize=False, separator_type='space', 
     if capitalize:
         passphrase_words = [word.capitalize() for word in passphrase_words]
     
-    separator = get_random_separator(separator_type) if separator_type != 'single_character' else user_defined_separator
+    separator = get_random_separator(separator_type, user_defined_separator)
     passphrase = separator.join(passphrase_words)
     return passphrase
 
