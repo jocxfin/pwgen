@@ -40,12 +40,27 @@
             <input type="checkbox" id="includeSpecial" checked>
             <label for="includeSpecial">Include Special Characters</label>
         </div>
+        <div>
+            <input type="checkbox" id="passphraseToggle">
+            <label for="passphraseToggle">Generate Passphrase</label>
+        </div>
+        <div id="passphraseOptions" style="display: none;">
+            <div>
+                <input type="checkbox" id="capitalizeWords">
+                <label for="capitalizeWords">Capitalize Words</label>
+            </div>
+            <div id="wordCountContainer">
+                <label for="wordCountSlider">Word Count: <span id="wordCountValue">4</span></label>
+                <input type="range" id="wordCountSlider" name="wordCount" min="2" max="10" value="4">
+            </div>
+        </div>
         <div class="password-container">
             <input type="text" id="password" readonly>
             <button onclick="copyPassword()">Copy</button>
         </div>
         <footer>
-            <p>Simple password generator made by <a href="https://github.com/jocxfin" target="_blank" rel="noopener noreferrer">jocxFIN</a></p>
+            <p>Simple password generator made by <a href="https://github.com/jocxfin" target="_blank"
+                    rel="noopener noreferrer">jocxFIN</a></p>
         </footer>
     </div>
     <script>
@@ -54,24 +69,54 @@
         const includeUppercase = document.getElementById('includeUppercase');
         const includeDigits = document.getElementById('includeDigits');
         const includeSpecial = document.getElementById('includeSpecial');
+        const passphraseToggle = document.getElementById('passphraseToggle');
+        const passphraseOptions = document.getElementById('passphraseOptions');
+        const capitalizeWords = document.getElementById('capitalizeWords');
+        const wordCountSlider = document.getElementById('wordCountSlider');
+        const wordCountValue = document.getElementById('wordCountValue');
         const passwordInput = document.getElementById('password');
-    
+
+        passphraseToggle.onchange = function () {
+            if (this.checked) {
+                passphraseOptions.style.display = 'block';
+                document.getElementById('sliderContainer').style.display = 'none';
+                document.querySelector('.password-container').style.display = 'none';
+            } else {
+                passphraseOptions.style.display = 'none';
+                document.getElementById('sliderContainer').style.display = 'block';
+                document.querySelector('.password-container').style.display = 'block';
+            }
+            generatePassword();
+        };
+
         lengthSlider.oninput = function () {
             lengthValue.textContent = this.value;
             generatePassword();
         };
-    
+
+        wordCountSlider.oninput = function () {
+            wordCountValue.textContent = this.value;
+            generatePassword();
+        };
+
         includeUppercase.onchange = generatePassword;
         includeDigits.onchange = generatePassword;
         includeSpecial.onchange = generatePassword;
-    
+        capitalizeWords.onchange = generatePassword;
+
         async function generatePassword() {
             const formData = new FormData();
-            formData.append('length', lengthSlider.value);
-            formData.append('include_uppercase', includeUppercase.checked);
-            formData.append('include_digits', includeDigits.checked);
-            formData.append('include_special', includeSpecial.checked);
-    
+            if (passphraseToggle.checked) {
+                formData.append('type', 'passphrase');
+                formData.append('word_count', wordCountSlider.value);
+                formData.append('capitalize', capitalizeWords.checked);
+            } else {
+                formData.append('length', lengthSlider.value);
+                formData.append('include_uppercase', includeUppercase.checked);
+                formData.append('include_digits', includeDigits.checked);
+                formData.append('include_special', includeSpecial.checked);
+            }
+
             const response = await fetch('/generate-password', {
                 method: 'POST',
                 body: formData
@@ -79,7 +124,7 @@
             const data = await response.json();
             scrambleAnimation(data.password);
         }
-    
+
         function scrambleAnimation(finalPassword) {
             let scrambled = Array.from({ length: finalPassword.length }, () => getRandomCharacter());
             passwordInput.value = scrambled.join('');
@@ -88,23 +133,23 @@
                 setTimeout(() => {
                     scrambled[index] = char;
                     passwordInput.value = scrambled.join('');
-                }, delay * index); // Multiply by index to ensure sequential reveal
+                }, delay * index);
             });
         }
-    
+
         function getRandomCharacter() {
             const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=[]{}|;:\'",.<>/?';
             return characters.charAt(Math.floor(Math.random() * characters.length));
         }
-    
+
         function copyPassword() {
             passwordInput.select();
             document.execCommand('copy');
         }
-    
+
         window.onload = generatePassword;
     </script>
-    
+
 </body>
 
 </html>

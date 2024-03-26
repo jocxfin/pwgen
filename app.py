@@ -5,6 +5,7 @@ import math
 
 app = Flask(__name__)
 
+
 word_list = []
 with open('wordlist.txt', 'r') as file:
     word_list = [line.strip() for line in file]
@@ -14,8 +15,11 @@ def calculate_entropy(password):
     entropy = len(password) * math.log2(pool_size)
     return entropy
 
-def generate_passphrase(word_count=4):
-    passphrase = ' '.join(secrets.choice(word_list) for _ in range(word_count))
+def generate_passphrase(word_count=4, capitalize=False):
+    passphrase_words = [secrets.choice(word_list) for _ in range(word_count)]
+    if capitalize:
+        passphrase_words = [word.capitalize() for word in passphrase_words]
+    passphrase = ' '.join(passphrase_words)
     return passphrase
 
 @app.route('/')
@@ -29,10 +33,11 @@ def generate_password_route():
     include_digits = request.form.get('include_digits', 'false') == 'true'
     include_special = request.form.get('include_special', 'false') == 'true'
     generate_type = request.form.get('type', 'password')
+    capitalize = request.form.get('capitalize', 'false') == 'true'
     
     if generate_type == 'passphrase':
-        word_count = max(4, length // 5) 
-        password = generate_passphrase(word_count)
+        word_count = request.form.get('word_count', type=int, default=4)
+        password = generate_passphrase(word_count, capitalize)
     else:
         characters = string.ascii_lowercase
         if include_uppercase:
@@ -46,11 +51,9 @@ def generate_password_route():
     entropy = calculate_entropy(password)
     return jsonify(password=password, entropy=entropy)
 
-
 @app.route('/manifest.json')
 def serve_manifest():
     return send_file('manifest.json', mimetype='application/manifest+json')
-
 
 @app.route('/service-worker.js')
 def serve_sw():
