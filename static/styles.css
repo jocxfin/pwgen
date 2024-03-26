@@ -147,14 +147,15 @@ footer a:hover {
 #separator, #maxWordLength {
     width: 116px;
     height: 41.5px;
-    border-radius: 6px;
+    border-radius: var(--border-radius);
     background: #41436A;
     color: white;
     border: 2px solid var(--accent-color-1);
+    padding: 3px;
 }
 
 #maxWordLength {
-    width: 40px !important;
+    width: 63.5px !important;
 }
 
 /* toggle button*/
