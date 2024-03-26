@@ -113,17 +113,17 @@ button:hover {
 }
 
 footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    text-align: center;
-    padding: 10px;
-    color: var(--text-color);
+    position: absolute !important;
+    bottom: 0 !important;
+    width: 100% !important;
+    text-align: center !important;
+    padding: 10px !important;
+    color: var(--text-color) !important;
 
 }
 
 footer p {
-    margin: 0;
+    margin: 0 !important;
 }
 
 footer a {
