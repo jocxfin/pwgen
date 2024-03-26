@@ -10,6 +10,11 @@
     --border-radius: 8px;
 }
 
+html {
+    overflow: hidden;
+    overflow: -moz-hidden-unscrollable;
+}
+
 body {
     display: flex;
     flex-direction: column;
