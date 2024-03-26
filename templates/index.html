@@ -67,6 +67,26 @@
             </div>
         </div>
         <div id="passphrase-wrapper">
+            <div>
+                <label for="separator">Separator:</label>
+                <select id="separator">
+                    <option value="space">Space</option>
+                    <option value="number">Random Number</option>
+                    <option value="special">Random Special Character</option>
+                    <option value="custom">User Defined</option>
+                </select>
+                <input type="text" id="customSeparator" placeholder="Enter custom separator" style="display: none;">
+            </div>
+            <div>
+                <label for="maxWordLength">Max Word Length:</label>
+                <select id="maxWordLength">
+                    <option value="3">3</option>
+                    <option value="5">5</option>
+                    <option value="7">7</option>
+                    <option value="9">9</option>
+                    <option value="12">12</option>
+                </select>
+            </div>
             <div id="checkbox-wrapper">
                 <p>Generate Passphrase</p>
                 <div class="checkbox-kaare">
@@ -86,44 +106,34 @@
     </div>
 
     <script>
-        const lengthSlider = document.getElementById('lengthSlider');
-        const lengthValue = document.getElementById('lengthValue');
-        const includeUppercase = document.getElementById('includeUppercase');
-        const includeDigits = document.getElementById('includeDigits');
-        const includeSpecial = document.getElementById('includeSpecial');
         const passphraseToggle = document.getElementById('passphraseToggle');
-        const passphraseOptions = document.getElementById('passphraseOptions');
         const capitalizeWords = document.getElementById('capitalizeWords');
         const wordCountSlider = document.getElementById('wordCountSlider');
         const wordCountValue = document.getElementById('wordCountValue');
+        const separator = document.getElementById('separator');
+        const customSeparator = document.getElementById('customSeparator');
+        const maxWordLength = document.getElementById('maxWordLength');
         const passwordInput = document.getElementById('password');
 
         passphraseToggle.onchange = function () {
-            if (this.checked) {
-                document.getElementById('passwordOptions').style.display = 'none';
-                document.getElementById('passphraseOptions').style.display = 'block';
-            } else {
-                document.getElementById('passwordOptions').style.display = 'block';
-                document.getElementById('passphraseOptions').style.display = 'none';
-            }
-            generatePassword();
+            togglePassphraseOptions(this.checked);
         };
 
-
-        lengthSlider.oninput = function () {
-            lengthValue.textContent = this.value;
-            generatePassword();
+        separator.onchange = function () {
+            customSeparator.style.display = this.value === 'custom' ? 'block' : 'none';
         };
 
         wordCountSlider.oninput = function () {
             wordCountValue.textContent = this.value;
-            generatePassword();
         };
 
-        includeUppercase.onchange = generatePassword;
-        includeDigits.onchange = generatePassword;
-        includeSpecial.onchange = generatePassword;
-        capitalizeWords.onchange = generatePassword;
+        function togglePassphraseOptions(isPassphrase) {
+            const options = document.getElementById('passphraseOptions');
+            const passwordOptions = document.getElementById('passwordOptions');
+            options.style.display = isPassphrase ? 'block' : 'none';
+            passwordOptions.style.display = isPassphrase ? 'none' : 'block';
+            generatePassword();
+        }
 
         async function generatePassword() {
             const formData = new FormData();
@@ -131,6 +141,9 @@
                 formData.append('type', 'passphrase');
                 formData.append('word_count', wordCountSlider.value);
                 formData.append('capitalize', capitalizeWords.checked);
+                formData.append('separator_type', separator.value);
+                formData.append('user_defined_separator', customSeparator.value);
+                formData.append('max_word_length', maxWordLength.value);
             } else {
                 formData.append('length', lengthSlider.value);
                 formData.append('include_uppercase', includeUppercase.checked);
@@ -149,14 +162,17 @@
         function scrambleAnimation(finalPassword) {
             let scrambled = Array.from({ length: finalPassword.length }, () => getRandomCharacter());
             passwordInput.value = scrambled.join('');
-            const maxDelay = 300;
-            const perCharDelay = maxDelay / finalPassword.length;
+            const maxDelay = 300; 
+            let indexes = Array.from({ length: finalPassword.length }, (_, i) => i); // Alustetaan indeksit
 
-            finalPassword.split('').forEach((char, index) => {
+            finalPassword.split('').forEach(() => {
+                let randomIndex = indexes.splice(Math.floor(Math.random() * indexes.length), 1)[0];
+                let delay = Math.random() * maxDelay; 
+
                 setTimeout(() => {
-                    scrambled[index] = char;
+                    scrambled[randomIndex] = finalPassword[randomIndex];
                     passwordInput.value = scrambled.join('');
-                }, perCharDelay * index);
+                }, delay);
             });
         }
 
