@@ -140,6 +140,10 @@ footer a:hover {
     height: 51.5px;
 }
 
+#customSeparator {
+    width: 40px;
+}
+
 #separator, #maxWordLength {
     width: 116px;
     height: 41.5px;
