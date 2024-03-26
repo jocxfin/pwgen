@@ -40,6 +40,7 @@ h1 {
     text-align: center;
 }
 
+#wordCountContainer,
 #sliderContainer {
     display: flex;
     align-items: center;
@@ -47,7 +48,8 @@ h1 {
     width: 320px;
 }
 
-#lengthSlider {
+#lengthSlider,
+#wordCountSlider {
     -webkit-appearance: none;
     width: 100%;
     height: 8px;
@@ -58,17 +60,12 @@ h1 {
     transition: opacity .2s;
 }
 
-#lengthSlider::-webkit-slider-thumb {
+#lengthSlider::-webkit-slider-thumb,
+#wordCountSlider::-webkit-slider-thumb,
+#lengthSlider::-moz-range-thumb,
+#wordCountSlider::-moz-range-thumb {
     -webkit-appearance: none;
     appearance: none;
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-    background: var(--accent-color-2);
-    cursor: pointer;
-}
-
-#lengthSlider::-moz-range-thumb {
     width: 25px;
     height: 25px;
     border-radius: 50%;
@@ -138,6 +135,7 @@ footer a:hover {
 #checkbox-wrapper {
     display: flex;
     justify-content: space-between;
+    width: 320px;
 }
 
 /* toggle button*/
@@ -149,30 +147,33 @@ footer a:hover {
     display: flex;
     align-items: center;
     text-align: center;
-  }
+}
 
-  .checkbox-kaare .tgl {
+.checkbox-kaare .tgl {
     display: none;
-  }
-  .checkbox-kaare .tgl,
-  .checkbox-kaare .tgl:after,
-  .checkbox-kaare .tgl:before,
-  .checkbox-kaare .tgl *,
-  .checkbox-kaare .tgl *:after,
-  .checkbox-kaare .tgl *:before,
-  .checkbox-kaare .tgl + .tgl-btn {
+}
+
+.checkbox-kaare .tgl,
+.checkbox-kaare .tgl:after,
+.checkbox-kaare .tgl:before,
+.checkbox-kaare .tgl *,
+.checkbox-kaare .tgl *:after,
+.checkbox-kaare .tgl *:before,
+.checkbox-kaare .tgl+.tgl-btn {
     box-sizing: border-box;
-  }
-  .checkbox-kaare .tgl::selection,
-  .checkbox-kaare .tgl:after::selection,
-  .checkbox-kaare .tgl:before::selection,
-  .checkbox-kaare .tgl *::selection,
-  .checkbox-kaare .tgl *:after::selection,
-  .checkbox-kaare .tgl *:before::selection,
-  .checkbox-kaare .tgl + .tgl-btn::selection {
+}
+
+.checkbox-kaare .tgl::selection,
+.checkbox-kaare .tgl:after::selection,
+.checkbox-kaare .tgl:before::selection,
+.checkbox-kaare .tgl *::selection,
+.checkbox-kaare .tgl *:after::selection,
+.checkbox-kaare .tgl *:before::selection,
+.checkbox-kaare .tgl+.tgl-btn::selection {
     background: none;
-  }
-  .checkbox-kaare .tgl + .tgl-btn {
+}
+
+.checkbox-kaare .tgl+.tgl-btn {
     outline: 0;
     display: block;
     width: 57px;
@@ -183,63 +184,75 @@ footer a:hover {
     font-size: 12px;
     font-weight: 400;
     color: #fff;
-  }
-  .checkbox-kaare .tgl + .tgl-btn:after,
-  .checkbox-kaare .tgl + .tgl-btn:before {
+}
+
+.checkbox-kaare .tgl+.tgl-btn:after,
+.checkbox-kaare .tgl+.tgl-btn:before {
     position: relative;
     display: block;
     content: "";
     width: 44%;
     height: 100%;
-  }
-  .checkbox-kaare .tgl + .tgl-btn:after {
+}
+
+.checkbox-kaare .tgl+.tgl-btn:after {
     left: 0;
-  }
-  .checkbox-kaare .tgl + .tgl-btn:before {
+}
+
+.checkbox-kaare .tgl+.tgl-btn:before {
     display: inline;
     position: absolute;
     top: 7px;
-  }
-  .checkbox-kaare .tgl:checked + .tgl-btn:after {
-    left: 56.5%;
-  }
+}
 
-  .checkbox-kaare .toggle-omena + .tgl-btn {
+.checkbox-kaare .tgl:checked+.tgl-btn:after {
+    left: 56.5%;
+}
+
+.checkbox-kaare .toggle-omena+.tgl-btn {
     background: var(--g08);
     border-radius: 20rem;
     padding: 2px;
     transition: all 0.4s ease;
     box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
-  }
-  .checkbox-kaare .toggle-omena + .tgl-btn:after {
+}
+
+.checkbox-kaare .toggle-omena+.tgl-btn:after {
     border-radius: 2em;
     background: #fff;
     transition: left 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), padding 0.3s ease, margin 0.3s ease;
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
-  }
-  .checkbox-kaare .toggle-omena + .tgl-btn:before {
+}
+
+.checkbox-kaare .toggle-omena+.tgl-btn:before {
     content: "No";
     left: 28px;
     color: var(--g04);
     transition: left 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  }
-  .checkbox-kaare .toggle-omena + .tgl-btn:active {
+}
+
+.checkbox-kaare .toggle-omena+.tgl-btn:active {
     box-shadow: inset 0 0 0 30px rgba(0, 0, 0, 0.1);
-  }
-  .checkbox-kaare .toggle-omena + .tgl-btn:active:after {
+}
+
+.checkbox-kaare .toggle-omena+.tgl-btn:active:after {
     padding-right: 0.4em;
-  }
-  .checkbox-kaare .toggle-omena:checked + .tgl-btn {
+}
+
+.checkbox-kaare .toggle-omena:checked+.tgl-btn {
     background: var(--blue);
-  }
-  .checkbox-kaare .toggle-omena:checked + .tgl-btn:active {
+}
+
+.checkbox-kaare .toggle-omena:checked+.tgl-btn:active {
     box-shadow: inset 0 0 0 30px rgba(0, 0, 0, 0.1);
-  }
-  .checkbox-kaare .toggle-omena:checked + .tgl-btn:active:after {
+}
+
+.checkbox-kaare .toggle-omena:checked+.tgl-btn:active:after {
     margin-left: -0.4em;
-  }
-  .checkbox-kaare .toggle-omena:checked + .tgl-btn:before {
+}
+
+.checkbox-kaare .toggle-omena:checked+.tgl-btn:before {
     content: "Yes";
     left: 4px;
     color: #fff;
-  }
+}

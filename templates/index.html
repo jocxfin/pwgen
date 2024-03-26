@@ -51,6 +51,21 @@
                 </div>
             </div>
         </div>
+
+        <div id="passphraseOptions" style="display: none;">
+            <div id="wordCountContainer">
+                <label for="wordCountSlider">Word Count: <span id="wordCountValue">4</span></label>
+                <input type="range" id="wordCountSlider" name="wordCount" min="2" max="10" value="4">
+            </div>
+            <div id="checkbox-wrapper">
+                <p>Capitalize Words</p>
+                <div class="checkbox-kaare">
+                    <input class='tgl toggle-omena' type="checkbox" id="capitalizeWords">
+                    <label class='tgl-btn' for="capitalizeWords"></label>
+                </div>
+            </div>
+
+        </div>
         <div id="passphrase-wrapper">
             <div id="checkbox-wrapper">
                 <p>Generate Passphrase</p>
@@ -60,20 +75,6 @@
                 </div>
             </div>
         </div>
-        <div id="passphraseOptions" style="display: none;">
-            <div id="checkbox-wrapper">
-                <p>Capitalize Words</p>
-                <div class="checkbox-kaare">
-                    <input class='tgl toggle-omena' type="checkbox" id="capitalizeWords">
-                    <label class='tgl-btn' for="capitalizeWords"></label>
-                </div>
-            </div>
-            <div id="wordCountContainer">
-                <label for="wordCountSlider">Word Count: <span id="wordCountValue">4</span></label>
-                <input type="range" id="wordCountSlider" name="wordCount" min="2" max="10" value="4">
-            </div>
-        </div>
-
         <div class="password-container" style="display: flex;">
             <input type="text" id="password" readonly>
             <button onclick="copyPassword()">Copy</button>
