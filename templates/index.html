@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Generator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="gradient"></div>
+    <div class="container">
+        <h1 id="header1">Generate a Secure Password</h1>
+        <div id="sliderContainer">
+            <input type="range" id="lengthSlider" name="length" min="1" max="64" value="12">
+            <span id="lengthValue">12</span>
+        </div>
+        <div class="password-container">
+            <input type="text" id="password" readonly>
+            <button onclick="copyPassword()">Copy</button>
+        </div>
+        <footer>
+            <p>Simple password generator made by <a href="https://github.com/jocxfin" target="_blank"
+                    rel="noopener noreferrer">jocxFIN</a></p>
+        </footer>
+    </div>
+    <script>
+        const lengthSlider = document.getElementById('lengthSlider');
+        const lengthValue = document.getElementById('lengthValue');
+        const passwordInput = document.getElementById('password');
+
+        lengthSlider.oninput = function () {
+            lengthValue.textContent = this.value;
+            generatePassword();
+        };
+
+        async function generatePassword() {
+            const formData = new FormData();
+            formData.append('length', lengthSlider.value);
+
+            const response = await fetch('/generate-password', {
+                method: 'POST',
+                body: formData
+            });
+            const data = await response.json();
+            scrambleAnimation(data.password);
+        }
+
+        function scrambleAnimation(finalPassword) {
+            let scrambled = Array.from({ length: finalPassword.length }, () => getRandomCharacter());
+            passwordInput.value = scrambled.join('');
+            finalPassword.split('').forEach((char, index) => {
+                let delay = Math.random() * (400 - 50) + 50;
+                setTimeout(() => {
+                    scrambled[index] = char;
+                    passwordInput.value = scrambled.join('');
+                }, delay);
+            });
+        }
+
+        function getRandomCharacter() {
+            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=[]{}|;:\'",.<>/?';
+            return characters.charAt(Math.floor(Math.random() * characters.length));
+        }
+
+        function copyPassword() {
+            passwordInput.select();
+            document.execCommand('copy');
+        }
+        window.onload = generatePassword;
+    </script>
+</body>
+</html>
