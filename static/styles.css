@@ -135,6 +135,10 @@ footer a:hover {
     text-decoration: underline;
 }
 
+#checkbox-wrapper {
+    display: flex;
+    justify-content: space-between;
+}
 
 /* toggle button*/
 
@@ -142,6 +146,9 @@ footer a:hover {
     --blue: #f64668;
     --g08: #E1E5EB;
     --g04: #848ea1;
+    display: flex;
+    align-items: center;
+    text-align: center;
   }
 
   .checkbox-kaare .tgl {
