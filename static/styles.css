@@ -135,7 +135,18 @@ footer a:hover {
 #checkbox-wrapper {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     width: 320px;
+    height: 51.5px;
+}
+
+#separator, #maxWordLength {
+    width: 116px;
+    height: 41.5px;
+    border-radius: 6px;
+    background: #41436A;
+    color: white;
+    border: 2px solid var(--accent-color-1);
 }
 
 /* toggle button*/
