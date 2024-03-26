@@ -153,6 +153,10 @@ footer a:hover {
     border: 2px solid var(--accent-color-1);
 }
 
+#maxWordLength {
+    width: 40px !important;
+}
+
 /* toggle button*/
 
 .checkbox-kaare {
