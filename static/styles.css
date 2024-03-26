@@ -11,16 +11,23 @@
 }
 
 body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
     margin: 0;
     padding: 0;
     background-color: var(--background-color);
     color: var(--text-color);
     font-family: var(--font-family);
+}
+
+.container {
+    flex: 1;
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
-    height: 100vh;
+    align-items: center;
+    width: 100%;
 }
 
 h1 {
@@ -63,16 +70,18 @@ h1 {
     background: var(--accent-color-2);
     cursor: pointer;
 }
+
 .password-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 10px;
     width: 100%;
-    margin-top: 15px; 
+    margin-top: 15px;
+}
 
 input[type="text"] {
-    background-color: var(--input-background);
+    background-color: var(--primary-color);
     border: 2px solid var(--accent-color-1); 
     color: var(--text-color);
     padding: 10px;
@@ -81,7 +90,6 @@ input[type="text"] {
     max-width: 320px;
     text-align: center;
     font-size: 1rem;
-    margin-top: 10px;
 }
 
 button {
@@ -94,36 +102,21 @@ button {
     border-radius: var(--border-radius);
     width: 80%;
     max-width: 200px;
-    margin-top: 10px;
-}
-
-
-.container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    width: 100%;
-    margin-top: -20%;
 }
 
 button:hover {
-    background-color: var(--accent-color-2);
+    background-color: var(--accent-color-3);
 }
 
 footer {
-    position: absolute !important;
-    bottom: 0 !important;
-    width: 100% !important;
-    text-align: center !important;
-    padding: 10px !important;
-    color: var(--text-color) !important;
-
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    color: var(--text-color);
 }
 
 footer p {
-    margin: 0 !important;
+    margin: 0;
 }
 
 footer a {
@@ -134,5 +127,3 @@ footer a {
 footer a:hover {
     text-decoration: underline;
 }
-
-
