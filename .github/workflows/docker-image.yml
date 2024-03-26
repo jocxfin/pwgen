@@ -12,7 +12,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-      with:
-            node-version: '20.x'
+
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag password-generator:${{ github.run_number }}
