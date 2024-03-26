@@ -3,7 +3,7 @@
     --primary-color: #41436A;
     --header-color: #dbddff;
     --accent-color-1: #984063;
-    --accent-color-2: #F64668;
+    --accent-color-2: #f64668;
     --accent-color-3: #FE9677;
     --text-color: #e0e0e0;
     --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -134,3 +134,105 @@ footer a {
 footer a:hover {
     text-decoration: underline;
 }
+
+
+/* toggle button*/
+
+.checkbox-kaare {
+    --blue: #f64668;
+    --g08: #E1E5EB;
+    --g04: #848ea1;
+  }
+
+  .checkbox-kaare .tgl {
+    display: none;
+  }
+  .checkbox-kaare .tgl,
+  .checkbox-kaare .tgl:after,
+  .checkbox-kaare .tgl:before,
+  .checkbox-kaare .tgl *,
+  .checkbox-kaare .tgl *:after,
+  .checkbox-kaare .tgl *:before,
+  .checkbox-kaare .tgl + .tgl-btn {
+    box-sizing: border-box;
+  }
+  .checkbox-kaare .tgl::selection,
+  .checkbox-kaare .tgl:after::selection,
+  .checkbox-kaare .tgl:before::selection,
+  .checkbox-kaare .tgl *::selection,
+  .checkbox-kaare .tgl *:after::selection,
+  .checkbox-kaare .tgl *:before::selection,
+  .checkbox-kaare .tgl + .tgl-btn::selection {
+    background: none;
+  }
+  .checkbox-kaare .tgl + .tgl-btn {
+    outline: 0;
+    display: block;
+    width: 57px;
+    height: 27px;
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+    font-size: 12px;
+    font-weight: 400;
+    color: #fff;
+  }
+  .checkbox-kaare .tgl + .tgl-btn:after,
+  .checkbox-kaare .tgl + .tgl-btn:before {
+    position: relative;
+    display: block;
+    content: "";
+    width: 44%;
+    height: 100%;
+  }
+  .checkbox-kaare .tgl + .tgl-btn:after {
+    left: 0;
+  }
+  .checkbox-kaare .tgl + .tgl-btn:before {
+    display: inline;
+    position: absolute;
+    top: 7px;
+  }
+  .checkbox-kaare .tgl:checked + .tgl-btn:after {
+    left: 56.5%;
+  }
+
+  .checkbox-kaare .toggle-omena + .tgl-btn {
+    background: var(--g08);
+    border-radius: 20rem;
+    padding: 2px;
+    transition: all 0.4s ease;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
+  }
+  .checkbox-kaare .toggle-omena + .tgl-btn:after {
+    border-radius: 2em;
+    background: #fff;
+    transition: left 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), padding 0.3s ease, margin 0.3s ease;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+  }
+  .checkbox-kaare .toggle-omena + .tgl-btn:before {
+    content: "No";
+    left: 28px;
+    color: var(--g04);
+    transition: left 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+  .checkbox-kaare .toggle-omena + .tgl-btn:active {
+    box-shadow: inset 0 0 0 30px rgba(0, 0, 0, 0.1);
+  }
+  .checkbox-kaare .toggle-omena + .tgl-btn:active:after {
+    padding-right: 0.4em;
+  }
+  .checkbox-kaare .toggle-omena:checked + .tgl-btn {
+    background: var(--blue);
+  }
+  .checkbox-kaare .toggle-omena:checked + .tgl-btn:active {
+    box-shadow: inset 0 0 0 30px rgba(0, 0, 0, 0.1);
+  }
+  .checkbox-kaare .toggle-omena:checked + .tgl-btn:active:after {
+    margin-left: -0.4em;
+  }
+  .checkbox-kaare .toggle-omena:checked + .tgl-btn:before {
+    content: "Yes";
+    left: 4px;
+    color: #fff;
+  }
