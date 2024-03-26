@@ -7,8 +7,17 @@
     <title>PwGen</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <link rel="icon" href="{{ url_for('static', filename='favicon.png') }}" type="image/png">
-    <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
+    <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#2A3850">
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then(reg => console.log('Service Worker registered', reg))
+                    .catch(err => console.log('Service Worker registration failed', err));
+            });
+        }
+    </script>
 </head>
 
 <body>
@@ -24,8 +33,7 @@
             <button onclick="copyPassword()">Copy</button>
         </div>
         <footer>
-            <p>Simple password generator made by <a href="https://github.com/jocxfin" target="_blank"
-                    rel="noopener noreferrer">jocxFIN</a></p>
+            <p>Simple password generator made by <a href="https://github.com/jocxfin" target="_blank" rel="noopener noreferrer">jocxFIN</a></p>
         </footer>
     </div>
     <script>
@@ -72,15 +80,6 @@
             document.execCommand('copy');
         }
         window.onload = generatePassword;
-    </script>
-    <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/static/service-worker.js')
-                    .then(reg => console.log('Service Worker registered', reg))
-                    .catch(err => console.log('Service Worker registration failed', err));
-            });
-        }
     </script>
 </body>
 

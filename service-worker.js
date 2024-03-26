@@ -3,7 +3,7 @@ const urlsToCache = [
   '/',
   '/static/styles.css',
   '/static/favicon.png',
-  '/static/manifest.json'
+  '/manifest.json'
 ];
 
 // Asenna vaiheessa välimuistiin tärkeät resurssit
