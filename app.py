@@ -1,25 +1,57 @@
 from flask import Flask, jsonify, render_template, request, send_file
 import secrets
-import werkzeug
+import string
+import math
 
 app = Flask(__name__)
+
+word_list = []
+with open('wordlist.txt', 'r') as file:
+    word_list = [line.strip() for line in file]
+
+def calculate_entropy(password):
+    pool_size = len(set(password))
+    entropy = len(password) * math.log2(pool_size)
+    return entropy
+
+def generate_passphrase(word_count=4):
+    passphrase = ' '.join(secrets.choice(word_list) for _ in range(word_count))
+    return passphrase
 
 @app.route('/')
 def index():
     return render_template('index.html')
 
 @app.route('/generate-password', methods=['POST'])
-def generate_password():
+def generate_password_route():
     length = request.form.get('length', type=int, default=12)
-    password = secrets.token_urlsafe(length)
-    return jsonify(password=password)
+    include_uppercase = request.form.get('include_uppercase', 'false') == 'true'
+    include_digits = request.form.get('include_digits', 'false') == 'true'
+    include_special = request.form.get('include_special', 'false') == 'true'
+    generate_type = request.form.get('type', 'password')
+    
+    if generate_type == 'passphrase':
+        word_count = max(4, length // 5) 
+        password = generate_passphrase(word_count)
+    else:
+        characters = string.ascii_lowercase
+        if include_uppercase:
+            characters += string.ascii_uppercase
+        if include_digits:
+            characters += string.digits
+        if include_special:
+            characters += "!@#$%^&*()"
+        password = ''.join(secrets.choice(characters) for _ in range(length))
+    
+    entropy = calculate_entropy(password)
+    return jsonify(password=password, entropy=entropy)
 
-# Lisää reititys manifest.json tiedostolle
+
 @app.route('/manifest.json')
 def serve_manifest():
     return send_file('manifest.json', mimetype='application/manifest+json')
 
-# Lisää reititys Service Worker -tiedostolle
+
 @app.route('/service-worker.js')
 def serve_sw():
     return send_file('service-worker.js', mimetype='application/javascript')
