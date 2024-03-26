@@ -25,10 +25,7 @@
     <div class="container">
         <h1 id="header1">Generate a Secure Password</h1>
         <div id="passwordOptions">
-            <div id="sliderContainer">
-                <label for="lengthSlider">Length: <span id="lengthValue">12</span></label>
-                <input type="range" id="lengthSlider" name="length" min="1" max="64" value="12">
-            </div>
+
             <div id="checkbox-wrapper">
                 <p>Include Uppercase Letters</p>
                 <div class="checkbox-kaare">
@@ -50,13 +47,13 @@
                     <label class='tgl-btn' for="includeSpecial"></label>
                 </div>
             </div>
+            <div id="sliderContainer">
+                <label for="lengthSlider">Length: <span id="lengthValue">12</span></label>
+                <input type="range" id="lengthSlider" name="length" min="1" max="69" value="12">
+            </div>
         </div>
 
         <div id="passphraseOptions" style="display: none;">
-            <div id="wordCountContainer">
-                <label for="wordCountSlider">Word Count: <span id="wordCountValue">4</span></label>
-                <input type="range" id="wordCountSlider" name="wordCount" min="2" max="10" value="4">
-            </div>
             <div id="checkbox-wrapper">
                 <p>Capitalize Words</p>
                 <div class="checkbox-kaare">
@@ -64,7 +61,6 @@
                     <label class='tgl-btn' for="capitalizeWords"></label>
                 </div>
             </div>
-
         </div>
         <div id="passphrase-wrapper">
             <div id="checkbox-wrapper">
@@ -73,6 +69,10 @@
                     <input class='tgl toggle-omena' type="checkbox" id="passphraseToggle">
                     <label class='tgl-btn' for="passphraseToggle"></label>
                 </div>
+            </div>
+            <div id="wordCountContainer">
+                <label for="wordCountSlider">Word Count: <span id="wordCountValue">4</span></label>
+                <input type="range" id="wordCountSlider" name="wordCount" min="2" max="10" value="4">
             </div>
         </div>
         <div class="password-container" style="display: flex;">
@@ -149,14 +149,17 @@
         function scrambleAnimation(finalPassword) {
             let scrambled = Array.from({ length: finalPassword.length }, () => getRandomCharacter());
             passwordInput.value = scrambled.join('');
+            const maxDelay = 300;
+            const perCharDelay = maxDelay / finalPassword.length;
+
             finalPassword.split('').forEach((char, index) => {
-                let delay = Math.random() * (400 - 50) + 50;
                 setTimeout(() => {
                     scrambled[index] = char;
                     passwordInput.value = scrambled.join('');
-                }, delay * index);
+                }, perCharDelay * index);
             });
         }
+
 
         function getRandomCharacter() {
             const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=[]{}|;:\'",.<>/?';
