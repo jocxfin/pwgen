@@ -39,7 +39,6 @@ def index():
 
 @app.route('/generate-password', methods=['POST'])
 def generate_password_route():
-    # Handle form data
     length = request.form.get('length', type=int, default=12)
     include_uppercase = request.form.get('include_uppercase', 'false') == 'true'
     include_digits = request.form.get('include_digits', 'false') == 'true'
