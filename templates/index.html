@@ -24,45 +24,47 @@
     <div class="gradient"></div>
     <div class="container">
         <h1 id="header1">Generate a Secure Password</h1>
-        <div id="sliderContainer">
-            <label for="lengthSlider">Length: <span id="lengthValue">12</span></label>
-            <input type="range" id="lengthSlider" name="length" min="1" max="64" value="12">
-        </div>
-        <div>
-            <input type="checkbox" id="includeUppercase" checked>
-            <label for="includeUppercase">Include Uppercase Letters</label>
-        </div>
-        <div>
-            <input type="checkbox" id="includeDigits" checked>
-            <label for="includeDigits">Include Digits</label>
-        </div>
-        <div>
-            <input type="checkbox" id="includeSpecial" checked>
-            <label for="includeSpecial">Include Special Characters</label>
-        </div>
-        <div>
-            <input type="checkbox" id="passphraseToggle">
-            <label for="passphraseToggle">Generate Passphrase</label>
-        </div>
-        <div id="passphraseOptions" style="display: none;">
+        <div id="passwordOptions">
+            <div id="sliderContainer">
+                <label for="lengthSlider">Length: <span id="lengthValue">12</span></label>
+                <input type="range" id="lengthSlider" name="length" min="1" max="64" value="12">
+            </div>
             <div>
-                <input type="checkbox" id="capitalizeWords">
-                <label for="capitalizeWords">Capitalize Words</label>
+                <input type="checkbox" id="includeUppercase" checked>
+                <label for="includeUppercase">Include Uppercase Letters</label>
             </div>
-            <div id="wordCountContainer">
-                <label for="wordCountSlider">Word Count: <span id="wordCountValue">4</span></label>
-                <input type="range" id="wordCountSlider" name="wordCount" min="2" max="10" value="4">
+            <div>
+                <input type="checkbox" id="includeDigits" checked>
+                <label for="includeDigits">Include Digits</label>
+            </div>
+            <div>
+                <input type="checkbox" id="includeSpecial" checked>
+                <label for="includeSpecial">Include Special Characters</label>
+            </div>
+            <div>
+                <input type="checkbox" id="passphraseToggle">
+                <label for="passphraseToggle">Generate Passphrase</label>
+            </div>
+            <div id="passphraseOptions" style="display: none;">
+                <div>
+                    <input type="checkbox" id="capitalizeWords">
+                    <label for="capitalizeWords">Capitalize Words</label>
+                </div>
+                <div id="wordCountContainer">
+                    <label for="wordCountSlider">Word Count: <span id="wordCountValue">4</span></label>
+                    <input type="range" id="wordCountSlider" name="wordCount" min="2" max="10" value="4">
+                </div>
             </div>
         </div>
-        <div class="password-container">
+        <div class="password-container" style="display: flex;">
             <input type="text" id="password" readonly>
             <button onclick="copyPassword()">Copy</button>
         </div>
         <footer>
-            <p>Simple password generator made by <a href="https://github.com/jocxfin" target="_blank"
-                    rel="noopener noreferrer">jocxFIN</a></p>
+            <p>Simple password generator made by <a href="https://github.com/jocxfin" target="_blank" rel="noopener noreferrer">jocxFIN</a></p>
         </footer>
     </div>
+    
     <script>
         const lengthSlider = document.getElementById('lengthSlider');
         const lengthValue = document.getElementById('lengthValue');
@@ -78,16 +80,15 @@
 
         passphraseToggle.onchange = function () {
             if (this.checked) {
-                passphraseOptions.style.display = 'block';
-                document.getElementById('sliderContainer').style.display = 'none';
-                document.querySelector('.password-container').style.display = 'none';
+                document.getElementById('passwordOptions').style.display = 'none';
+                document.getElementById('passphraseOptions').style.display = 'block';
             } else {
-                passphraseOptions.style.display = 'none';
-                document.getElementById('sliderContainer').style.display = 'block';
-                document.querySelector('.password-container').style.display = 'block';
+                document.getElementById('passwordOptions').style.display = 'block';
+                document.getElementById('passphraseOptions').style.display = 'none';
             }
             generatePassword();
         };
+
 
         lengthSlider.oninput = function () {
             lengthValue.textContent = this.value;
