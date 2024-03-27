@@ -1,3 +1,5 @@
+import requests
+import hashlib
 import os
 from flask import Flask, jsonify, render_template, request, send_file
 import secrets
@@ -8,7 +10,7 @@ app = Flask(__name__)
 
 word_list = []
 with open('wordlist.txt', 'r') as file:
-    word_list = [line.strip() for line in file if len(line.strip()) <= 12]  # Oletusarvo max pituudelle
+    word_list = [line.strip() for line in file if len(line.strip()) <= 12]
 
 special_characters = "!@#$%^&*()"
 
@@ -24,17 +26,31 @@ def get_random_separator(separator_type, user_defined_separator=''):
         return secrets.choice(special_characters)
     elif separator_type == "single_character":
         return user_defined_separator
-    return '-' 
+    return '-'
 
+
+def check_password_pwned(password):
+    sha1_password = hashlib.sha1(password.encode('utf-8')).hexdigest().upper()
+    prefix, suffix = sha1_password[:5], sha1_password[5:]
+    response = requests.get(f'https://api.pwnedpasswords.com/range/{prefix}')
+    hashes = (line.split(':') for line in response.text.splitlines())
+    for hash_suffix, count in hashes:
+        if hash_suffix == suffix:
+            return True
+    return False
 
 def generate_passphrase(word_count=4, capitalize=False, separator_type='space', max_word_length=12, user_defined_separator=''):
-    filtered_word_list = [word for word in word_list if len(word) <= max_word_length]
-    passphrase_words = [secrets.choice(filtered_word_list) for _ in range(word_count)]
-    if capitalize:
-        passphrase_words = [word.capitalize() for word in passphrase_words]
-    
-    separator = get_random_separator(separator_type, user_defined_separator)
-    passphrase = separator.join(passphrase_words)
+    attempt = 0
+    while True:
+        filtered_word_list = [word for word in word_list if len(word) <= max_word_length]
+        passphrase_words = [secrets.choice(filtered_word_list) for _ in range(word_count)]
+        if capitalize:
+            passphrase_words = [word.capitalize() for word in passphrase_words]
+        separator = get_random_separator(separator_type, user_defined_separator)
+        passphrase = separator.join(passphrase_words)
+        if not check_password_pwned(passphrase) or attempt > 10:
+            break
+        attempt += 1
     return passphrase
 
 @app.route('/')
@@ -52,9 +68,9 @@ def generate_password_route():
     separator_type = request.form.get('separator_type', 'space')
     max_word_length = request.form.get('max_word_length', type=int, default=12)
     user_defined_separator = request.form.get('user_defined_separator', '')
-    
+    word_count = request.form.get('word_count', type=int, default=4)
+
     if generate_type == 'passphrase':
-        word_count = request.form.get('word_count', type=int, default=4)
         password = generate_passphrase(word_count, capitalize, separator_type, max_word_length, user_defined_separator)
     else:
         characters = string.ascii_lowercase
@@ -65,7 +81,16 @@ def generate_password_route():
         if include_special:
             characters += special_characters
         password = ''.join(secrets.choice(characters) for _ in range(length))
-    
+        attempt = 0
+        password_is_pwned = True
+        while password_is_pwned and attempt < 10:
+            password = ''.join(secrets.choice(characters) for _ in range(length))
+            password_is_pwned = check_password_pwned(password)
+            attempt += 1
+
+        if password_is_pwned:
+            return jsonify(error="Unable to generate a non-pwned password after several attempts"), 500
+
     entropy = calculate_entropy(password)
     return jsonify(password=password, entropy=entropy)
 
