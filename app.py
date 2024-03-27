@@ -101,6 +101,3 @@ def serve_manifest():
 @app.route('/service-worker.js')
 def serve_sw():
     return send_file('service-worker.js', mimetype='application/javascript')
-
-if __name__ == '__main__':
-    app.run(debug=False, host='0.0.0.0', port=int(os.getenv('PORT', 5069)))
