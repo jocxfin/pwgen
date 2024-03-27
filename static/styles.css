@@ -115,7 +115,8 @@ button:hover {
     font-family: monospace !important;
     font-size: 10px;
     width: 373px !important;
-
+    border-radius: 6px 6px 0 0 !important;
+    background-color: var(--accent-color-1) !important;
 }
 
 footer {
