@@ -4,7 +4,7 @@
 
 This is a simple docker web application designed to generate secure passwords or passphrases with customizable options. Users can select to generate either a random password with specific criteria or a passphrase composed of random words. Additional features include the option to include uppercase letters, digits, and special characters for passwords, or to capitalize words and specify separators for passphrases.
 
-Demo of the software is available on [https://pwgen.joonatanh.com](https://pwgen.joonatanh.com).
+Demo of the software is available on [https://pwgen.joonatanh.com](https://pwgen.joonatanh.com).(`main`-branch)
 
 ## Features
 
