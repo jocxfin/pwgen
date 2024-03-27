@@ -117,6 +117,7 @@ button:hover {
     width: 373px !important;
     border-radius: 6px 6px 0 0 !important;
     background-color: var(--accent-color-1) !important;
+    text-align: end !important;
 }
 
 footer {
