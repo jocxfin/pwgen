@@ -141,7 +141,7 @@ footer a:hover {
 }
 
 #customSeparator {
-    width: 40px;
+    width: 92px;
 }
 
 #separator, #maxWordLength {
@@ -154,9 +154,7 @@ footer a:hover {
     padding: 3px;
 }
 
-#maxWordLength {
-    width: 63.5px !important;
-}
+
 
 /* toggle button*/
 
