@@ -19,6 +19,7 @@ Demo of the software is available on [https://pwgen.joonatanh.com](https://pwgen
   - Set the maximum word length
 - Display the generated password or passphrase in a user-friendly interface
 - Option to copy the generated password or passphrase to the clipboard
+- Check all of the generated passwords and passphrases against the haveibeenpwned database using their API. User will not be shown a compromised password.
 - More to come soon👍
 
 ## How to Use

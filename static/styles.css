@@ -78,7 +78,7 @@ h1 {
     flex-direction: column;
     align-items: center;
     gap: 10px;
-    width: 100%;
+    width: 369px;
     margin-top: 15px;
 }
 
@@ -86,10 +86,9 @@ input[type="text"] {
     background-color: var(--primary-color);
     border: 2px solid var(--accent-color-1);
     color: var(--text-color);
-    padding: 10px;
+    padding: 14px 0 10px 0;
     border-radius: var(--border-radius);
-    width: 80%;
-    max-width: 320px;
+    width: 100%;
     text-align: center;
     font-size: 1rem;
 }
@@ -108,6 +107,17 @@ button {
 
 button:hover {
     background-color: var(--accent-color-3);
+}
+
+#copypwd {
+    
+    position: absolute !important;
+    top: -11px !important;
+    height: 18px !important;
+    font-family: monospace !important;
+    font-size: 10px;
+    width: 373px !important;
+
 }
 
 footer {
