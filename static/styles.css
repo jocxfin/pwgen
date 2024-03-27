@@ -155,7 +155,13 @@ footer a:hover {
     padding: 3px;
 }
 
+#infotext {
+    font-size: 12px;
+}
 
+#apilink {
+    color: var(--accent-color-2);
+}
 
 /* toggle button*/
 
