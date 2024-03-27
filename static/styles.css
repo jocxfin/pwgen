@@ -80,6 +80,7 @@ h1 {
     gap: 10px;
     width: 369px;
     margin-top: 15px;
+    position: relative;
 }
 
 input[type="text"] {
@@ -101,8 +102,6 @@ button {
     text-align: center;
     font-size: 16px;
     border-radius: var(--border-radius);
-    width: 80%;
-    max-width: 200px;
 }
 
 button:hover {
