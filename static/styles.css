@@ -83,6 +83,10 @@ h1 {
     position: relative;
 }
 
+#password:focus {
+    outline: none !important;
+}
+
 input[type="text"] {
     background-color: var(--primary-color);
     border: 2px solid var(--accent-color-1);
