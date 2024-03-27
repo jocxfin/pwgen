@@ -222,7 +222,7 @@ footer a:hover {
 .checkbox-kaare .tgl+.tgl-btn:before {
     display: inline;
     position: absolute;
-    top: 7px;
+    top: 6px;
 }
 
 .checkbox-kaare .tgl:checked+.tgl-btn:after {
