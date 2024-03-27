@@ -19,6 +19,7 @@
         }
     </script>
 </head>
+
 <body>
     <div class="container">
         <h1 id="header1">Generate a Secure Password</h1>
@@ -93,6 +94,12 @@
                     <input class='tgl toggle-omena' type="checkbox" id="passphraseToggle">
                     <label class='tgl-btn' for="passphraseToggle"></label>
                 </div>
+            </div>
+        </div>
+        <div id="passphrase-wrapper">
+            <div id="checkbox-wrapper">
+                <p id="infotext">All generated passwords and passphrases are ran against HaveIBeenPwned-<a id="apilink" href="https://haveibeenpwned.com" target="_blank"
+                    rel="noopener noreferrer">API</a> before showing them to the user.</p>
             </div>
         </div>
         <div class="password-container" style="display: flex;">

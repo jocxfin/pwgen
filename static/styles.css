@@ -144,7 +144,8 @@ footer a:hover {
     width: 92px;
 }
 
-#separator, #maxWordLength {
+#separator,
+#maxWordLength {
     width: 116px;
     height: 41.5px;
     border-radius: var(--border-radius);
@@ -154,7 +155,13 @@ footer a:hover {
     padding: 3px;
 }
 
+#infotext {
+    font-size: 12px;
+}
 
+#apilink {
+    color: var(--accent-color-2);
+}
 
 /* toggle button*/
 
@@ -274,5 +281,3 @@ footer a:hover {
     left: 4px;
     color: #fff;
 }
-
-
