@@ -1,3 +1,4 @@
+import os
 from flask import Flask, jsonify, render_template, request, send_file
 import secrets
 import string
@@ -77,4 +78,4 @@ def serve_sw():
     return send_file('service-worker.js', mimetype='application/javascript')
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5069)
+    app.run(debug=False, host='0.0.0.0', port=int(os.getenv('PORT', 5069)))
