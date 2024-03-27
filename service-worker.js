@@ -6,7 +6,6 @@ const urlsToCache = [
   '/manifest.json'
 ];
 
-// Asenna vaiheessa välimuistiin tärkeät resurssit
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME)
@@ -17,22 +16,42 @@ self.addEventListener('install', (event) => {
   );
 });
 
-// Aktivointivaiheessa, hallitse vanhoja välimuisteja
 self.addEventListener('activate', (event) => {
-  // Aktivointilogiikka
+  const cacheWhitelist = [CACHE_NAME];
+  event.waitUntil(
+    caches.keys().then(cacheNames => {
+      return Promise.all(
+        cacheNames.map(cacheName => {
+          if (cacheWhitelist.indexOf(cacheName) === -1) {
+            console.log('[Service Worker] Deleting old cache:', cacheName);
+            return caches.delete(cacheName);
+          }
+        })
+      );
+    })
+  );
 });
 
-// Hae pyynnöt ja yritä palauttaa välimuistista, muuten tee verkosta
 self.addEventListener('fetch', (event) => {
   event.respondWith(
     caches.match(event.request)
       .then((response) => {
-        // Välimuistista löytyi, palauta se
         if (response) {
           return response;
         }
-        // Ei löytynyt välimuistista, hae verkosta
-        return fetch(event.request);
+        return fetch(event.request).then((response) => {
+          if (!response || response.status !== 200 || response.type !== 'basic') {
+            return response;
+          }
+          var responseToCache = response.clone();
+
+          caches.open(CACHE_NAME)
+            .then((cache) => {
+              cache.put(event.request, responseToCache);
+            });
+
+          return response;
+        });
       })
   );
 });
