@@ -96,15 +96,15 @@
                 </div>
             </div>
         </div>
-        <div id="passphrase-wrapper">
+        <div class="password-container" style="display: flex;">
+            <input type="text" id="password" readonly>
+            <button id="copypwd" onclick="copyPassword()">copy password</button>
+        </div>
+        <div id="passphrase-wrapper" class="infotext-wrapper">
             <div id="checkbox-wrapper">
                 <p id="infotext">All generated passwords and passphrases are ran against HaveIBeenPwned-<a id="apilink" href="https://haveibeenpwned.com" target="_blank"
                     rel="noopener noreferrer">API</a> before showing them to the user.</p>
             </div>
-        </div>
-        <div class="password-container" style="display: flex;">
-            <input type="text" id="password" readonly>
-            <button id="copypwd" onclick="copyPassword()">copy password</button>
         </div>
         <footer>
             <p>Simple password generator made by <a href="https://github.com/jocxfin/pwgen" target="_blank"
