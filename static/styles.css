@@ -122,6 +122,14 @@ button:hover {
     border-radius: 6px 6px 0 0 !important;
     background-color: var(--accent-color-1) !important;
     text-align: end !important;
+    padding-right: 6px !important;
+    letter-spacing: 1.4px;
+}
+
+#copypwd:hover {
+    cursor: pointer !important;
+    background-color: var(--accent-color-2) !important;
+    transition: cubic-bezier(0.075, 0.82, 0.165, 0.2);
 }
 
 footer {
