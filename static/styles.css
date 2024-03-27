@@ -164,7 +164,9 @@ footer a:hover {
     border: 2px solid var(--accent-color-1);
     padding: 3px;
 }
-
+.infotext-wrapper {
+    text-align: center !important;
+}
 #infotext {
     font-size: 12px;
 }
