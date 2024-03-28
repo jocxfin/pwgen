@@ -224,11 +224,9 @@
 
         function onCopy() {
             var button = document.getElementById("copypwd"); 
-            button.style.backgroundColor = "#05AA6D"; 
             button.innerHTML = "copied!"; 
 
             setTimeout(function () {
-                button.style.backgroundColor = ""; 
                 button.innerHTML = "copy password"; 
             }, 1500);
         }
