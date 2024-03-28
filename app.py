@@ -101,7 +101,3 @@ async def serve_manifest():
 @app.route('/service-worker.js')
 async def serve_sw():
     return send_file('service-worker.js', mimetype='application/javascript')
-
-if __name__ == "__main__":
-    # Specify the port on which to run the application. Default is 5000, but can be set to any desired port.
-    app.run(host='0.0.0.0', port=5000, debug=True)
