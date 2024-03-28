@@ -98,7 +98,7 @@
         </div>
         <div class="password-container" style="display: flex;">
             <input type="text" id="password" readonly>
-            <button id="copypwd" onclick="copyPassword()">copy password</button>
+            <button id="copypwd" onclick="copyPassword()" oncopy="onCopy()">copy password</button>
         </div>
         <div id="checkbox-wrapper" class="buttonwrapper">
             <button id="refreshpw" class="button">Generate</button>
@@ -222,6 +222,16 @@
             }, 690);
         }, false);
 
+        function onCopy() {
+            var button = document.getElementById("copypwd"); 
+            button.style.backgroundColor = "#05AA6D"; 
+            button.innerHTML = "copied!"; 
+
+            setTimeout(function () {
+                button.style.backgroundColor = ""; 
+                button.innerHTML = "copy password"; 
+            }, 1500);
+        }
         window.onload = generatePassword;
     </script>
 
