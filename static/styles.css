@@ -136,6 +136,19 @@ button:hover {
     padding: 10px;
 }
 
+.button {
+    display: inline-block;
+    border: 0;
+    outline: 0;
+    padding: 12px 16px;
+    line-height: 1.4;
+    border-radius: var(--border-radius);
+    color: white !important;
+    cursor: pointer;
+    position: relative;
+    transition: padding-right .3s ease-out;
+}
+
 .button.loading {
     background-color: #CCC;
     padding-right: 40px;
