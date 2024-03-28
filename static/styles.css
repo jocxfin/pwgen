@@ -112,7 +112,7 @@ button:hover {
 }
 
 #copypwd {
-    
+
     position: absolute !important;
     top: -11px !important;
     height: 18px !important;
@@ -132,11 +132,13 @@ button:hover {
     transition: cubic-bezier(0.075, 0.82, 0.165, 0.2);
 }
 
-#refreshpw {
-    padding: 10px;
+.buttonwrapper {
+    justify-content: center;
+    margin-top: 13px;
 }
 
 .button {
+    background-color: var(--accent-color-1) !important;
     display: inline-block;
     border: 0;
     outline: 0;
@@ -150,7 +152,7 @@ button:hover {
 }
 
 .button.loading {
-    background-color: #CCC;
+    background-color: var(--accent-color-2);
     padding-right: 40px;
 }
 
@@ -163,17 +165,19 @@ button:hover {
     width: 0px;
     height: 0px;
     margin-top: -2px;
-    border: 2px solid rgba(255,255,255,0.5);
+    border: 2px solid rgba(255, 255, 255, 0.5);
     border-left-color: #FFF;
     border-top-color: #FFF;
     animation: spin .6s infinite linear, grow .3s forwards ease-out;
 }
-@keyframes spin { 
+
+@keyframes spin {
     to {
         transform: rotate(359deg);
     }
 }
-@keyframes grow { 
+
+@keyframes grow {
     to {
         width: 14px;
         height: 14px;
@@ -226,9 +230,11 @@ footer a:hover {
     border: 2px solid var(--accent-color-1);
     padding: 3px;
 }
+
 .infotext-wrapper {
     text-align: center !important;
 }
+
 #infotext {
     font-size: 12px;
 }
