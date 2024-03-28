@@ -73,9 +73,9 @@
             <div id="checkbox-wrapper">
                 <label for="maxWordLength">Max Word Length:</label>
                 <select id="maxWordLength">
-                    <option value="5">6</option>
                     <option value="3">3</option>
                     <option value="5">5</option>
+                    <option selected value="5">6</option>
                     <option value="7">7</option>
                     <option value="9">9</option>
                     <option value="12">12</option>
@@ -99,6 +99,9 @@
         <div class="password-container" style="display: flex;">
             <input type="text" id="password" readonly>
             <button id="copypwd" onclick="copyPassword()">copy password</button>
+        </div>
+        <div id="checkbox-wrapper">
+            <button id="refreshpw" class="button">Generate</button>
         </div>
         <div id="passphrase-wrapper" class="infotext-wrapper">
             <div id="checkbox-wrapper">
