@@ -105,8 +105,9 @@
         </div>
         <div id="passphrase-wrapper" class="infotext-wrapper">
             <div id="checkbox-wrapper">
-                <p id="infotext">All generated passwords and passphrases are ran against HaveIBeenPwned-<a id="apilink" href="https://haveibeenpwned.com" target="_blank"
-                    rel="noopener noreferrer">API</a> before showing them to the user.</p>
+                <p id="infotext">All generated passwords and passphrases are ran against HaveIBeenPwned-<a id="apilink"
+                        href="https://haveibeenpwned.com" target="_blank" rel="noopener noreferrer">API</a> before
+                    showing them to the user.</p>
             </div>
         </div>
         <footer>
@@ -209,6 +210,18 @@
             passwordInput.select();
             document.execCommand('copy');
         }
+
+        var refreshpw = document.getElementById('refreshpw');
+
+        refreshpw.addEventListener("click", async function () {
+            refreshpw.classList.add('loading');
+
+            await generatePassword();
+
+            setTimeout(() => {
+                refreshpw.classList.remove('loading');
+            }, 1069);
+        }, false);
 
         window.onload = generatePassword;
     </script>
