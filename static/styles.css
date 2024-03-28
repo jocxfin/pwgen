@@ -133,7 +133,7 @@ button:hover {
 }
 
 .buttonwrapper {
-    justify-content: center;
+    justify-content: center !important;
     margin-top: 13px;
 }
 
