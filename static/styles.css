@@ -152,7 +152,7 @@ button:hover {
 }
 
 .button.loading {
-    background-color: var(--accent-color-2);
+    background-color: var(--accent-color-2) !important;
     padding-right: 40px;
 }
 
