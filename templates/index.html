@@ -161,7 +161,6 @@
             formData.append('capitalize', capitalizeWords.checked);
             formData.append('word_count', wordCountSlider.value);
             formData.append('separator_type', separator.value === 'custom' ? 'single_character' : separator.value);
-            // Lisätään mukautettu erotin vain, jos separator valittu 'custom'
             if (separator.value === 'custom') {
                 formData.append('user_defined_separator', customSeparator.value);
             }
@@ -220,7 +219,7 @@
 
             setTimeout(() => {
                 refreshpw.classList.remove('loading');
-            }, 1069);
+            }, 690);
         }, false);
 
         window.onload = generatePassword;
