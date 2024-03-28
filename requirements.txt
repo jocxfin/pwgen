@@ -1,4 +1,4 @@
-Flask==3.0.1
+Flask>=3.0.1
 requests
-gunicorn
+gunicorn>=21.2.0
 setuptools>=65.5.1
