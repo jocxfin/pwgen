@@ -1,18 +1,20 @@
-import requests
-import hashlib
-import os
 from flask import Flask, jsonify, render_template, request, send_file
 import secrets
 import string
 import math
+import asyncio
+import httpx
+from flask_caching import Cache
+import hashlib
 
 app = Flask(__name__)
+cache = Cache(app, config={'CACHE_TYPE': 'SimpleCache'})
 
 word_list = []
 with open('wordlist.txt', 'r') as file:
-    word_list = [line.strip() for line in file if len(line.strip()) <= 12]
+    word_list = [line.strip() for line in file.readlines() if len(line.strip()) <= 12]
 
-special_characters = "!@#$%^&*()"
+special_characters = "!@/”¥¢Œ¥#$%^&*(Σ)"
 
 def calculate_entropy(password):
     pool_size = len(set(password))
@@ -28,18 +30,18 @@ def get_random_separator(separator_type, user_defined_separator=''):
         return user_defined_separator
     return '-'
 
-
-def check_password_pwned(password):
+async def check_password_pwned(password):
     sha1_password = hashlib.sha1(password.encode('utf-8')).hexdigest().upper()
     prefix, suffix = sha1_password[:5], sha1_password[5:]
-    response = requests.get(f'https://api.pwnedpasswords.com/range/{prefix}')
+    async with httpx.AsyncClient() as client:
+        response = await client.get(f'https://api.pwnedpasswords.com/range/{prefix}')
     hashes = (line.split(':') for line in response.text.splitlines())
     for hash_suffix, count in hashes:
         if hash_suffix == suffix:
             return True
     return False
 
-def generate_passphrase(word_count=4, capitalize=False, separator_type='space', max_word_length=12, user_defined_separator=''):
+async def generate_passphrase(word_count=4, capitalize=False, separator_type='space', max_word_length=12, user_defined_separator=''):
     attempt = 0
     while True:
         filtered_word_list = [word for word in word_list if len(word) <= max_word_length]
@@ -48,17 +50,17 @@ def generate_passphrase(word_count=4, capitalize=False, separator_type='space', 
             passphrase_words = [word.capitalize() for word in passphrase_words]
         separator = get_random_separator(separator_type, user_defined_separator)
         passphrase = separator.join(passphrase_words)
-        if not check_password_pwned(passphrase) or attempt > 10:
+        if not await check_password_pwned(passphrase) or attempt > 10:
             break
         attempt += 1
     return passphrase
 
 @app.route('/')
-def index():
+async def index():
     return render_template('index.html')
 
 @app.route('/generate-password', methods=['POST'])
-def generate_password_route():
+async def generate_password_route():
     length = request.form.get('length', type=int, default=12)
     include_uppercase = request.form.get('include_uppercase', 'false') == 'true'
     include_digits = request.form.get('include_digits', 'false') == 'true'
@@ -71,7 +73,7 @@ def generate_password_route():
     word_count = request.form.get('word_count', type=int, default=4)
 
     if generate_type == 'passphrase':
-        password = generate_passphrase(word_count, capitalize, separator_type, max_word_length, user_defined_separator)
+        password = await generate_passphrase(word_count, capitalize, separator_type, max_word_length, user_defined_separator)
     else:
         characters = string.ascii_lowercase
         if include_uppercase:
@@ -82,22 +84,24 @@ def generate_password_route():
             characters += special_characters
         password = ''.join(secrets.choice(characters) for _ in range(length))
         attempt = 0
-        password_is_pwned = True
-        while password_is_pwned and attempt < 10:
+        while True:
+            password_is_pwned = await check_password_pwned(password)
+            if not password_is_pwned or attempt > 10:
+                break
             password = ''.join(secrets.choice(characters) for _ in range(length))
-            password_is_pwned = check_password_pwned(password)
             attempt += 1
-
-        if password_is_pwned:
-            return jsonify(error="Unable to generate a non-pwned password after several attempts"), 500
 
     entropy = calculate_entropy(password)
     return jsonify(password=password, entropy=entropy)
 
 @app.route('/manifest.json')
-def serve_manifest():
+async def serve_manifest():
     return send_file('manifest.json', mimetype='application/manifest+json')
 
 @app.route('/service-worker.js')
-def serve_sw():
+async def serve_sw():
     return send_file('service-worker.js', mimetype='application/javascript')
+
+if __name__ == "__main__":
+    # Specify the port on which to run the application. Default is 5000, but can be set to any desired port.
+    app.run(host='0.0.0.0', port=5000, debug=True)

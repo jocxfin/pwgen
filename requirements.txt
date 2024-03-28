@@ -1,4 +1,5 @@
 Flask>=3.0.1
-requests
+httpx
 gunicorn>=21.2.0
 setuptools>=65.5.1
+flask-caching
