@@ -1,5 +1,6 @@
-Flask>=3.0.1
 httpx
-setuptools>=65.5.1
 flask-caching
-uwsgi
+Flask>=3.0.1
+requests
+gunicorn>=21.2.0
+setuptools>=65.5.1
