@@ -37,6 +37,10 @@ async def check_password_pwned(password):
             return True
     return False
 
+@app.route('/')
+async def index():
+    return render_template('index.html')
+
 @app.route('/generate-password', methods=['POST'])
 async def generate_password_route():
 
