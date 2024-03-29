@@ -6,6 +6,7 @@ import asyncio
 import httpx
 from flask_caching import Cache
 import hashlib
+from asgiref.wsgi import WSGIAdapter
 
 app = Flask(__name__)
 cache = Cache(app, config={'CACHE_TYPE': 'SimpleCache'})
@@ -125,3 +126,5 @@ async def serve_manifest():
 @app.route('/service-worker.js')
 async def serve_sw():
     return send_file('service-worker.js', mimetype='application/javascript')
+
+app_asgi = WSGIAdapter(app)
