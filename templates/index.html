@@ -166,8 +166,11 @@
         }
 
         document.querySelectorAll('input, select').forEach(element => {
-            element.addEventListener('change', generatePassword);
+            if (element.id !== 'passphraseToggle') { 
+                element.addEventListener('change', generatePassword);
+            }
         });
+
 
         async function generatePassword() {
             const formData = new FormData();
