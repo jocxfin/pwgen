@@ -24,7 +24,13 @@
     <div class="container">
         <h1 id="header1">Generate a Secure Password</h1>
         <div id="passwordOptions">
-
+            <div id="checkbox-wrapper">
+                <label for="languageSelect">Language:</label>
+                <select id="languageSelect">
+                    <option value="en">English</option>
+                    <option value="fi">Finnish</option>
+                </select>
+            </div>            
             <div id="checkbox-wrapper">
                 <p>Include Uppercase Letters</p>
                 <div class="checkbox-kaare">
@@ -147,6 +153,7 @@
         const includeNumbers = document.getElementById('includeNumbers');
         const includeSpecialChars = document.getElementById('includeSpecialChars');
         const refreshpw = document.getElementById('refreshpw');
+        const languageSelect = document.getElementById('languageSelect');
     
         separator.onchange = () => customSeparator.style.display = separator.value === 'custom' ? 'block' : 'none';
     
@@ -182,6 +189,7 @@
             }
             formData.append('max_word_length', maxWordLength.value);
             formData.append('type', passphraseToggle.checked ? 'passphrase' : 'password');
+            formData.append('language', languageSelect.value);
     
             fetch('/generate-password', {
                 method: 'POST',
