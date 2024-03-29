@@ -223,7 +223,8 @@ footer a:hover {
 }
 
 #separator,
-#maxWordLength {
+#maxWordLength,
+#languageSelect {
     width: 116px;
     height: 41.5px;
     border-radius: var(--border-radius);
