@@ -37,9 +37,34 @@ async def check_password_pwned(password):
             return True
     return False
 
-@app.route('/')
-async def index():
-    return render_template('index.html')
+async def generate_passphrase(word_list, word_count=4, capitalize=False, separator_type='space', max_word_length=12, user_defined_separator='', include_numbers=False, include_special_chars=False):
+    attempt = 0
+    while True:
+        passphrase_elements = []
+        for _ in range(word_count - 1):
+            word = secrets.choice([w for w in word_list if len(w) <= max_word_length])
+            if capitalize:
+                word = word.capitalize()
+
+            if include_numbers:
+                word += str(secrets.choice(range(10)))
+            if include_special_chars:
+                word += secrets.choice(special_characters)
+
+            passphrase_elements.append(word)
+
+        final_word = secrets.choice([w for w in word_list if len(w) <= max_word_length])
+        if capitalize:
+            final_word = final_word.capitalize()
+        passphrase_elements.append(final_word)
+
+        passphrase = get_random_separator(separator_type, user_defined_separator).join(passphrase_elements)
+
+        if not await check_password_pwned(passphrase) or attempt > 10:
+            break
+        attempt += 1
+
+        return passphrase
 
 @app.route('/generate-password', methods=['POST'])
 async def generate_password_route():
@@ -85,34 +110,9 @@ async def generate_password_route():
     entropy = calculate_entropy(password)
     return jsonify(password=password, entropy=entropy)
 
-async def generate_passphrase(word_list, word_count=4, capitalize=False, separator_type='space', max_word_length=12, user_defined_separator='', include_numbers=False, include_special_chars=False):
-    attempt = 0
-    while True:
-        passphrase_elements = []
-        for _ in range(word_count - 1):
-            word = secrets.choice([w for w in word_list if len(w) <= max_word_length])
-            if capitalize:
-                word = word.capitalize()
-
-            if include_numbers:
-                word += str(secrets.choice(range(10)))
-            if include_special_chars:
-                word += secrets.choice(special_characters)
-
-            passphrase_elements.append(word)
-
-            final_word = secrets.choice([w for w in word_list if len(w) <= max_word_length])
-            if capitalize:
-                final_word = final_word.capitalize()
-            passphrase_elements.append(final_word)
-
-            passphrase = get_random_separator(separator_type, user_defined_separator).join(passphrase_elements)
-
-            if not await check_password_pwned(passphrase) or attempt > 10:
-                break
-            attempt += 1
-
-        return passphrase
+@app.route('/')
+async def index():
+    return render_template('index.html')
 
 @app.route('/manifest.json')
 async def serve_manifest():
