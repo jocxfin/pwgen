@@ -1,4 +1,7 @@
-Flask==3.0.1
+httpx
+flask-caching
+Flask[async]>=3.0.1
 requests
-gunicorn
+gunicorn>=21.2.0
 setuptools>=65.5.1
+uvicorn[standard]>=0.14.0
