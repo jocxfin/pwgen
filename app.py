@@ -45,27 +45,30 @@ async def generate_passphrase(word_count=4, capitalize=False, separator_type='sp
     attempt = 0
     while True:
         passphrase_elements = []
-        for _ in range(word_count):
+        for _ in range(word_count - 1): 
             word = secrets.choice([w for w in word_list if len(w) <= max_word_length])
             if capitalize:
                 word = word.capitalize()
-            passphrase_elements.append(word)
 
             if include_numbers:
-                passphrase_elements.append(str(secrets.choice(range(10))))
+                word += str(secrets.choice(range(10)))
             if include_special_chars:
-                passphrase_elements.append(secrets.choice(special_characters))
+                word += secrets.choice(special_characters)
 
-        if include_numbers or include_special_chars:
-            passphrase_elements = passphrase_elements[:-1]
+            passphrase_elements.append(word)
 
-        separator = user_defined_separator if user_defined_separator else '-'
-        passphrase = separator.join(passphrase_elements)
+        final_word = secrets.choice([w for w in word_list if len(w) <= max_word_length])
+        if capitalize:
+            final_word = final_word.capitalize()
+        passphrase_elements.append(final_word)
+
+        passphrase = '-'.join(passphrase_elements)
 
         if not await check_password_pwned(passphrase) or attempt > 10:
             break
         attempt += 1
     return passphrase
+
 
 
 
