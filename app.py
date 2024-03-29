@@ -45,19 +45,33 @@ async def generate_passphrase(word_count=4, capitalize=False, separator_type='sp
     attempt = 0
     while True:
         filtered_word_list = [word for word in word_list if len(word) <= max_word_length]
-        passphrase_words = [secrets.choice(filtered_word_list) for _ in range(word_count)]
-        if capitalize:
-            passphrase_words = [word.capitalize() for word in passphrase_words]
-        if include_numbers:
-            passphrase_words.append(str(secrets.choice(range(10))))  
-        if include_special_chars:
-            passphrase_words.append(secrets.choice(special_characters))  
-        separator = get_random_separator(separator_type, user_defined_separator)
-        passphrase = separator.join(passphrase_words)
+        passphrase_components = []
+
+        for _ in range(word_count):
+            word = secrets.choice(filtered_word_list)
+            if capitalize:
+                word = word.capitalize()
+            passphrase_components.append(word)
+
+            if include_numbers and not include_special_chars:
+                passphrase_components.append(str(secrets.choice(range(10))))
+            elif include_special_chars and not include_numbers:
+                passphrase_components.append(secrets.choice(special_characters)) 
+            elif include_numbers and include_special_chars:
+
+                if secrets.randbelow(2):  
+                    passphrase_components.append(str(secrets.choice(range(10))))
+                else:
+                    passphrase_components.append(secrets.choice(special_characters))
+
+        separator = user_defined_separator if user_defined_separator else ' '
+        passphrase = separator.join(passphrase_components)
+
         if not await check_password_pwned(passphrase) or attempt > 10:
             break
         attempt += 1
     return passphrase
+
 
 @app.route('/')
 async def index():
