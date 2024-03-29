@@ -44,33 +44,29 @@ async def check_password_pwned(password):
 async def generate_passphrase(word_count=4, capitalize=False, separator_type='space', max_word_length=12, user_defined_separator='', include_numbers=False, include_special_chars=False):
     attempt = 0
     while True:
-        filtered_word_list = [word for word in word_list if len(word) <= max_word_length]
-        passphrase_components = []
-
+        passphrase_elements = []
         for _ in range(word_count):
-            word = secrets.choice(filtered_word_list)
+            word = secrets.choice([w for w in word_list if len(w) <= max_word_length])
             if capitalize:
                 word = word.capitalize()
-            passphrase_components.append(word)
+            passphrase_elements.append(word)
 
-            if include_numbers and not include_special_chars:
-                passphrase_components.append(str(secrets.choice(range(10))))
-            elif include_special_chars and not include_numbers:
-                passphrase_components.append(secrets.choice(special_characters)) 
-            elif include_numbers and include_special_chars:
+            if include_numbers:
+                passphrase_elements.append(str(secrets.choice(range(10))))
+            if include_special_chars:
+                passphrase_elements.append(secrets.choice(special_characters))
 
-                if secrets.randbelow(2):  
-                    passphrase_components.append(str(secrets.choice(range(10))))
-                else:
-                    passphrase_components.append(secrets.choice(special_characters))
+        if include_numbers or include_special_chars:
+            passphrase_elements = passphrase_elements[:-1]
 
-        separator = user_defined_separator if user_defined_separator else ' '
-        passphrase = separator.join(passphrase_components)
+        separator = user_defined_separator if user_defined_separator else '-'
+        passphrase = separator.join(passphrase_elements)
 
         if not await check_password_pwned(passphrase) or attempt > 10:
             break
         attempt += 1
     return passphrase
+
 
 
 @app.route('/')
@@ -85,7 +81,7 @@ async def generate_password_route():
     include_special = request.form.get('include_special', 'false') == 'true'
     generate_type = request.form.get('type', 'password')
     capitalize = request.form.get('capitalize', 'false') == 'true'
-    separator_type = request.form.get('separator_type', 'space')
+    separator_type = request.form.get('separator_type', '-')
     max_word_length = request.form.get('max_word_length', type=int, default=12)
     user_defined_separator = request.form.get('user_defined_separator', '')
     word_count = request.form.get('word_count', type=int, default=4)
