@@ -158,22 +158,13 @@
 
         separator.onchange = () => customSeparator.style.display = separator.value === 'custom' ? 'block' : 'none';
 
-        wordCountSlider.oninput = () => {
-            wordCountValue.textContent = wordCountSlider.value;
-            generatePassword();
-        };
-        lengthSlider.oninput = () => {
-            lengthValue.textContent = lengthSlider.value;
-            generatePassword();
-        };
-
         passphraseToggle.onchange = togglePassphraseOptions;
 
         function togglePassphraseOptions() {
             document.getElementById('passwordOptions').style.display = passphraseToggle.checked ? 'none' : 'block';
             document.getElementById('passphraseOptions').style.display = passphraseToggle.checked ? 'block' : 'none';
             customSeparator.style.display = 'none';
-            generatePassword(); // Generate password when toggling between password and passphrase
+            generatePassword();
         }
 
         document.querySelectorAll('input, select').forEach(element => {

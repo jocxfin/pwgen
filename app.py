@@ -10,6 +10,14 @@ import hashlib
 app = Flask(__name__)
 cache = Cache(app, config={'CACHE_TYPE': 'SimpleCache'})
 
+word_list_en = []
+with open('wordlist.txt', 'r') as file:
+    word_list_en = [line.strip() for line in file.readlines() if len(line.strip()) <= 12]
+
+word_list_fi = []
+with open('wordlist_fi.txt', 'r') as file:
+    word_list_fi = [line.strip() for line in file.readlines() if len(line.strip()) <= 12]
+
 special_characters = "!@/”¥¢Œ¥#$%^&*(Σ)"
 
 def calculate_entropy(password):
@@ -37,11 +45,13 @@ async def check_password_pwned(password):
             return True
     return False
 
-async def generate_passphrase(word_list, word_count=4, capitalize=False, separator_type='space', max_word_length=12, user_defined_separator='', include_numbers=False, include_special_chars=False):
+async def generate_passphrase(word_count=4, capitalize=False, separator_type='space', max_word_length=12, user_defined_separator='', include_numbers=False, include_special_chars=False, language='en'):
     attempt = 0
+    word_list = word_list_en if language == 'en' else word_list_fi
+    
     while True:
         passphrase_elements = []
-        for _ in range(word_count - 1):
+        for _ in range(word_count - 1): 
             word = secrets.choice([w for w in word_list if len(w) <= max_word_length])
             if capitalize:
                 word = word.capitalize()
@@ -58,23 +68,20 @@ async def generate_passphrase(word_list, word_count=4, capitalize=False, separat
             final_word = final_word.capitalize()
         passphrase_elements.append(final_word)
 
-        passphrase = get_random_separator(separator_type, user_defined_separator).join(passphrase_elements)
+        passphrase = '-'.join(passphrase_elements)
 
         if not await check_password_pwned(passphrase) or attempt > 10:
             break
         attempt += 1
+    return passphrase
 
-        return passphrase
+@app.route('/')
+async def index():
+    return render_template('index.html')
 
 @app.route('/generate-password', methods=['POST'])
 async def generate_password_route():
     language = request.form.get('language', 'en')
-    wordlist_filename = 'wordlist_fi.txt' if language == 'fi' else 'wordlist.txt'
-    
-    word_list = []
-    with open(wordlist_filename, 'r') as file:
-        word_list = [line.strip() for line in file.readlines() if len(line.strip()) <= 12]
-
     length = request.form.get('length', type=int, default=12)
     include_uppercase = request.form.get('include_uppercase', 'false') == 'true'
     include_digits = request.form.get('include_digits', 'false') == 'true'
@@ -86,10 +93,10 @@ async def generate_password_route():
     user_defined_separator = request.form.get('user_defined_separator', '')
     word_count = request.form.get('word_count', type=int, default=4)
     include_numbers = request.form.get('include_numbers', 'false') == 'true' 
-    include_special_chars = request.form.get('include_special_chars', 'false') == 'true'
+    include_special_chars = request.form.get('include_special_chars', 'false') == 'true' 
 
     if generate_type == 'passphrase':
-        password = await generate_passphrase(word_list, word_count, capitalize, separator_type, max_word_length, user_defined_separator, include_numbers, include_special_chars)
+        password = await generate_passphrase(word_count, capitalize, separator_type, max_word_length, user_defined_separator, include_numbers, include_special_chars, language)
     else:
         characters = string.ascii_lowercase
         if include_uppercase:
@@ -110,9 +117,6 @@ async def generate_password_route():
     entropy = calculate_entropy(password)
     return jsonify(password=password, entropy=entropy)
 
-@app.route('/')
-async def index():
-    return render_template('index.html')
 
 @app.route('/manifest.json')
 async def serve_manifest():
