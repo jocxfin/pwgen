@@ -41,13 +41,17 @@ async def check_password_pwned(password):
             return True
     return False
 
-async def generate_passphrase(word_count=4, capitalize=False, separator_type='space', max_word_length=12, user_defined_separator=''):
+async def generate_passphrase(word_count=4, capitalize=False, separator_type='space', max_word_length=12, user_defined_separator='', include_numbers=False, include_special_chars=False):
     attempt = 0
     while True:
         filtered_word_list = [word for word in word_list if len(word) <= max_word_length]
         passphrase_words = [secrets.choice(filtered_word_list) for _ in range(word_count)]
         if capitalize:
             passphrase_words = [word.capitalize() for word in passphrase_words]
+        if include_numbers:
+            passphrase_words.append(str(secrets.choice(range(10))))  
+        if include_special_chars:
+            passphrase_words.append(secrets.choice(special_characters))  
         separator = get_random_separator(separator_type, user_defined_separator)
         passphrase = separator.join(passphrase_words)
         if not await check_password_pwned(passphrase) or attempt > 10:
@@ -71,9 +75,11 @@ async def generate_password_route():
     max_word_length = request.form.get('max_word_length', type=int, default=12)
     user_defined_separator = request.form.get('user_defined_separator', '')
     word_count = request.form.get('word_count', type=int, default=4)
+    include_numbers = request.form.get('include_numbers', 'false') == 'true' 
+    include_special_chars = request.form.get('include_special_chars', 'false') == 'true' 
 
     if generate_type == 'passphrase':
-        password = await generate_passphrase(word_count, capitalize, separator_type, max_word_length, user_defined_separator)
+        password = await generate_passphrase(word_count, capitalize, separator_type, max_word_length, user_defined_separator, include_numbers, include_special_chars)
     else:
         characters = string.ascii_lowercase
         if include_uppercase:
@@ -93,6 +99,7 @@ async def generate_password_route():
 
     entropy = calculate_entropy(password)
     return jsonify(password=password, entropy=entropy)
+
 
 @app.route('/manifest.json')
 async def serve_manifest():
