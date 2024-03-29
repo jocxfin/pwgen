@@ -43,7 +43,6 @@ async def index():
 
 @app.route('/generate-password', methods=['POST'])
 async def generate_password_route():
-
     language = request.form.get('language', 'en')
     wordlist_filename = 'wordlist_fi.txt' if language == 'fi' else 'wordlist.txt'
     
@@ -73,7 +72,7 @@ async def generate_password_route():
         if include_digits:
             characters += string.digits
         if include_special:
-            characters += "!@#$%^&*()"
+            characters += special_characters
         password = ''.join(secrets.choice(characters) for _ in range(length))
         attempt = 0
         while True:
@@ -85,7 +84,6 @@ async def generate_password_route():
 
     entropy = calculate_entropy(password)
     return jsonify(password=password, entropy=entropy)
-
 
 async def generate_passphrase(word_list, word_count=4, capitalize=False, separator_type='space', max_word_length=12, user_defined_separator='', include_numbers=False, include_special_chars=False):
     attempt = 0
@@ -99,24 +97,22 @@ async def generate_passphrase(word_list, word_count=4, capitalize=False, separat
             if include_numbers:
                 word += str(secrets.choice(range(10)))
             if include_special_chars:
-                word += secrets.choice("!@#$%^&*()")
-                passphrase_elements.append(word)
+                word += secrets.choice(special_characters)
 
-        final_word = secrets.choice([w for w in word_list if len(w) <= max_word_length])
-        if capitalize:
-            final_word = final_word.capitalize()
-        passphrase_elements.append(final_word)
+            passphrase_elements.append(word)
 
-        passphrase = get_random_separator(separator_type, user_defined_separator).join(passphrase_elements)
+            final_word = secrets.choice([w for w in word_list if len(w) <= max_word_length])
+            if capitalize:
+                final_word = final_word.capitalize()
+            passphrase_elements.append(final_word)
 
-        if not await check_password_pwned(passphrase) or attempt > 10:
-            break
-        attempt += 1
+            passphrase = get_random_separator(separator_type, user_defined_separator).join(passphrase_elements)
 
-    return passphrase
+            if not await check_password_pwned(passphrase) or attempt > 10:
+                break
+            attempt += 1
 
-            
-
+        return passphrase
 
 @app.route('/manifest.json')
 async def serve_manifest():
