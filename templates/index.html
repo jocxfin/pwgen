@@ -146,6 +146,7 @@
         const includeSpecial = document.getElementById('includeSpecial');
         const includeNumbers = document.getElementById('includeNumbers');
         const includeSpecialChars = document.getElementById('includeSpecialChars');
+        const refreshpw = document.getElementById('refreshpw');
     
         separator.onchange = () => customSeparator.style.display = separator.value === 'custom' ? 'block' : 'none';
     
@@ -182,17 +183,20 @@
             formData.append('max_word_length', maxWordLength.value);
             formData.append('type', passphraseToggle.checked ? 'passphrase' : 'password');
     
-            try {
-                const response = await fetch('/generate-password', {
-                    method: 'POST',
-                    body: formData
-                });
+            fetch('/generate-password', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
                 if (!response.ok) throw new Error('Network response was not ok.');
-                const data = await response.json();
+                return response.json();
+            })
+            .then(data => {
                 scrambleAnimation(data.password);
-            } catch (error) {
+            })
+            .catch(error => {
                 console.error('Error generating password:', error);
-            }
+            });
         }
     
         function scrambleAnimation(finalPassword) {
@@ -201,12 +205,11 @@
             const maxDelay = 300;
             let indexes = Array.from({ length: finalPassword.length }, (_, i) => i);
     
-            finalPassword.split('').forEach(() => {
-                let randomIndex = indexes.splice(Math.floor(Math.random() * indexes.length), 1)[0];
+            finalPassword.split('').forEach((char, index) => {
                 let delay = Math.random() * maxDelay;
     
                 setTimeout(() => {
-                    scrambled[randomIndex] = finalPassword[randomIndex];
+                    scrambled[index] = char;
                     passwordInput.value = scrambled.join('');
                 }, delay);
             });
@@ -218,11 +221,22 @@
         }
     
         function copyPassword() {
-            passwordInput.select();
-            document.execCommand('copy');
+            const password = passwordInput.value;
+            navigator.clipboard.writeText(password).then(() => {
+                console.log('Password copied to clipboard');
+            }).catch(err => {
+                console.error('Error copying password to clipboard:', err);
+            });
         }
     
-        var refreshpw = document.getElementById('refreshpw');
+        function onCopy() {
+            const button = document.getElementById("copypwd");
+            button.innerHTML = `copied!`;
+    
+            setTimeout(() => {
+                button.innerHTML = `copy password`;
+            }, 1500);
+        }
     
         refreshpw.addEventListener("click", async function () {
             refreshpw.classList.add('loading');
@@ -234,16 +248,9 @@
             }, 690);
         }, false);
     
-        function onCopy() {
-            var button = document.getElementById("copypwd");
-            button.innerHTML = "copied!";
-    
-            setTimeout(function () {
-                button.innerHTML = "copy password";
-            }, 1500);
-        }
         window.onload = generatePassword;
     </script>
+    
     
 </body>
 
