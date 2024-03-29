@@ -44,20 +44,33 @@ async def check_password_pwned(password):
 async def generate_passphrase(word_count=4, capitalize=False, separator_type='space', max_word_length=12, user_defined_separator='', include_numbers=False, include_special_chars=False):
     attempt = 0
     while True:
-        filtered_word_list = [word for word in word_list if len(word) <= max_word_length]
-        passphrase_words = [secrets.choice(filtered_word_list) for _ in range(word_count)]
+        passphrase_elements = []
+        for _ in range(word_count - 1): 
+            word = secrets.choice([w for w in word_list if len(w) <= max_word_length])
+            if capitalize:
+                word = word.capitalize()
+
+            if include_numbers:
+                word += str(secrets.choice(range(10)))
+            if include_special_chars:
+                word += secrets.choice(special_characters)
+
+            passphrase_elements.append(word)
+
+        final_word = secrets.choice([w for w in word_list if len(w) <= max_word_length])
         if capitalize:
-            passphrase_words = [word.capitalize() for word in passphrase_words]
-        if include_numbers:
-            passphrase_words.append(str(secrets.choice(range(10))))  
-        if include_special_chars:
-            passphrase_words.append(secrets.choice(special_characters))  
-        separator = get_random_separator(separator_type, user_defined_separator)
-        passphrase = separator.join(passphrase_words)
+            final_word = final_word.capitalize()
+        passphrase_elements.append(final_word)
+
+        passphrase = '-'.join(passphrase_elements)
+
         if not await check_password_pwned(passphrase) or attempt > 10:
             break
         attempt += 1
     return passphrase
+
+
+
 
 @app.route('/')
 async def index():
@@ -71,7 +84,7 @@ async def generate_password_route():
     include_special = request.form.get('include_special', 'false') == 'true'
     generate_type = request.form.get('type', 'password')
     capitalize = request.form.get('capitalize', 'false') == 'true'
-    separator_type = request.form.get('separator_type', 'space')
+    separator_type = request.form.get('separator_type', '-')
     max_word_length = request.form.get('max_word_length', type=int, default=12)
     user_defined_separator = request.form.get('user_defined_separator', '')
     word_count = request.form.get('word_count', type=int, default=4)
