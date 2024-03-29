@@ -16,6 +16,7 @@ Demo of the software is available on [https://pwgen.joonatanh.com](https://pwgen
 - Generate a passphrase with options to:
   - Capitalize the first letter of each word
   - Choose a separator between words (space, random number, random special character, or a user-defined character)
+  - Option to add either numbers or special characters after the words
   - Set the maximum word length
 - Display the generated password or passphrase in a user-friendly interface
 - Option to copy the generated password or passphrase to the clipboard
