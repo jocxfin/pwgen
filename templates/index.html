@@ -46,7 +46,7 @@
                 </div>
             </div>
             <div id="checkbox-wrapper">
-                <p>Exclude Similar Characters (Homoglyphs)</p>
+                <p>Exclude Homoglyphs</p>
                 <div class="checkbox-kaare">
                     <input class='tgl toggle-omena' type="checkbox" id="excludeHomoglyphs">
                     <label class='tgl-btn' for="excludeHomoglyphs"></label>
@@ -164,7 +164,7 @@
         const includeSpecial = document.getElementById('includeSpecial');
         const includeNumbers = document.getElementById('includeNumbers');
         const includeSpecialChars = document.getElementById('includeSpecialChars');
-        const exclude_homoglyphs = document.getElementById('exclude_homoglyphs');
+        const excludeHomoglyphs = document.getElementById('excludeHomoglyphs');
         const refreshpw = document.getElementById('refreshpw');
         const languageSelect = document.getElementById('languageSelect');
 
@@ -192,7 +192,7 @@
             formData.append('include_uppercase', includeUppercase.checked);
             formData.append('include_digits', includeDigits.checked);
             formData.append('include_special', includeSpecial.checked);
-            formData.append('exclude_homoglyphs', exclude_homoglyphs.checked);
+            formData.append('exclude_homoglyphs', excludeHomoglyphs.checked);
 
             formData.append('include_numbers', includeNumbers.checked);
             formData.append('include_special_chars', includeSpecialChars.checked);

@@ -27,8 +27,6 @@ homoglyphs = {
     'l': ['1', 'I'], '1': ['l', 'I'], 'I': ['1', 'l'],
 }
 
-exclude_homoglyphs = request.form.get('exclude_homoglyphs', 'false') == 'true'
-
 def filter_homoglyphs(characters):
     if not exclude_homoglyphs:
         return characters
@@ -115,6 +113,7 @@ async def generate_password_route():
     word_count = request.form.get('word_count', type=int, default=4)
     include_numbers = request.form.get('include_numbers', 'false') == 'true' 
     include_special_chars = request.form.get('include_special_chars', 'false') == 'true' 
+    exclude_homoglyphs = request.form.get('exclude_homoglyphs', 'false') == 'true'
 
     if generate_type == 'passphrase':
         password = await generate_passphrase(word_count, capitalize, separator_type, max_word_length, user_defined_separator, include_numbers, include_special_chars, language)
