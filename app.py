@@ -22,18 +22,12 @@ with open('wordlist_fi.txt', 'r') as file:
 
 special_characters = "!£$%^&*(){},./;:#*-+"
 
-homoglyphs = {
-    'o': ['0', 'O'], '0': ['o'],
-    'l': ['1', 'I'], '1': ['l', 'I'], 'I': ['1', 'l'],
-}
+homoglyphs = {'o', '0', 'O', 'l', '1', 'I'}
 
 def filter_homoglyphs(characters, exclude_homoglyphs=False):
     if not exclude_homoglyphs:
         return characters
-    filtered_chars = ""
-    for char in characters:
-        if char not in homoglyphs and all(char not in group for group in homoglyphs.values()):
-            filtered_chars += char
+    filtered_chars = "".join(char for char in characters if char not in homoglyphs)
     return filtered_chars
 
 
