@@ -35,9 +35,9 @@ def load_env_defaults():
     global env_pw_settings, env_pp_settings
     env_pw_settings = {
         'length': int(os.getenv('PW_LENGTH', '12')),
-        'include_uppercase': os.getenv('PW_INCLUDE_UPPERCASE', 'false').lower() == 'true',
-        'include_digits': os.getenv('PW_INCLUDE_DIGITS', 'false').lower() == 'true',
-        'include_special': os.getenv('PW_INCLUDE_SPECIAL', 'false').lower() == 'true',
+        'include_uppercase': os.getenv('PW_INCLUDE_UPPERCASE', 'true').lower() == 'true',
+        'include_digits': os.getenv('PW_INCLUDE_DIGITS', 'true').lower() == 'true',
+        'include_special': os.getenv('PW_INCLUDE_SPECIAL', 'true').lower() == 'true',
         'exclude_homoglyphs': os.getenv('PW_EXCLUDE_HOMOGLYPHS', 'false').lower() == 'true'
     }
     
