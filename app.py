@@ -23,8 +23,6 @@ with open('wordlist_fi.txt', 'r') as file:
 
 special_characters = "!£$%^&*(){},./;:#*-+"
 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-
 homoglyphs = {'o', '0', 'O', 'l', '1', 'I'}
 
 def filter_homoglyphs(characters, exclude_homoglyphs=False):
