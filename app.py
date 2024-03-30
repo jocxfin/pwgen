@@ -8,6 +8,7 @@ import httpx
 from flask_caching import Cache
 import hashlib
 import secrets
+import logging
 
 app = Flask(__name__)
 cache = Cache(app, config={'CACHE_TYPE': 'SimpleCache'})
@@ -21,6 +22,8 @@ with open('wordlist_fi.txt', 'r') as file:
     word_list_fi = [line.strip() for line in file.readlines() if len(line.strip()) <= 12]
 
 special_characters = "!£$%^&*(){},./;:#*-+"
+
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 homoglyphs = {'o', '0', 'O', 'l', '1', 'I'}
 
@@ -70,17 +73,24 @@ def get_random_separator(separator_type, user_defined_separator=''):
 
 async def check_password_pwned(password):
     if os.getenv('NO_API_CHECK', 'false').lower() == 'true':
+        logging.info("Password check against HIBP API is disabled by environment variable.")
         return False
 
     sha1_password = hashlib.sha1(password.encode('utf-8')).hexdigest().upper()
     prefix, suffix = sha1_password[:5], sha1_password[5:]
-    async with httpx.AsyncClient() as client:
-        response = await client.get(f'https://api.pwnedpasswords.com/range/{prefix}')
-    hashes = (line.split(':') for line in response.text.splitlines())
-    for hash_suffix, count in hashes:
-        if hash_suffix == suffix:
-            return True
-    return False
+    try:
+        async with httpx.AsyncClient() as client:
+            response = await client.get(f'https://api.pwnedpasswords.com/range/{prefix}')
+        hashes = (line.split(':') for line in response.text.splitlines())
+        for hash_suffix, count in hashes:
+            if hash_suffix == suffix:
+                logging.info("Password found in HIBP database. Creating new password.")
+                return True
+        logging.info("Password not found in HIBP database. Serving to user.")
+        return False
+    except Exception as e:
+        logging.error(f"Error checking password against HIBP API: {e}")
+        return False
 
 async def generate_passphrase(word_count=4, capitalize=False, separator_type='space', max_word_length=12, user_defined_separator='', include_numbers=False, include_special_chars=False, language='en'):
     attempt = 0
