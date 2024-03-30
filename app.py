@@ -1,12 +1,13 @@
 from flask import Flask, jsonify, render_template, request, send_file
 from asgiref.wsgi import WsgiToAsgi
-import secrets
+import os
 import string
 import math
 import asyncio
 import httpx
 from flask_caching import Cache
 import hashlib
+import secrets
 
 app = Flask(__name__)
 cache = Cache(app, config={'CACHE_TYPE': 'SimpleCache'})
@@ -19,7 +20,7 @@ word_list_fi = []
 with open('wordlist_fi.txt', 'r') as file:
     word_list_fi = [line.strip() for line in file.readlines() if len(line.strip()) <= 12]
 
-special_characters = "!@/”¥¢Œ¥#$%^&*(Σ)"
+special_characters = "!@/#$%^&*()"
 
 def calculate_entropy(password):
     pool_size = len(set(password))
@@ -36,6 +37,9 @@ def get_random_separator(separator_type, user_defined_separator=''):
     return '-'
 
 async def check_password_pwned(password):
+    if os.getenv('NO_API_CHECK', 'false').lower() == 'true':
+        return False
+
     sha1_password = hashlib.sha1(password.encode('utf-8')).hexdigest().upper()
     prefix, suffix = sha1_password[:5], sha1_password[5:]
     async with httpx.AsyncClient() as client:
@@ -50,9 +54,11 @@ async def generate_passphrase(word_count=4, capitalize=False, separator_type='sp
     attempt = 0
     word_list = word_list_en if language == 'en' else word_list_fi
     
+    separator = get_random_separator(separator_type, user_defined_separator)
+
     while True:
         passphrase_elements = []
-        for _ in range(word_count - 1): 
+        for _ in range(word_count): 
             word = secrets.choice([w for w in word_list if len(w) <= max_word_length])
             if capitalize:
                 word = word.capitalize()
@@ -64,21 +70,18 @@ async def generate_passphrase(word_count=4, capitalize=False, separator_type='sp
 
             passphrase_elements.append(word)
 
-        final_word = secrets.choice([w for w in word_list if len(w) <= max_word_length])
-        if capitalize:
-            final_word = final_word.capitalize()
-        passphrase_elements.append(final_word)
-
-        passphrase = '-'.join(passphrase_elements)
+        passphrase = separator.join(passphrase_elements)
 
         if not await check_password_pwned(passphrase) or attempt > 10:
             break
         attempt += 1
     return passphrase
 
+
 @app.route('/')
-async def index():
-    return render_template('index.html')
+def index():
+    no_api_check = os.getenv('NO_API_CHECK', 'false').lower() == 'true'
+    return render_template('index.html', no_api_check=no_api_check)
 
 @app.route('/generate-password', methods=['POST'])
 async def generate_password_route():
