@@ -228,14 +228,18 @@
         }
 
         function copyPassword() {
-            const password = document.getElementById('password').value;
-            copyToClipboard(password)
-                .then(() => console.log('Password copied to clipboard'))
-                .catch((err) => {
-                    console.error('Error copying password to clipboard, using fallback:', err);
-                    fallbackCopyTextToClipboard(password);
-                });
-        }
+        const password = document.getElementById('password').value;
+        copyToClipboard(password)
+            .then(() => {
+                console.log('Password copied to clipboard');
+                onCopy();
+            })
+            .catch((err) => {
+                console.error('Error copying password to clipboard, using fallback:', err);
+                fallbackCopyTextToClipboard(password);
+            });
+    }
+
 
         function copyToClipboard(str) {
             if (navigator && navigator.clipboard && navigator.clipboard.writeText) {
