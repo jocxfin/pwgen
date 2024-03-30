@@ -51,7 +51,7 @@
                     <input class='tgl toggle-omena' type="checkbox" id="excludeHomoglyphs">
                     <label class='tgl-btn' for="excludeHomoglyphs"></label>
                 </div>
-            </div>            
+            </div>
             <div id="sliderContainer">
                 <label for="lengthSlider">Length: <span id="lengthValue">12</span></label>
                 <input type="range" id="lengthSlider" name="length" min="1" max="69" value="12">
@@ -141,14 +141,37 @@
                 {% endif %}
             </div>
         </div>
-        
-        </div>
-        <footer>
-            <p>Simple password generator made by <a href="https://github.com/jocxfin/pwgen" target="_blank"
-                    rel="noopener noreferrer">jocxFIN</a></p>
-        </footer>
+
+    </div>
+    <footer>
+        <p>Simple password generator made by <a href="https://github.com/jocxfin/pwgen" target="_blank"
+                rel="noopener noreferrer">jocxFIN</a></p>
+    </footer>
     </div>
     <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('lengthSlider').value = {{ pw_settings.length }};
+        document.getElementById('includeUppercase').checked = {{ pw_settings.include_uppercase | tojson }};
+        document.getElementById('includeDigits').checked = {{ pw_settings.include_digits | tojson }};
+        document.getElementById('includeSpecial').checked = {{ pw_settings.include_special | tojson }};
+        document.getElementById('excludeHomoglyphs').checked = {{ pw_settings.exclude_homoglyphs | tojson }};
+        document.getElementById('lengthValue').innerText = {{ pw_settings.length }};
+
+        document.getElementById('wordCountSlider').value = {{ pp_settings.word_count }};
+        document.getElementById('capitalizeWords').checked = {{ pp_settings.capitalize | tojson }};
+        document.getElementById('includeNumbers').checked = {{ pp_settings.include_numbers | tojson }};
+        document.getElementById('includeSpecialChars').checked = {{ pp_settings.include_special_chars | tojson }};
+        document.getElementById('languageSelect').value = "{{ pp_settings.language }}";
+        document.getElementById('wordCountValue').innerText = {{ pp_settings.word_count }};
+
+        document.getElementById('maxWordLength').value = {{ pp_settings.max_word_length }};
+        const separatorValue = "{{ pp_settings.separator_type }}";
+        document.getElementById('separator').value = separatorValue;
+        if (separatorValue === 'custom') {
+            document.getElementById('customSeparator').style.display = 'block';
+            document.getElementById('customSeparator').value = "{{ pp_settings.user_defined_separator }}";
+        }
+
         const passphraseToggle = document.getElementById('passphraseToggle');
         const capitalizeWords = document.getElementById('capitalizeWords');
         const wordCountSlider = document.getElementById('wordCountSlider');
@@ -240,22 +263,22 @@
         }
 
         function getRandomCharacter() {
-            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=[]{}|;:\'",.<>/?';
+            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=[]{ }|;:\'",.<>/?';
             return characters.charAt(Math.floor(Math.random() * characters.length));
         }
 
         function copyPassword() {
-        const password = document.getElementById('password').value;
-        copyToClipboard(password)
-            .then(() => {
-                console.log('Password copied to clipboard');
-                onCopy();
-            })
-            .catch((err) => {
-                console.error('Error copying password to clipboard, using fallback:', err);
-                fallbackCopyTextToClipboard(password);
-            });
-    }
+            const password = document.getElementById('password').value;
+            copyToClipboard(password)
+                .then(() => {
+                    console.log('Password copied to clipboard');
+                    onCopy();
+                })
+                .catch((err) => {
+                    console.error('Error copying password to clipboard, using fallback:', err);
+                    fallbackCopyTextToClipboard(password);
+                });
+        }
 
 
         function copyToClipboard(str) {
@@ -316,8 +339,10 @@
             lengthValue.innerText = this.value;
         }
 
-        window.onload = generatePassword;
+        generatePassword();
+        });
     </script>
+
 </body>
 
 </html>
