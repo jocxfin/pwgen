@@ -30,6 +30,28 @@ def filter_homoglyphs(characters, exclude_homoglyphs=False):
     filtered_chars = "".join(char for char in characters if char not in homoglyphs)
     return filtered_chars
 
+def load_env_defaults():
+    global env_pw_settings, env_pp_settings
+    env_pw_settings = {
+        'length': int(os.getenv('PW_LENGTH', '12')),
+        'include_uppercase': os.getenv('PW_INCLUDE_UPPERCASE', 'false').lower() == 'true',
+        'include_digits': os.getenv('PW_INCLUDE_DIGITS', 'false').lower() == 'true',
+        'include_special': os.getenv('PW_INCLUDE_SPECIAL', 'false').lower() == 'true',
+        'exclude_homoglyphs': os.getenv('PW_EXCLUDE_HOMOGLYPHS', 'false').lower() == 'true'
+    }
+    
+    env_pp_settings = {
+        'word_count': int(os.getenv('PP_WORD_COUNT', '4')),
+        'capitalize': os.getenv('PP_CAPITALIZE', 'false').lower() == 'true',
+        'separator_type': os.getenv('PP_SEPARATOR_TYPE', 'space'),
+        'user_defined_separator': os.getenv('PP_USER_DEFINED_SEPARATOR', ''),
+        'max_word_length': int(os.getenv('PP_MAX_WORD_LENGTH', '12')),
+        'include_numbers': os.getenv('PP_INCLUDE_NUMBERS', 'false').lower() == 'true',
+        'include_special_chars': os.getenv('PP_INCLUDE_SPECIAL_CHARS', 'false').lower() == 'true',
+        'language': os.getenv('PP_LANGUAGE', 'en')
+    }
+
+load_env_defaults()
 
 
 def calculate_entropy(password):
@@ -95,34 +117,35 @@ def index():
 
 @app.route('/generate-password', methods=['POST'])
 async def generate_password_route():
-    language = request.form.get('language', 'en')
-    length = request.form.get('length', type=int, default=12)
-    include_uppercase = request.form.get('include_uppercase', 'false') == 'true'
-    include_digits = request.form.get('include_digits', 'false') == 'true'
-    include_special = request.form.get('include_special', 'false') == 'true'
-    exclude_homoglyphs = request.form.get('exclude_homoglyphs', 'false') == 'true'
+    language = request.form.get('language', env_pp_settings['language'])
+    length = request.form.get('length', type=int, default=env_pw_settings['length'])
+    include_uppercase = request.form.get('include_uppercase', 'true' if env_pw_settings['include_uppercase'] else 'false') == 'true'
+    include_digits = request.form.get('include_digits', 'true' if env_pw_settings['include_digits'] else 'false') == 'true'
+    include_special = request.form.get('include_special', 'true' if env_pw_settings['include_special'] else 'false') == 'true'
+    exclude_homoglyphs = request.form.get('exclude_homoglyphs', 'true' if env_pw_settings['exclude_homoglyphs'] else 'false') == 'true'
     generate_type = request.form.get('type', 'password')
-    capitalize = request.form.get('capitalize', 'false') == 'true'
-    separator_type = request.form.get('separator_type', '-')
-    max_word_length = request.form.get('max_word_length', type=int, default=12)
-    user_defined_separator = request.form.get('user_defined_separator', '')
-    word_count = request.form.get('word_count', type=int, default=4)
-    include_numbers = request.form.get('include_numbers', 'false') == 'true'
-    include_special_chars = request.form.get('include_special_chars', 'false') == 'true'
+    capitalize = request.form.get('capitalize', 'true' if env_pp_settings['capitalize'] else 'false') == 'true'
+    separator_type = request.form.get('separator_type', env_pp_settings['separator_type'])
+    max_word_length = request.form.get('max_word_length', type=int, default=env_pp_settings['max_word_length'])
+    user_defined_separator = request.form.get('user_defined_separator', env_pp_settings['user_defined_separator'])
+    word_count = request.form.get('word_count', type=int, default=env_pp_settings['word_count'])
+    include_numbers = request.form.get('include_numbers', 'true' if env_pp_settings['include_numbers'] else 'false') == 'true'
+    include_special_chars = request.form.get('include_special_chars', 'true' if env_pp_settings['include_special_chars'] else 'false') == 'true'
 
     characters = string.ascii_lowercase
     if exclude_homoglyphs:
-        characters = filter_homoglyphs(characters + string.ascii_uppercase + string.digits, True)
-        special_characters_filtered = filter_homoglyphs(special_characters, True)
-    else:
-        special_characters_filtered = special_characters
+        characters = filter_homoglyphs(characters, True)
         if include_uppercase:
             characters += string.ascii_uppercase
         if include_digits:
             characters += string.digits
-
-    if include_special:
-        characters += special_characters_filtered
+    else:
+        if include_uppercase:
+            characters += string.ascii_uppercase
+        if include_digits:
+            characters += string.digits
+        if include_special:
+            characters += special_characters
 
     if generate_type == 'passphrase':
         password = await generate_passphrase(word_count, capitalize, separator_type, max_word_length, user_defined_separator, include_numbers, include_special_chars, language)
@@ -138,6 +161,7 @@ async def generate_password_route():
 
     entropy = calculate_entropy(password)
     return jsonify(password=password, entropy=entropy)
+
 
 
 
