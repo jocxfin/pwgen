@@ -46,7 +46,7 @@ def load_env_defaults():
         'capitalize': os.getenv('PP_CAPITALIZE', 'false').lower() == 'true',
         'separator_type': os.getenv('PP_SEPARATOR_TYPE', 'space'),
         'user_defined_separator': os.getenv('PP_USER_DEFINED_SEPARATOR', ''),
-        'max_word_length': int(os.getenv('PP_MAX_WORD_LENGTH', '12')),
+        'max_word_length': int(os.getenv('PP_MAX_WORD_LENGTH', '7')),
         'include_numbers': os.getenv('PP_INCLUDE_NUMBERS', 'false').lower() == 'true',
         'include_special_chars': os.getenv('PP_INCLUDE_SPECIAL_CHARS', 'false').lower() == 'true',
         'language': os.getenv('PP_LANGUAGE', 'en')
