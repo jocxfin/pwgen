@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, render_template, request, send_file
+from flask import Flask, jsonify, render_template, request, send_file, os
 from asgiref.wsgi import WsgiToAsgi
 import secrets
 import string
@@ -36,6 +36,9 @@ def get_random_separator(separator_type, user_defined_separator=''):
     return '-'
 
 async def check_password_pwned(password):
+    if os.getenv('NO_API_CHECK', 'false').lower() == 'true':
+        return False
+
     sha1_password = hashlib.sha1(password.encode('utf-8')).hexdigest().upper()
     prefix, suffix = sha1_password[:5], sha1_password[5:]
     async with httpx.AsyncClient() as client:
@@ -76,7 +79,8 @@ async def generate_passphrase(word_count=4, capitalize=False, separator_type='sp
 
 @app.route('/')
 async def index():
-    return render_template('index.html')
+    no_api_check = os.getenv('NO_API_CHECK', 'false').lower() == 'true'
+    return await render_template('index.html', no_api_check=no_api_check)
 
 @app.route('/generate-password', methods=['POST'])
 async def generate_password_route():
