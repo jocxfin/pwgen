@@ -45,6 +45,13 @@
                     <label class='tgl-btn' for="includeSpecial"></label>
                 </div>
             </div>
+            <div id="checkbox-wrapper">
+                <p>Exclude Similar Characters (Homoglyphs)</p>
+                <div class="checkbox-kaare">
+                    <input class='tgl toggle-omena' type="checkbox" id="excludeHomoglyphs">
+                    <label class='tgl-btn' for="excludeHomoglyphs"></label>
+                </div>
+            </div>            
             <div id="sliderContainer">
                 <label for="lengthSlider">Length: <span id="lengthValue">12</span></label>
                 <input type="range" id="lengthSlider" name="length" min="1" max="69" value="12">
@@ -157,6 +164,7 @@
         const includeSpecial = document.getElementById('includeSpecial');
         const includeNumbers = document.getElementById('includeNumbers');
         const includeSpecialChars = document.getElementById('includeSpecialChars');
+        const exclude_homoglyphs = document.getElementById('exclude_homoglyphs');
         const refreshpw = document.getElementById('refreshpw');
         const languageSelect = document.getElementById('languageSelect');
 
@@ -184,10 +192,13 @@
             formData.append('include_uppercase', includeUppercase.checked);
             formData.append('include_digits', includeDigits.checked);
             formData.append('include_special', includeSpecial.checked);
+            formData.append('exclude_homoglyphs', exclude_homoglyphs.checked);
+
             formData.append('include_numbers', includeNumbers.checked);
             formData.append('include_special_chars', includeSpecialChars.checked);
             formData.append('capitalize', capitalizeWords.checked);
             formData.append('word_count', wordCountSlider.value);
+
             formData.append('separator_type', separator.value === 'custom' ? 'single_character' : separator.value);
             if (separator.value === 'custom') {
                 formData.append('user_defined_separator', customSeparator.value);

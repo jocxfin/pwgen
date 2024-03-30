@@ -22,6 +22,23 @@ with open('wordlist_fi.txt', 'r') as file:
 
 special_characters = "!£$%^&*(){},./;:#*-+"
 
+homoglyphs = {
+    'o': ['0'], '0': ['o'],
+    'l': ['1', 'I'], '1': ['l', 'I'], 'I': ['1', 'l'],
+}
+
+exclude_homoglyphs = request.form.get('exclude_homoglyphs', 'false') == 'true'
+
+def filter_homoglyphs(characters):
+    if not exclude_homoglyphs:
+        return characters
+    filtered_chars = ""
+    for char in characters:
+        if char not in homoglyphs and all(char not in group for group in homoglyphs.values()):
+            filtered_chars += char
+    return filtered_chars
+
+
 def calculate_entropy(password):
     pool_size = len(set(password))
     entropy = len(password) * math.log2(pool_size)
