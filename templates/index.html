@@ -150,8 +150,7 @@
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            document.getElementById('lengthSlider').value = {{ pw_settings.length }
-        };
+            document.getElementById('lengthSlider').value = {{ pw_settings.length }};
         document.getElementById('includeUppercase').checked = {{ pw_settings.include_uppercase | tojson }};
         document.getElementById('includeDigits').checked = {{ pw_settings.include_digits | tojson }};
         document.getElementById('includeSpecial').checked = {{ pw_settings.include_special | tojson }};
