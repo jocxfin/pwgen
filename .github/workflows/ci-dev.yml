@@ -2,8 +2,8 @@ name: ci-dev
 
 on:
   push:
-    branches:
-      - 'dev'
+    branches-ignore:
+      - 'main'
 
 jobs:
   docker:
