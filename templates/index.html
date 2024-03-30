@@ -286,9 +286,16 @@
                 refreshpw.classList.remove('loading');
             }, 690);
         }, false);
+        
+        wordCountSlider.oninput = function() {
+            wordCountValue.innerText = this.value;
+        }
+
+        lengthSlider.oninput = function() {
+            lengthValue.innerText = this.value;
+        }
 
         window.onload = generatePassword;
-
     </script>
 </body>
 
