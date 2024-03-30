@@ -2,35 +2,42 @@
 
 ## Description
 
-This is a simple docker web application designed to generate secure passwords or passphrases with customizable options. Users can select to generate either a random password with specific criteria or a passphrase composed of random words. Additional features include the option to include uppercase letters, digits, and special characters for passwords, or to capitalize words and specify separators for passphrases.
+This simple docker web application is designed to generate secure passwords or passphrases with customizable options. Users can opt to generate either a random password with specific criteria or a passphrase composed of random words. It includes features for enhancing password strength, such as including uppercase letters, digits, and special characters for passwords, or capitalizing words and specifying separators for passphrases.
 
-Demo of the software is available on [https://pwgen.joonatanh.com](https://pwgen.joonatanh.com).(`main`-branch)
+A demo of the software is available on [https://pwgen.joonatanh.com](https://pwgen.joonatanh.com) (`main` branch).
 
 ## Features
 
-- Progressive Web Application(PWA)
-- Generate a random password with options to include:
+- **Progressive Web Application (PWA)**
+- **Password Generation**: Generate a random password with options to include:
   - Uppercase letters
   - Digits
   - Special characters
-- Generate a passphrase with options to:
+- **Passphrase Generation**: Generate a passphrase with options to:
   - Capitalize the first letter of each word
   - Choose a separator between words (space, random number, random special character, or a user-defined character)
   - Option to add either numbers or special characters after the words
   - Set the maximum word length
-- Display the generated password or passphrase in a user-friendly interface
-- Option to copy the generated password or passphrase to the clipboard
-- Check all of the generated passwords and passphrases against the haveibeenpwned database using their API. User will not be shown a compromised password.
-- More to come soon👍
+- **User Interface**: Display the generated password or passphrase in a user-friendly interface with the option to copy it to the clipboard.
+- **Security Check**: Check all generated passwords and passphrases against the haveibeenpwned database using their API to ensure users are not shown a compromised password.
+- **Offline Mode**: Added a feature to disable checking passwords against the haveibeenpwned API, suitable for instances running in isolated networks or where external API access is unnecessary.
 
 ## How to Use
 
-1. Install docker
-2. Run the generator by pulling the image jocxfin/pwgen:latest and then running it with the command
+1. **Install Docker** if you haven't already.
+2. **Run the Generator**: Pull the image `jocxfin/pwgen:latest` and then run it using the following commands:
+
 ```bash
 docker pull jocxfin/pwgen:latest
 docker run -d -p 5069:5069 jocxfin/pwgen:latest
 ```
+
+To enable **Offline Mode**, append `-e NO_API_CHECK=true` to the `docker run` command:
+
+```bash
+docker run -d -p 5069:5069 -e NO_API_CHECK=true jocxfin/pwgen:latest
+```
+
 ## Requirements
 
 - Docker
