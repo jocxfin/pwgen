@@ -22,6 +22,22 @@ with open('wordlist_fi.txt', 'r') as file:
 
 special_characters = "!£$%^&*(){},./;:#*-+"
 
+homoglyphs = {
+    'o': ['0'], '0': ['o'],
+    'l': ['1', 'I'], '1': ['l', 'I'], 'I': ['1', 'l'],
+}
+
+def filter_homoglyphs(characters, exclude_homoglyphs=False):
+    if not exclude_homoglyphs:
+        return characters
+    filtered_chars = ""
+    for char in characters:
+        if char not in homoglyphs and all(char not in group for group in homoglyphs.values()):
+            filtered_chars += char
+    return filtered_chars
+
+
+
 def calculate_entropy(password):
     pool_size = len(set(password))
     entropy = len(password) * math.log2(pool_size)
@@ -90,25 +106,33 @@ async def generate_password_route():
     include_uppercase = request.form.get('include_uppercase', 'false') == 'true'
     include_digits = request.form.get('include_digits', 'false') == 'true'
     include_special = request.form.get('include_special', 'false') == 'true'
+    exclude_homoglyphs = request.form.get('exclude_homoglyphs', 'false') == 'true'
     generate_type = request.form.get('type', 'password')
     capitalize = request.form.get('capitalize', 'false') == 'true'
     separator_type = request.form.get('separator_type', '-')
     max_word_length = request.form.get('max_word_length', type=int, default=12)
     user_defined_separator = request.form.get('user_defined_separator', '')
     word_count = request.form.get('word_count', type=int, default=4)
-    include_numbers = request.form.get('include_numbers', 'false') == 'true' 
-    include_special_chars = request.form.get('include_special_chars', 'false') == 'true' 
+    include_numbers = request.form.get('include_numbers', 'false') == 'true'
+    include_special_chars = request.form.get('include_special_chars', 'false') == 'true'
 
-    if generate_type == 'passphrase':
-        password = await generate_passphrase(word_count, capitalize, separator_type, max_word_length, user_defined_separator, include_numbers, include_special_chars, language)
+    characters = string.ascii_lowercase
+    if exclude_homoglyphs:
+        characters = filter_homoglyphs(characters + string.ascii_uppercase + string.digits, True)
+        special_characters_filtered = filter_homoglyphs(special_characters, True)
     else:
-        characters = string.ascii_lowercase
+        special_characters_filtered = special_characters
         if include_uppercase:
             characters += string.ascii_uppercase
         if include_digits:
             characters += string.digits
-        if include_special:
-            characters += special_characters
+
+    if include_special:
+        characters += special_characters_filtered
+
+    if generate_type == 'passphrase':
+        password = await generate_passphrase(word_count, capitalize, separator_type, max_word_length, user_defined_separator, include_numbers, include_special_chars, language)
+    else:
         password = ''.join(secrets.choice(characters) for _ in range(length))
         attempt = 0
         while True:
@@ -120,6 +144,7 @@ async def generate_password_route():
 
     entropy = calculate_entropy(password)
     return jsonify(password=password, entropy=entropy)
+
 
 
 @app.route('/manifest.json')
