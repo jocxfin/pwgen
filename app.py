@@ -113,7 +113,8 @@ async def generate_passphrase(word_count=4, capitalize=False, separator_type='sp
 @app.route('/')
 def index():
     no_api_check = os.getenv('NO_API_CHECK', 'false').lower() == 'true'
-    return render_template('index.html', no_api_check=no_api_check)
+    return render_template('index.html', no_api_check=no_api_check, env_pw_settings=env_pw_settings, env_pp_settings=env_pp_settings)
+
 
 @app.route('/generate-password', methods=['POST'])
 async def generate_password_route():
