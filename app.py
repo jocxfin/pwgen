@@ -19,7 +19,7 @@ word_list_fi = []
 with open('wordlist_fi.txt', 'r') as file:
     word_list_fi = [line.strip() for line in file.readlines() if len(line.strip()) <= 12]
 
-special_characters = "!@/”¥¢Œ¥#$%^&*(Σ)"
+special_characters = "!@/#$%^&*()"
 
 def calculate_entropy(password):
     pool_size = len(set(password))
@@ -50,9 +50,11 @@ async def generate_passphrase(word_count=4, capitalize=False, separator_type='sp
     attempt = 0
     word_list = word_list_en if language == 'en' else word_list_fi
     
+    separator = get_random_separator(separator_type, user_defined_separator)
+
     while True:
         passphrase_elements = []
-        for _ in range(word_count - 1): 
+        for _ in range(word_count): 
             word = secrets.choice([w for w in word_list if len(w) <= max_word_length])
             if capitalize:
                 word = word.capitalize()
@@ -64,17 +66,13 @@ async def generate_passphrase(word_count=4, capitalize=False, separator_type='sp
 
             passphrase_elements.append(word)
 
-        final_word = secrets.choice([w for w in word_list if len(w) <= max_word_length])
-        if capitalize:
-            final_word = final_word.capitalize()
-        passphrase_elements.append(final_word)
-
-        passphrase = '-'.join(passphrase_elements)
+        passphrase = separator.join(passphrase_elements)
 
         if not await check_password_pwned(passphrase) or attempt > 10:
             break
         attempt += 1
     return passphrase
+
 
 @app.route('/')
 async def index():
