@@ -23,7 +23,7 @@ with open('wordlist_fi.txt', 'r') as file:
 special_characters = "!£$%^&*(){},./;:#*-+"
 
 homoglyphs = {
-    'o': ['0'], '0': ['o'],
+    'o': ['0', 'O'], '0': ['o'],
     'l': ['1', 'I'], '1': ['l', 'I'], 'I': ['1', 'l'],
 }
 
