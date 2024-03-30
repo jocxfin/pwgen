@@ -166,7 +166,7 @@
         }
 
         document.querySelectorAll('input, select').forEach(element => {
-            if (element.id !== 'passphraseToggle') { 
+            if (element.id !== 'passphraseToggle') {
                 element.addEventListener('change', generatePassword);
             }
         });
@@ -228,19 +228,22 @@
         }
 
         function copyPassword() {
-            const password = document.getElementById('password').value;
-            copyToClipboard(password)
-                .then(() => console.log('Password copied to clipboard'))
-                .catch((err) => {
-                    console.error('Error copying password to clipboard, using fallback:', err);
-                    fallbackCopyTextToClipboard(password);
-                });
-        }
+        const password = document.getElementById('password').value;
+        copyToClipboard(password)
+            .then(() => {
+                console.log('Password copied to clipboard');
+                onCopy();
+            })
+            .catch((err) => {
+                console.error('Error copying password to clipboard, using fallback:', err);
+                fallbackCopyTextToClipboard(password);
+            });
+    }
+
 
         function copyToClipboard(str) {
             if (navigator && navigator.clipboard && navigator.clipboard.writeText) {
-                return navigator.clip
-                board.writeText(str);
+                return navigator.clipboard.writeText(str);
             }
             return Promise.reject('The Clipboard API is not available.');
         }
@@ -277,6 +280,7 @@
             }, 1500);
         }
 
+
         refreshpw.addEventListener("click", async function () {
             refreshpw.classList.add('loading');
 
@@ -286,12 +290,12 @@
                 refreshpw.classList.remove('loading');
             }, 690);
         }, false);
-        
-        wordCountSlider.oninput = function() {
+
+        wordCountSlider.oninput = function () {
             wordCountValue.innerText = this.value;
         }
 
-        lengthSlider.oninput = function() {
+        lengthSlider.oninput = function () {
             lengthValue.innerText = this.value;
         }
 
