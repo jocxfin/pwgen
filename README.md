@@ -18,6 +18,7 @@ A demo of the software is available on [https://pwgen.joonatanh.com](https://pwg
   - Choose a separator between words (space, random number, random special character, or a user-defined character)
   - Option to add either numbers or special characters after the words
   - Set the maximum word length
+  - Use either English or Finnish word list
 - **User Interface**: Display the generated password or passphrase in a user-friendly interface with the option to copy it to the clipboard.
 - **Security Check**: Check all generated passwords and passphrases against the haveibeenpwned database using their API to ensure users are not shown a compromised password.
 - **Offline Mode**: Added a feature to disable checking passwords against the haveibeenpwned API, suitable for instances running in isolated networks or where external API access is unnecessary.
