@@ -1,11 +1,11 @@
 from flask import Flask, jsonify, render_template, request, send_file
 from asgiref.wsgi import WsgiToAsgi
+from flask_caching import Cache
 import os
 import string
 import math
 import asyncio
 import httpx
-from flask_caching import Cache
 import hashlib
 import secrets
 import logging
@@ -43,7 +43,7 @@ async def check_password_pwned(password):
     prefix, suffix = sha1_password[:5], sha1_password[5:]
     try:
         async with httpx.AsyncClient() as client:
-            response = await client.get(f'https://api.pwnedpasswords.com/range/{prefix}')
+            response = await client.get(f'config.haveibeenpwnedapi{prefix}')
         hashes = (line.split(':') for line in response.text.splitlines())
         for hash_suffix, count in hashes:
             if hash_suffix == suffix:

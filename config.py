@@ -19,3 +19,13 @@ NO_API_CHECK = os.getenv('NO_API_CHECK', 'false').lower() == 'true'
 special_characters = "!£$%^&*(){},./;:#*-+"
 
 homoglyphs = {'o', '0', 'O', 'l', '1', 'I'}
+
+word_list_en = []
+with open('wordlist.txt', 'r') as file:
+    word_list_en = [line.strip() for line in file.readlines() if len(line.strip()) <= 12]
+
+word_list_fi = []
+with open('wordlist_fi.txt', 'r') as file:
+    word_list_fi = [line.strip() for line in file.readlines() if len(line.strip()) <= 12]
+
+haveibeenpwnedapi = 'https://api.pwnedpasswords.com/range/'
