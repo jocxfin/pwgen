@@ -1,26 +1,3 @@
-document.addEventListener('DOMContentLoaded', function () {
-document.getElementById('lengthSlider').value = {{ pw_settings.length }};
-document.getElementById('includeUppercase').checked = {{ pw_settings.include_uppercase | tojson }};
-document.getElementById('includeDigits').checked = {{ pw_settings.include_digits | tojson }};
-document.getElementById('includeSpecial').checked = {{ pw_settings.include_special | tojson }};
-document.getElementById('excludeHomoglyphs').checked = {{ pw_settings.exclude_homoglyphs | tojson }};
-document.getElementById('lengthValue').innerText = {{ pw_settings.length }};
-
-document.getElementById('wordCountSlider').value = {{ pp_settings.word_count }};
-document.getElementById('capitalizeWords').checked = {{ pp_settings.capitalize | tojson }};
-document.getElementById('includeNumbers').checked = {{ pp_settings.include_numbers | tojson }};
-document.getElementById('includeSpecialChars').checked = {{ pp_settings.include_special_chars | tojson }};
-document.getElementById('languageSelect').value = "{{ pp_settings.language }}";
-document.getElementById('wordCountValue').innerText = {{ pp_settings.word_count }};
-
-document.getElementById('maxWordLength').value = {{ pp_settings.max_word_length }};
-const separatorValue = "{{ pp_settings.separator_type }}";
-document.getElementById('separator').value = separatorValue;
-if (separatorValue === 'custom') {
-    document.getElementById('customSeparator').style.display = 'block';
-    document.getElementById('customSeparator').value = "{{ pp_settings.user_defined_separator }}";
-}
-
 const passphraseToggle = document.getElementById('passphraseToggle');
 const capitalizeWords = document.getElementById('capitalizeWords');
 const wordCountSlider = document.getElementById('wordCountSlider');
@@ -135,4 +112,3 @@ lengthSlider.oninput = function () {
 }
 
 generatePassword();
-});
