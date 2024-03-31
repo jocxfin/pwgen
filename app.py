@@ -5,8 +5,7 @@ import logging
 import config
 import string
 import secrets
-from password_utils import (calculate_entropy, check_password_pwned,
-                            generate_passphrase, get_random_separator, filter_homoglyphs)
+from password_utils import (calculate_entropy, check_password_pwned,generate_passphrase, get_random_separator, filter_homoglyphs)
 
 app = Flask(__name__)
 cache = Cache(app, config={'CACHE_TYPE': config.CACHE_TYPE})
