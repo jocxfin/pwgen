@@ -151,6 +151,9 @@ async def generate_password_route():
         if include_digits:
             digit_chars = filter_homoglyphs(string.digits, True)
             characters += digit_chars
+        if include_special:
+            special_chars = filter_homoglyphs(special_characters, True)
+            characters += special_chars
     else:
         if include_uppercase:
             characters += string.ascii_uppercase
@@ -158,6 +161,7 @@ async def generate_password_route():
             characters += string.digits
         if include_special:
             characters += special_characters
+
 
 
     if generate_type == 'passphrase':
