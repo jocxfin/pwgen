@@ -110,5 +110,56 @@ wordCountSlider.oninput = function () {
 lengthSlider.oninput = function () {
     lengthValue.innerText = this.value;
 }
+function copyPassword() {
+    const password = document.getElementById('password').value;
+    copyToClipboard(password)
+        .then(() => {
+            console.log('Password copied to clipboard');
+            onCopy();
+        })
+        .catch((err) => {
+            console.error('Error copying password to clipboard, using fallback:', err);
+            fallbackCopyTextToClipboard(password);
+        });
+}
 
+
+function copyToClipboard(str) {
+    if (navigator && navigator.clipboard && navigator.clipboard.writeText) {
+        return navigator.clipboard.writeText(str);
+    }
+    return Promise.reject('The Clipboard API is not available.');
+}
+
+function fallbackCopyTextToClipboard(text) {
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+    textArea.style.top = "0";
+    textArea.style.left = "0";
+    textArea.style.position = "fixed";
+
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+
+    try {
+        const successful = document.execCommand('copy');
+        const msg = successful ? 'successful' : 'unsuccessful';
+        console.log(`Fallback: Copying text command was ${msg}`);
+        onCopy();
+    } catch (err) {
+        console.error('Fallback: Oops, unable to copy', err);
+    }
+
+    document.body.removeChild(textArea);
+}
+
+function onCopy() {
+    const button = document.getElementById("copypwd");
+    button.innerHTML = `copied!`;
+
+    setTimeout(() => {
+        button.innerHTML = `copy password`;
+    }, 1500);
+}
 generatePassword();
