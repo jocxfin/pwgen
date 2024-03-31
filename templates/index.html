@@ -194,14 +194,13 @@
                 {% endif %}
             </div>
         </div>
-
     </div>
     <footer>
         <p>Simple password generator made by <a href="https://github.com/jocxfin/pwgen" target="_blank"
                 rel="noopener noreferrer">jocxFIN</a></p>
     </footer>
     </div>
-    <script src="/index.js"></script>
+    <script src="{{ url_for('static', filename='index.js') }}"></script>
 </body>
 
 </html>
