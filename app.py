@@ -35,7 +35,7 @@ def get_random_separator(separator_type, user_defined_separator=''):
     return '-'
 
 async def check_password_pwned(password):
-    if os.getenv('NO_API_CHECK', 'false').lower() == 'true':
+    if config.NO_API_CHECK:
         logging.info("Password check against HIBP API is disabled by environment variable.")
         return False
 
