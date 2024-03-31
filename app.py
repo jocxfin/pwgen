@@ -43,7 +43,7 @@ async def check_password_pwned(password):
     prefix, suffix = sha1_password[:5], sha1_password[5:]
     try:
         async with httpx.AsyncClient() as client:
-            response = await client.get(f'config.haveibeenpwnedapi{prefix}')
+            response = await client.get(f'{config.haveibeenpwnedapi}{prefix}')
         hashes = (line.split(':') for line in response.text.splitlines())
         for hash_suffix, count in hashes:
             if hash_suffix == suffix:
