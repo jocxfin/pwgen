@@ -43,8 +43,10 @@ async def generate_password_route():
     return jsonify(response_data)
 
 @app.route('/manifest.json')
+@cache.cached(timeout=3600)
 async def serve_manifest():
     return send_file('manifest.json', mimetype='application/manifest+json')
+
 
 @app.route('/service-worker.js')
 async def serve_sw():
