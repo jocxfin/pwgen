@@ -6,7 +6,7 @@ import config
 import string
 import secrets
 from utils.password_utils import (calculate_entropy, check_password_pwned,generate_passphrase, get_random_separator, filter_homoglyphs)
-from handlers.request_handlers import handle_generate_password_request
+from handlers.request_handler import handle_generate_password_request
 
 
 app = Flask(__name__)
