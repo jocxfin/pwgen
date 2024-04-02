@@ -15,6 +15,8 @@ PP_INCLUDE_NUMBERS = os.getenv('PP_INCLUDE_NUMBERS', 'false').lower() == 'true'
 PP_INCLUDE_SPECIAL_CHARS = os.getenv('PP_INCLUDE_SPECIAL_CHARS', 'false').lower() == 'true'
 PP_LANGUAGE = os.getenv('PP_LANGUAGE', 'en')
 NO_API_CHECK = os.getenv('NO_API_CHECK', 'false').lower() == 'true'
+MULTI_GEN = os.getenv('MULTI_GEN', 'false').lower() == 'true'
+
 
 special_characters = "!£$%^&*(){},./;:#*-+"
 

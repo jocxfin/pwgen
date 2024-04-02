@@ -14,6 +14,7 @@ cache = Cache(app, config={'CACHE_TYPE': config.CACHE_TYPE})
 @app.route('/')
 def index():
     no_api_check = config.NO_API_CHECK
+    multi_gen_enabled = config.MULTI_GEN
     
     pw_settings = {
         'length': config.PW_LENGTH,
@@ -34,11 +35,15 @@ def index():
         'language': config.PP_LANGUAGE
     }
     
-    return render_template('index.html', no_api_check=no_api_check, pw_settings=pw_settings, pp_settings=pp_settings)
+    return render_template('index.html', no_api_check=no_api_check, pw_settings=pw_settings, pp_settings=pp_settings, multi_gen_enabled=multi_gen_enabled)
 
 @app.route('/generate-password', methods=['POST'])
 async def generate_password_route():
-    response_data = await handle_generate_password_request(request.form)
+    if config.MULTI_GEN:
+        passwords = [await handle_generate_password_request(request.form) for _ in range(5)]
+        response_data = {"passwords": [pwd["password"] for pwd in passwords]}
+    else:
+        response_data = await handle_generate_password_request(request.form)
     return jsonify(response_data)
 
 @app.route('/manifest.json')

@@ -42,12 +42,10 @@ async function generatePassword() {
     formData.append('include_digits', includeDigits.checked);
     formData.append('include_special', includeSpecial.checked);
     formData.append('exclude_homoglyphs', excludeHomoglyphs.checked);
-
     formData.append('include_numbers', includeNumbers.checked);
     formData.append('include_special_chars', includeSpecialChars.checked);
     formData.append('capitalize', capitalizeWords.checked);
     formData.append('word_count', wordCountSlider.value);
-
     formData.append('separator_type', separator.value === 'custom' ? 'single_character' : separator.value);
     if (separator.value === 'custom') {
         formData.append('user_defined_separator', customSeparator.value);
@@ -60,17 +58,24 @@ async function generatePassword() {
         method: 'POST',
         body: formData
     })
-        .then(response => {
-            if (!response.ok) throw new Error('Network response was not ok.');
-            return response.json();
-        })
-        .then(data => {
+    .then(response => response.json())
+    .then(data => {
+        if (data.passwords && Array.isArray(data.passwords)) {
+            data.passwords.forEach((pwd, index) => {
+                if (index < 5) {
+                    document.querySelector(`.multipw${index}`).textContent = pwd;
+                }
+            });
+        } else {
+            passwordInput.value = data.password;
             scrambleAnimation(data.password);
-        })
-        .catch(error => {
-            console.error('Error generating password:', error);
-        });
+        }
+    })
+    .catch(error => {
+        console.error('Error generating password:', error);
+    });
 }
+
 
 function scrambleAnimation(finalPassword) {
     let scrambled = Array.from({ length: finalPassword.length }, () => getRandomCharacter());
