@@ -49,7 +49,6 @@ async def serve_manifest():
 
 
 @app.route('/service-worker.js')
-@cache.cached(timeout=3600)
 async def serve_sw():
     return send_file('service-worker.js', mimetype='application/javascript')
 
