@@ -58,12 +58,14 @@ async function generatePassword() {
         method: 'POST',
         body: formData
     })
+    .then(refreshpw.classList.add('loading'))
     .then(response => response.json())
     .then(data => {
         if (data.passwords && Array.isArray(data.passwords)) {
             data.passwords.forEach((pwd, index) => {
                 if (index < 5) {
                     document.querySelector(`.multipw${index}`).textContent = pwd;
+                    refreshpw.classList.remove('loading');
                 }
             });
         } else {
@@ -100,10 +102,7 @@ function getRandomCharacter() {
 
 refreshpw.addEventListener("click", async function () {
     refreshpw.classList.add('loading');
-
-    await generatePassword();
-
-    refreshpw.classList.remove('loading');
+    generatePassword();
 }, false);
 
 wordCountSlider.oninput = function () {
