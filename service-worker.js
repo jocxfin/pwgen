@@ -33,6 +33,10 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
+  if (event.request.method !== 'GET') {
+    return fetch(event.request);
+  }
+
   event.respondWith(
     caches.match(event.request)
       .then((response) => {
