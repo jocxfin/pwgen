@@ -36,6 +36,11 @@ async def handle_generate_password_request(request_form):
 
     if generate_type == 'passphrase':
         password = await generate_passphrase(word_count, capitalize, separator_type, max_word_length, user_defined_separator, include_numbers, include_special_chars, language)
+        while True:
+            passphrase_is_pwned = await check_password_pwned(password)
+            if not passphrase_is_pwned or attempt > 10:
+                break
+            attempt += 1
     else:
         password = ''.join(secrets.choice(characters) for _ in range(length))
         attempt = 0
