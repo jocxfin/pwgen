@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, render_template, request, send_file
+from flask import Flask, jsonify, render_template, request, send_file, Response
 from asgiref.wsgi import WsgiToAsgi
 from flask_caching import Cache
 import logging
@@ -7,7 +7,6 @@ import string
 import secrets
 from utils.password_utils import (calculate_entropy, check_password_pwned,generate_passphrase, get_random_separator, filter_homoglyphs)
 from handlers.request_handler import handle_generate_password_request
-
 
 app = Flask(__name__)
 cache = Cache(app, config={'CACHE_TYPE': config.CACHE_TYPE})
@@ -43,10 +42,15 @@ async def generate_password_route():
     return jsonify(response_data)
 
 @app.route('/manifest.json')
-@cache.cached(timeout=3600)
 async def serve_manifest():
-    return send_file('manifest.json', mimetype='application/manifest+json')
-
+    cache_key = 'manifest.json'
+    cached_content = cache.get(cache_key)
+    if cached_content is None:
+        with open('manifest.json', 'r') as file:
+            content = file.read()
+            cache.set(cache_key, content, timeout=3600)
+            cached_content = content
+    return Response(cached_content, mimetype='application/manifest+json')
 
 @app.route('/service-worker.js')
 async def serve_sw():
