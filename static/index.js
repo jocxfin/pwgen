@@ -103,9 +103,7 @@ refreshpw.addEventListener("click", async function () {
 
     await generatePassword();
 
-    setTimeout(() => {
-        refreshpw.classList.remove('loading');
-    }, 690);
+    refreshpw.classList.remove('loading');
 }, false);
 
 wordCountSlider.oninput = function () {
