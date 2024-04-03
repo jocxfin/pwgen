@@ -127,7 +127,11 @@ button {
 }
 
 #multipwcp {
-    background: var(--accent-color-1);
+    background-color: var(--accent-color-1);
+}
+
+#multipwcp:hover {
+    background-color: var(--accent-color-2) !important;
 }
 
 .multipw0 { grid-area: 1 / 1 / 2 / 5; }
