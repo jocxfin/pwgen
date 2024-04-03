@@ -147,10 +147,7 @@ button {
 .multipwcp2 { grid-area: 3 / 5 / 4 / 6; }
 .multipwcp3 { grid-area: 4 / 5 / 5 / 6; }
 .multipwcp4 { grid-area: 5 / 5 / 6 / 6; }
-.cpbg { 
-    grid-area: 1 / 5 / 6 / 6;
-    background-color: var(--accent-color-1);
-}
+
 
 button:hover {
     background-color: var(--accent-color-2) !important;
