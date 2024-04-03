@@ -126,9 +126,9 @@ button {
 }
 
 #multipw {
-    padding: 4px;
+    padding: 6px;
     border-bottom: 2px solid var(--accent-color-1);
-    font-size: 13px;
+    font-size: 15px;
 }
 
 #multipw:hover {
