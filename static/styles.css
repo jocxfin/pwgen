@@ -131,6 +131,7 @@ button {
     padding: 6px;
     border-bottom: 2px solid var(--accent-color-1);
     font-size: 15px;
+    line-break: anywhere;
 }
 
 #multipw:hover {
@@ -508,10 +509,20 @@ footer a:hover {
     }
 }
 
-/* Small devices (phones, 600px and down) */
-@media only screen and (max-width: 600px) {
+/* Small devices (phones, 430px and up) */
+@media only screen and (min-width: 430px) {
     html {
         overflow-x: hidden;
+    }
+
+    #passwordOptions {
+        width: 350px;
+        margin-top: 53px;
+    }
+
+    #passphraseOptions {
+        width: 350px;
+        margin-top: 140px;
     }
 
     #checkbox-wrapper {
@@ -520,31 +531,54 @@ footer a:hover {
     }
 
     #wordCountContainer, #sliderContainer {
-        font-size: 14px;
+        font-size: 16px;
 
     }
 
     #header1 {
-        margin-bottom: 14px;
-        font-size: 30px;
+        margin-bottom: 0;
+        position: fixed;
+        top: 0%;
+        font-size: 38px;
     }
 
     #customSeparator, #customLanguage {
-        height: 2.5px;
-        font-size: 11px;
+        height: 12.5px;
+        font-size: 15px;
     }
 
     #separator, #maxWordLength, #languageSelect {
         height: 30px;
-        font-size: 11px;
+        font-size: 16px;
     }
 
     .infotext-wrapper {
-        margin-top: 22px;
+        position: absolute;
+        bottom: 7%;
     }
 
     .buttonwrapper {
         margin-top: 22px;
+    }
+
+    #infotext {
+        font-size: 14px;
+    }
+
+    #password-container1 {
+        width: 350px;
+    }
+
+    .parent {
+        width: 350px;
+    }
+
+    #multipw {
+        font-size: 16px;
+    }
+
+    #multipwcp {
+        font-size: 16px;
     }
 }
 
