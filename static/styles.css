@@ -226,6 +226,7 @@ button:hover {
 .buttonwrapper {
     justify-content: center !important;
     margin-top: 13px;
+    z-index: 1;
 }
 
 .button {
