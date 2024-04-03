@@ -279,7 +279,7 @@ button:hover {
 footer {
     width: 100%;
     text-align: center;
-    padding: 13px;
+    margin-bottom: 13px;
     font-size: 13px;
     color: var(--text-color);
     position: absolute;
@@ -454,4 +454,31 @@ footer a:hover {
     content: "Yes";
     left: 4px;
     color: #fff;
+}
+
+/* media queries */
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+
 }
