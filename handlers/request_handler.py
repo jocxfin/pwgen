@@ -29,7 +29,7 @@ async def handle_generate_password_request(request_form):
         try:
             custom_word_list = await fetch_custom_wordlist(language)
         except Exception as e:
-            return {"error": f"Failed to fetch custom word list: {e}"}
+            return {"password": f"Error: Failed to fetch custom word list due to {e}", "entropy": 0}
         language = 'custom'
 
     characters = string.ascii_lowercase
