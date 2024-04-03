@@ -113,12 +113,18 @@ wordCountSlider.oninput = function () {
 lengthSlider.oninput = function () {
     lengthValue.innerText = this.value;
 }
-function copyPassword() {
-    const password = document.getElementById('password').value;
+function copyPassword(index) {
+    let password;
+    if (index === 100) {
+        password = document.querySelector('.password-container #password').value;
+    } else {
+        password = document.querySelector(`.multipw${index}`).textContent;
+    }
+
     copyToClipboard(password)
         .then(() => {
             console.log('Password copied to clipboard');
-            onCopy();
+            onCopy(index);
         })
         .catch((err) => {
             console.error('Error copying password to clipboard, using fallback:', err);
@@ -157,12 +163,24 @@ function fallbackCopyTextToClipboard(text) {
     document.body.removeChild(textArea);
 }
 
-function onCopy() {
-    const button = document.getElementById("copypwd");
-    button.innerHTML = `copied!`;
+function onCopy(index) {
+    let buttonText;
+    buttonText = index === 100 ? 'copy password' : 'copied!';
+    if (index === 100) {
+        const button = document.querySelector('.password-container #copypwd');
+        button.innerHTML = buttonText;
 
-    setTimeout(() => {
-        button.innerHTML = `copy password`;
-    }, 1500);
+        setTimeout(() => {
+            button.innerHTML = 'copy password';
+        }, 1500);
+    } else {
+        document.querySelectorAll(`.multipwcp${index}`).forEach(button => {
+            button.innerHTML = buttonText;
+
+            setTimeout(() => {
+                button.innerHTML = 'copy';
+            }, 1500);
+        });
+    }
 }
 generatePassword();
