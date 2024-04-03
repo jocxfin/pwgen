@@ -529,7 +529,8 @@ footer a:hover {
 
     #checkbox-wrapper {
         height: 36.5px;
-        font-size: 14px;
+        font-size: 16px;
+        width: 350px;
     }
 
     #wordCountContainer, #sliderContainer {
