@@ -144,11 +144,17 @@ button {
 .multipw2 { grid-area: 3 / 1 / 4 / 5; }
 .multipw3 { grid-area: 4 / 1 / 5 / 5; }
 .multipw4 { grid-area: 5 / 1 / 6 / 5; }
-.multipwcp0 { grid-area: 1 / 5 / 2 / 6; }
+.multipwcp0 { 
+    grid-area: 1 / 5 / 2 / 6; 
+    border-top-right-radius: 8px;
+}
 .multipwcp1 { grid-area: 2 / 5 / 3 / 6; }
 .multipwcp2 { grid-area: 3 / 5 / 4 / 6; }
 .multipwcp3 { grid-area: 4 / 5 / 5 / 6; }
-.multipwcp4 { grid-area: 5 / 5 / 6 / 6; }
+.multipwcp4 { 
+    grid-area: 5 / 5 / 6 / 6; 
+    border-bottom-right-radius: 8px;
+}
 
 
 button:hover {
