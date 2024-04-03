@@ -150,14 +150,14 @@ button {
 }
 .multipwcp0 { 
     grid-area: 1 / 5 / 2 / 6; 
-    border-top-right-radius: 8px;
+    border-top-right-radius: 4px;
 }
 .multipwcp1 { grid-area: 2 / 5 / 3 / 6; }
 .multipwcp2 { grid-area: 3 / 5 / 4 / 6; }
 .multipwcp3 { grid-area: 4 / 5 / 5 / 6; }
 .multipwcp4 { 
     grid-area: 5 / 5 / 6 / 6; 
-    border-bottom-right-radius: 8px;
+    border-bottom-right-radius: 4px;
 }
 
 
