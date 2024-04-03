@@ -462,6 +462,7 @@ footer a:hover {
 @media only screen and (max-width: 380px) {
     html {
         overflow-x: hidden;
+        overflow-y: visible;
     }
 
     #checkbox-wrapper {
@@ -517,6 +518,24 @@ footer a:hover {
     #header1 {
         margin-bottom: 14px;
         font-size: 30px;
+    }
+
+    #customSeparator, #customLanguage {
+        height: 2.5px;
+        font-size: 11px;
+    }
+
+    #separator, #maxWordLength, #languageSelect {
+        height: 30px;
+        font-size: 11px;
+    }
+
+    .infotext-wrapper {
+        margin-top: 22px;
+    }
+
+    .buttonwrapper {
+        margin-top: 22px;
     }
 }
 
