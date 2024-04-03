@@ -128,11 +128,17 @@ button {
 #multipw {
     padding: 4px;
     border-bottom: 2px solid var(--accent-color-1);
+    font-size: 13px;
+}
+
+#multipw:hover {
+    cursor: text;
 }
 
 #multipwcp {
     background-color: var(--accent-color-1);
     padding: 4px;
+    margin-right: -2px;
 }
 
 #multipwcp:hover {
@@ -150,14 +156,16 @@ button {
 }
 .multipwcp0 { 
     grid-area: 1 / 5 / 2 / 6; 
-    border-top-right-radius: 4px;
+    border-top-right-radius: 8px;
+    margin-top: -2px;
 }
 .multipwcp1 { grid-area: 2 / 5 / 3 / 6; }
 .multipwcp2 { grid-area: 3 / 5 / 4 / 6; }
 .multipwcp3 { grid-area: 4 / 5 / 5 / 6; }
 .multipwcp4 { 
     grid-area: 5 / 5 / 6 / 6; 
-    border-bottom-right-radius: 4px;
+    border-bottom-right-radius: 8px;
+    margin-bottom: -2px;
 }
 
 
