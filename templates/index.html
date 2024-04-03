@@ -79,73 +79,98 @@
                     <label class='tgl-btn' for="includeSpecialChars"></label>
                 </div>
             </div>
-            <div id="checkbox-wrapper">
-                <label for="languageSelect">Language:</label>
-                <select id="languageSelect">
-                    <option value="en">English</option>
-                    <option value="fi">Finnish</option>
-                </select>
+            {% if no_lang %}
+            <div id="checkbox-wrapper" style="display: none !important;">
+                {% else %}
+                <div id="checkbox-wrapper">
+                    {% endif %}
+                    <label for="languageSelect">Language:</label>
+                    <select id="languageSelect">
+                        <option value="en">English</option>
+                        <option value="fi">Finnish</option>
+                        <option value="custom">Custom list</option>
+                    </select>
+                    <input type="text" id="customLanguage" placeholder="Enter custom url for text file"
+                        style="display: none;">
+                </div>
+                <div id="checkbox-wrapper">
+                    <label for="separator">Separator:</label>
+                    <select id="separator">
+                        <option value="space">Dash</option>
+                        <option value="number">Random Number</option>
+                        <option value="special">Random Special Character</option>
+                        <option value="custom">User Defined</option>
+                    </select>
+                    <input type="text" id="customSeparator" placeholder="Enter custom separator" style="display: none;">
+                </div>
+                <div id="checkbox-wrapper">
+                    <label for="maxWordLength">Max Word Length:</label>
+                    <select id="maxWordLength">
+                        <option value="3">3</option>
+                        <option value="5">5</option>
+                        <option selected value="5">6</option>
+                        <option value="7">7</option>
+                        <option value="9">9</option>
+                        <option value="12">12</option>
+                        <option value="16">16</option>
+                    </select>
+                </div>
+                <div id="wordCountContainer">
+                    <label for="wordCountSlider">Word Count: <span id="wordCountValue">4</span></label>
+                    <input type="range" id="wordCountSlider" name="wordCount" min="2" max="10" value="4">
+                </div>
             </div>
-            <div id="checkbox-wrapper">
-                <label for="separator">Separator:</label>
-                <select id="separator">
-                    <option value="space">Dash</option>
-                    <option value="number">Random Number</option>
-                    <option value="special">Random Special Character</option>
-                    <option value="custom">User Defined</option>
-                </select>
-                <input type="text" id="customSeparator" placeholder="Enter custom separator" style="display: none;">
+            <div id="passphrase-wrapper">
+                <div id="checkbox-wrapper">
+                    <p>Generate Passphrase</p>
+                    <div class="checkbox-kaare">
+                        <input class='tgl toggle-omena' type="checkbox" id="passphraseToggle">
+                        <label class='tgl-btn' for="passphraseToggle"></label>
+                    </div>
+                </div>
             </div>
-            <div id="checkbox-wrapper">
-                <label for="maxWordLength">Max Word Length:</label>
-                <select id="maxWordLength">
-                    <option value="3">3</option>
-                    <option value="5">5</option>
-                    <option selected value="5">6</option>
-                    <option value="7">7</option>
-                    <option value="9">9</option>
-                    <option value="12">12</option>
-                    <option value="16">16</option>
-                </select>
+            {% if multi_gen %}
+            <div id="password-container1">
+                <div class="parent">
+                    <div id="multipw" class="multipw0"></div>
+                    <div id="multipw" class="multipw1"></div>
+                    <div id="multipw" class="multipw2"></div>
+                    <div id="multipw" class="multipw3"></div>
+                    <div id="multipw" class="multipw4"></div>
+                    <div id="multipwcp" class="multipwcp0" onclick="copyPassword(0)">copy</div>
+                    <div id="multipwcp" class="multipwcp1" onclick="copyPassword(1)">copy</div>
+                    <div id="multipwcp" class="multipwcp2" onclick="copyPassword(2)">copy</div>
+                    <div id="multipwcp" class="multipwcp3" onclick="copyPassword(3)">copy</div>
+                    <div id="multipwcp" class="multipwcp4" onclick="copyPassword(4)">copy</div>
+                </div>
             </div>
-            <div id="wordCountContainer">
-                <label for="wordCountSlider">Word Count: <span id="wordCountValue">4</span></label>
-                <input type="range" id="wordCountSlider" name="wordCount" min="2" max="10" value="4">
+            {% else %}
+            <div class="password-container" style="display: flex;">
+                <input type="text" id="password" oncopy="onCopy()" readonly>
+                <button id="copypwd" onclick="copyPassword(100)">copy password</button>
             </div>
-        </div>
-        <div id="passphrase-wrapper">
-            <div id="checkbox-wrapper">
-                <p>Generate Passphrase</p>
-                <div class="checkbox-kaare">
-                    <input class='tgl toggle-omena' type="checkbox" id="passphraseToggle">
-                    <label class='tgl-btn' for="passphraseToggle"></label>
+            {% endif %}
+
+            <div id="checkbox-wrapper" class="buttonwrapper">
+                <button id="refreshpw" class="button">Generate</button>
+            </div>
+            <div id="passphrase-wrapper" class="infotext-wrapper">
+                <div id="checkbox-wrapper">
+                    {% if no_api_check %}
+                    <p id="infotext">Offline mode enabled. No checks are ran against haveibeenpwned-API.</p>
+                    {% else %}
+                    <p id="infotext">All passwords and passphrases created are cross-referenced with <a id="apilink"
+                            href="https://haveibeenpwned.com" target="_blank"
+                            rel="noopener noreferrer">haveibeenpwned</a>-API to guarantee they have not been compromised
+                        in past data breaches.</p>
+                    {% endif %}
                 </div>
             </div>
         </div>
-        <div class="password-container" style="display: flex;">
-            <input type="text" id="password" oncopy="onCopy()" readonly>
-            <button id="copypwd" onclick="copyPassword()">copy password</button>
-        </div>
-        <div id="checkbox-wrapper" class="buttonwrapper">
-            <button id="refreshpw" class="button">Generate</button>
-        </div>
-        <div id="passphrase-wrapper" class="infotext-wrapper">
-            <div id="checkbox-wrapper">
-                {% if no_api_check %}
-                <p id="infotext">Offline mode enabled. No checks are ran against haveibeenpwned-API.</p>
-                {% else %}
-                <p id="infotext">All generated passwords and passphrases are ran against <a id="apilink"
-                        href="https://haveibeenpwned.com" target="_blank"
-                        rel="noopener noreferrer">haveibeenpwned</a>-API before
-                    showing them to the user.</p>
-                {% endif %}
-            </div>
-        </div>
-    </div>
-    <footer>
-        <p>Simple password generator made by <a href="https://github.com/jocxfin/pwgen" target="_blank"
-                rel="noopener noreferrer">jocxFIN</a></p>
-    </footer>
+        <footer>
+            <p>Simple password generator made by <a href="https://github.com/jocxfin/pwgen" target="_blank"
+                    rel="noopener noreferrer">jocxFIN</a></p>
+        </footer>
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -170,6 +195,14 @@
                 document.getElementById('customSeparator').style.display = 'block';
                 document.getElementById('customSeparator').value = "{{ pp_settings.user_defined_separator }}";
             }
+            const LanguageValue = "{{ pp_settings.language }}";
+            document.getElementById('languageSelect').value = LanguageValue;
+            if (LanguageValue === 'custom') {
+                document.getElementById('customLanguage').style.display = 'block';
+            }
+            languageSelect.onchange = function () {
+                document.getElementById('customLanguage').style.display = this.value === 'custom' ? 'block' : 'none';
+            };
         });
     </script>
     <script src="{{ url_for('static', filename='index.js') }}"></script>
