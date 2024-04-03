@@ -16,6 +16,7 @@ async def fetch_custom_wordlist(url):
     except Exception as e:
         logging.error(f"Failed to fetch custom word list: {e}")
         raise
+    
 
 
 
