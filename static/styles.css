@@ -127,6 +127,7 @@ button {
 
 #multipw {
     padding: 4px;
+    border-bottom: 2px solid var(--accent-color-1);
 }
 
 #multipwcp {
@@ -143,7 +144,10 @@ button {
 .multipw1 { grid-area: 2 / 1 / 3 / 5; }
 .multipw2 { grid-area: 3 / 1 / 4 / 5; }
 .multipw3 { grid-area: 4 / 1 / 5 / 5; }
-.multipw4 { grid-area: 5 / 1 / 6 / 5; }
+.multipw4 { 
+    border-bottom: none !important;
+    grid-area: 5 / 1 / 6 / 5; 
+}
 .multipwcp0 { 
     grid-area: 1 / 5 / 2 / 6; 
     border-top-right-radius: 8px;
