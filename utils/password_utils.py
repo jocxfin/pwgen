@@ -1,6 +1,21 @@
 import string
 import secrets
 import config
+import httpx
+import logging
+
+async def fetch_custom_wordlist(url):
+    if not url.endswith('.txt'):
+        raise ValueError("Only .txt files are allowed for custom word lists.")
+    try:
+        async with httpx.AsyncClient() as client:
+            response = await client.get(url)
+        response.raise_for_status()
+        word_list = response.text.splitlines()
+        return [word.strip() for word in word_list if word.strip() and len(word.strip()) <= 12]
+    except Exception as e:
+        logging.error(f"Failed to fetch custom word list: {e}")
+        raise
 
 def filter_homoglyphs(characters, exclude_homoglyphs=False):
     if not exclude_homoglyphs:
@@ -48,8 +63,16 @@ async def check_password_pwned(password):
         logging.error(f"Error checking password against HIBP API: {e}")
         return False
 
-async def generate_passphrase(word_count=4, capitalize=False, separator_type='space', max_word_length=12, user_defined_separator='', include_numbers=False, include_special_chars=False, language='en'):
-    word_list = config.word_list_en if language == 'en' else config.word_list_fi
+async def generate_passphrase(word_count=4, capitalize=False, separator_type='space', max_word_length=12, user_defined_separator='', include_numbers=False, include_special_chars=False, language='en', custom_word_list=None):
+    if language == 'custom' and custom_word_list is not None:
+        word_list = custom_word_list
+    elif language == 'en':
+        word_list = config.word_list_en
+    elif language == 'fi':
+        word_list = config.word_list_fi
+    else:
+        word_list = config.word_list_en    
+    
     separator = get_random_separator(separator_type, user_defined_separator)
 
     passphrase_elements = []

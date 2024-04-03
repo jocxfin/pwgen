@@ -3,7 +3,7 @@ import string
 import secrets
 from utils.password_utils import (
     calculate_entropy, check_password_pwned, generate_passphrase,
-    get_random_separator, filter_homoglyphs)
+    get_random_separator, filter_homoglyphs, fetch_custom_wordlist)
 
 def get_bool(request_form, field_name, default):
     return request_form.get(field_name, str(default)).lower() == 'true'
@@ -24,6 +24,14 @@ async def handle_generate_password_request(request_form):
     include_numbers = get_bool(request_form, 'include_numbers', config.PP_INCLUDE_NUMBERS)
     include_special_chars = get_bool(request_form, 'include_special_chars', config.PP_INCLUDE_SPECIAL_CHARS)
 
+    custom_word_list = None
+    if language not in ['en', 'fi']:
+        try:
+            custom_word_list = await fetch_custom_wordlist(language)
+        except Exception as e:
+            return {"error": f"Failed to fetch custom word list: {e}"}
+        language = 'custom'
+
     characters = string.ascii_lowercase
     if exclude_homoglyphs:
         characters = filter_homoglyphs(characters, True)
@@ -35,7 +43,7 @@ async def handle_generate_password_request(request_form):
         characters += config.special_characters if not exclude_homoglyphs else filter_homoglyphs(config.special_characters, True)
 
     if generate_type == 'passphrase':
-        password = await generate_passphrase(word_count, capitalize, separator_type, max_word_length, user_defined_separator, include_numbers, include_special_chars, language)
+        password = await generate_passphrase(word_count, capitalize, separator_type, max_word_length, user_defined_separator, include_numbers, include_special_chars, language, custom_word_list)
         while True:
             passphrase_is_pwned = await check_password_pwned(password)
             if not passphrase_is_pwned or attempt > 10:
