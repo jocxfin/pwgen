@@ -458,9 +458,66 @@ footer a:hover {
 
 /* media queries */
 
-/* Extra small devices (phones, 600px and down) */
-@media only screen and (max-width: 600px) {
+/* Extra small devices (phones, 380px and down) */
+@media only screen and (max-width: 380px) {
+    html {
+        overflow-x: hidden;
+    }
 
+    #checkbox-wrapper {
+        height: 36.5px;
+        font-size: 14px;
+    }
+
+    #wordCountContainer, #sliderContainer {
+        font-size: 14px;
+
+    }
+
+    #header1 {
+        margin-bottom: 14px;
+        font-size: 30px;
+    }
+
+    #customSeparator, #customLanguage {
+        height: 2.5px;
+        font-size: 11px;
+    }
+
+    #separator, #maxWordLength, #languageSelect {
+        height: 30px;
+        font-size: 11px;
+    }
+
+    .infotext-wrapper {
+        margin-top: 22px;
+    }
+
+    .buttonwrapper {
+        margin-top: 22px;
+    }
+}
+
+/* Small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+    html {
+        overflow-x: hidden;
+    }
+
+    #checkbox-wrapper {
+        height: 36.5px;
+        font-size: 14px;
+    }
+
+    #wordCountContainer, #sliderContainer {
+        font-size: 14px;
+
+    }
+
+    #header1 {
+        margin-bottom: 14px;
+        font-size: 30px;
+    }
 }
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
