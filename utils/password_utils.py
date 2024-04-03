@@ -5,8 +5,8 @@ import httpx
 import logging
 
 async def fetch_custom_wordlist(url):
-    if not url.endswith('.txt'):
-        raise ValueError("Only .txt files are allowed for custom word lists.")
+    if not url.startswith("https://raw.githubusercontent.com/") or not url.endswith('.txt'):
+        raise ValueError("URL must be from 'https://raw.githubusercontent.com/' and a .txt file.")
     try:
         async with httpx.AsyncClient() as client:
             response = await client.get(url)
