@@ -140,6 +140,7 @@ button {
     background-color: var(--accent-color-1);
     padding: 4px;
     margin-right: -2px;
+    font-size: 15px;
 }
 
 #multipwcp:hover {
@@ -160,9 +161,14 @@ button {
     border-top-right-radius: 8px;
     margin-top: -2px;
 }
-.multipwcp1 { grid-area: 2 / 5 / 3 / 6; }
+.multipwcp1 { 
+    grid-area: 2 / 5 / 3 / 6;
+    background-color: #762f54 !important;
+}
 .multipwcp2 { grid-area: 3 / 5 / 4 / 6; }
-.multipwcp3 { grid-area: 4 / 5 / 5 / 6; }
+.multipwcp3 { 
+    background-color: #762f54 !important;
+    grid-area: 4 / 5 / 5 / 6; }
 .multipwcp4 { 
     grid-area: 5 / 5 / 6 / 6; 
     border-bottom-right-radius: 8px;
