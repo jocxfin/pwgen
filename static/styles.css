@@ -1,5 +1,6 @@
 :root {
     --background-color: #2A3850;
+    --alternative-bg: #192c4b;
     --primary-color: #41436A;
     --header-color: #dbddff;
     --accent-color-1: #984063;
@@ -279,7 +280,7 @@ footer a:hover {
     height: 51.5px;
 }
 
-#customSeparator {
+#customSeparator, #customLanguage {
     width: 111px;
     height: 15.5px;
 }
