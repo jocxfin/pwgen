@@ -164,19 +164,18 @@ function fallbackCopyTextToClipboard(text) {
 }
 
 function onCopy(index) {
-    let buttonText;
-    buttonText = index === 100 ? 'copy password' : 'copied!';
     if (index === 100) {
         const button = document.querySelector('.password-container #copypwd');
-        button.innerHTML = buttonText;
-
+        button.innerHTML = "copied!";
+        
         setTimeout(() => {
             button.innerHTML = 'copy password';
         }, 1500);
     } else {
-        document.querySelectorAll(`.multipwcp${index}`).forEach(button => {
-            button.innerHTML = buttonText;
-
+        const buttons = document.querySelectorAll(`.multipwcp${index}`);
+        buttons.forEach(button => {
+            button.innerHTML = "copied!";
+            
             setTimeout(() => {
                 button.innerHTML = 'copy';
             }, 1500);
