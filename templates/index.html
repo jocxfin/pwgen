@@ -88,7 +88,9 @@
                 <select id="languageSelect">
                     <option value="en">English</option>
                     <option value="fi">Finnish</option>
+                    <option value="custom">Custom list</option>
                 </select>
+                <input type="text" id="customLanguage" placeholder="Enter custom url for text file" style="display: none;">
             </div>
             <div id="checkbox-wrapper">
                 <label for="separator">Separator:</label>
@@ -191,6 +193,12 @@
             if (separatorValue === 'custom') {
                 document.getElementById('customSeparator').style.display = 'block';
                 document.getElementById('customSeparator').value = "{{ pp_settings.user_defined_separator }}";
+            }
+            const LanguageValue = "{{ pp_settings.language }}";
+            document.getElementById('languageSelect').value = LanguageValue;
+            if (LanguageValue === 'custom') {
+                document.getElementById('customLanguage').style.display = 'block';
+                document.getElementById('customLanguage').value = "{{ pp_settings.language }}";
             }
         });
     </script>
