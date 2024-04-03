@@ -143,6 +143,7 @@ button {
     padding: 4px;
     margin-right: -2px;
     font-size: 15px;
+    align-content: center;
 }
 
 #multipwcp:hover {
