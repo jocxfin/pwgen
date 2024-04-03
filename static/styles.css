@@ -497,6 +497,15 @@ footer a:hover {
     .buttonwrapper {
         margin-top: 22px;
     }
+
+    footer {
+        padding-bottom: 13px;
+        font-size: 13px;
+        color: var(--text-color);
+        position: fixed;
+        bottom: 0%;
+        background-color: var(--background-color);
+    }
 }
 
 /* Small devices (phones, 600px and down) */
