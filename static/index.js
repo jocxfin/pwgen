@@ -71,6 +71,7 @@ async function generatePassword() {
         } else {
             passwordInput.value = data.password;
             scrambleAnimation(data.password);
+            refreshpw.classList.remove('loading');
         }
     })
     .catch(error => {
