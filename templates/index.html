@@ -198,8 +198,10 @@
             document.getElementById('languageSelect').value = LanguageValue;
             if (LanguageValue === 'custom') {
                 document.getElementById('customLanguage').style.display = 'block';
-                document.getElementById('customLanguage').value = "{{ pp_settings.language }}";
             }
+            languageSelect.onchange = function() {
+            document.getElementById('customLanguage').style.display = this.value === 'custom' ? 'block' : 'none';
+            };
         });
     </script>
     <script src="{{ url_for('static', filename='index.js') }}"></script>

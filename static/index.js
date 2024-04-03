@@ -53,6 +53,10 @@ async function generatePassword() {
     formData.append('max_word_length', maxWordLength.value);
     formData.append('type', passphraseToggle.checked ? 'passphrase' : 'password');
     formData.append('language', languageSelect.value);
+    if (languageSelect.value === 'custom') {
+        formData.append('language', "");
+        formData.append('language', customLanguage.value);
+    }
 
     fetch('/generate-password', {
         method: 'POST',
