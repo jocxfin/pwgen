@@ -125,11 +125,12 @@ button {
 }
 
 #multipw {
-
+    padding: 4px;
 }
 
 #multipwcp {
     background-color: var(--accent-color-1);
+    padding: 4px;
 }
 
 #multipwcp:hover {
