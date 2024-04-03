@@ -8,22 +8,23 @@ A demo of the software is available on [https://pwgen.joonatanh.com](https://pwg
 
 ## Features
 
-- **Progressive Web Application (PWA)**
-- **Password Generation**: Generate a random password with options to include:
-  - Uppercase letters
-  - Digits
-  - Special characters
-  - Option to exclude homoglyphs (similar-looking characters)
-- **Passphrase Generation**: Generate a passphrase with options to:
-  - Capitalize the first letter of each word
-  - Choose a separator between words (space, random number, random special character, or a user-defined character)
-  - Option to add either numbers or special characters after the words
-  - Set the maximum word length
-  - Use either English or Finnish word list
 - **User Interface**: Display the generated password or passphrase in a user-friendly interface with the option to copy it to the clipboard.
 - **Security Check**: Check all generated passwords and passphrases against the haveibeenpwned database using their API to ensure users are not shown a compromised password.
 - **Offline Mode**: Added a feature to disable checking passwords against the haveibeenpwned API, suitable for instances running in isolated networks or where external API access is unnecessary.
-- **Environment Variable Configuration for Password/Passphrase Defaults**: Functionality to allow users to define default settings for password and passphrase generation using environment variables. 
+- **Environment Variable Configuration for Password/Passphrase Defaults**: Functionality to allow users to define default settings for password and passphrase generation using environment variables.
+- - **Environment Variable Customization**: Configure default settings for password and passphrase generation through environment variables.
+- **Security Checks**: Validates all generated passwords and passphrases against the haveibeenpwned database to ensure they haven't been previously compromised.
+- **Offline Mode**: Provides an option to disable online checks against the haveibeenpwned API, ideal for isolated networks or enhanced privacy needs.
+- **Multiple Generation**: Generates up to 5 passwords or passphrases simultaneously, configurable via an environment variable (`MULTI_GEN=true`).
+- **Language Dropdown Control**: Allows the disabling of the language dropdown menu through an environment variable (`PP_HIDE_LANG=true`), simplifying the UI based on user preference.
+- **Progressive Web Application (PWA)**: Ensures a seamless, app-like experience on various devices.
+- **Comprehensive Password Generation Options**: Includes uppercase letters, digits, and special characters, with an option to exclude homoglyphs.
+- **Flexible Passphrase Generation**: Offers capitalization of words, choice of separators (space, number, special character, or user-defined character), and inclusion of numbers or special characters.
+- **User Interface**: Features a user-friendly interface with clipboard copy functionality for easy password and passphrase use.
+- **Language Support**: Supports English and Finnish word lists for passphrase generation.
+- **Custom Word Lists**: Supports fetching custom word lists from specified URLs, facilitating personalized passphrase generation. Requires URLs to start with `https://raw.githubusercontent.com/` and point to `.txt` files.
+
+
 
 ## How to Use
 
@@ -45,21 +46,24 @@ With environmental variables defining settings:
 
 ```bash
 docker pull jocxfin/pwgen:latest
-docker run -d -p 5069:5069 \
-  -e NO_API_CHECK=false \
-  -e PW_LENGTH=12 \
-  -e PW_INCLUDE_UPPERCASE=false \
-  -e PW_INCLUDE_DIGITS=false \
-  -e PW_INCLUDE_SPECIAL=false \
-  -e PW_EXCLUDE_HOMOGLYPHS=true \
-  -e PP_WORD_COUNT=4 \
-  -e PP_CAPITALIZE=false \
-  -e PP_SEPARATOR_TYPE=space \
-  -e PP_USER_DEFINED_SEPARATOR='' \
-  -e PP_MAX_WORD_LENGTH=12 \
-  -e PP_INCLUDE_NUMBERS=false \
-  -e PP_INCLUDE_SPECIAL_CHARS=false \
-  -e PP_LANGUAGE=en \
+docker run -d -p 5069:5069 \\
+  -e NO_API_CHECK=false \\
+  -e PW_LENGTH=12 \\
+  -e PW_INCLUDE_UPPERCASE=false \\
+  -e PW_INCLUDE_DIGITS=false \\
+  -e PW_INCLUDE_SPECIAL=false \\
+  -e PW_EXCLUDE_HOMOGLYPHS=true \\
+  -e PP_WORD_COUNT=4 \\
+  -e PP_CAPITALIZE=false \\
+  -e PP_SEPARATOR_TYPE=space \\
+  -e PP_USER_DEFINED_SEPARATOR='' \\
+  -e PP_MAX_WORD_LENGTH=12 \\
+  -e PP_INCLUDE_NUMBERS=false \\
+  -e PP_INCLUDE_SPECIAL_CHARS=false \\
+  -e PP_LANGUAGE=en \\
+  -e PP_HIDE_LANG=false \\
+  -e PP_LANGUAGE_CUSTOM='' \\
+  -e MULTI_GEN=true \\
   jocxfin/pwgen:latest
 ```
 ## Requirements
