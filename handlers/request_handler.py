@@ -10,6 +10,7 @@ def get_bool(request_form, field_name, default):
 
 async def handle_generate_password_request(request_form):
     language = request_form.get('language', config.PP_LANGUAGE)
+    languageCustom = request_form.get('languageCustom', config.PP_LANGUAGE_CUSTOM)
     length = int(request_form.get('length', config.PW_LENGTH))
     include_uppercase = get_bool(request_form, 'include_uppercase', config.PW_INCLUDE_UPPERCASE)
     include_digits = get_bool(request_form, 'include_digits', config.PW_INCLUDE_DIGITS)
@@ -27,7 +28,7 @@ async def handle_generate_password_request(request_form):
     custom_word_list = None
     if language not in ['en', 'fi']:
         try:
-            custom_word_list = await fetch_custom_wordlist(language)
+            custom_word_list = await fetch_custom_wordlist(languageCustom)
         except Exception as e:
             return {"password": f"Error: Failed to fetch custom word list due to {e}", "entropy": 0}
         language = 'custom'

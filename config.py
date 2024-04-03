@@ -14,6 +14,7 @@ PP_MAX_WORD_LENGTH = int(os.getenv('PP_MAX_WORD_LENGTH', '7'))
 PP_INCLUDE_NUMBERS = os.getenv('PP_INCLUDE_NUMBERS', 'false').lower() == 'true'
 PP_INCLUDE_SPECIAL_CHARS = os.getenv('PP_INCLUDE_SPECIAL_CHARS', 'false').lower() == 'true'
 PP_LANGUAGE = os.getenv('PP_LANGUAGE', 'en')
+PP_LANGUAGE_CUSTOM = os.getenv('PP_LANGUAGE_CUSTOM', '')
 NO_API_CHECK = os.getenv('NO_API_CHECK', 'false').lower() == 'true'
 MULTI_GEN = os.getenv('MULTI_GEN', 'false').lower() == 'true'
 PP_HIDE_LANG = os.getenv('PP_HIDE_LANG', 'false').lower() == 'true'

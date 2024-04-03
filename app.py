@@ -33,7 +33,8 @@ def index():
         'max_word_length': config.PP_MAX_WORD_LENGTH,
         'include_numbers': config.PP_INCLUDE_NUMBERS,
         'include_special_chars': config.PP_INCLUDE_SPECIAL_CHARS,
-        'language': config.PP_LANGUAGE
+        'language': config.PP_LANGUAGE,
+        'languageCustom': config.PP_LANGUAGE_CUSTOM
     }
     
     return render_template('index.html', no_api_check=no_api_check, pw_settings=pw_settings, pp_settings=pp_settings, multi_gen=multi_gen, no_lang=no_lang)
