@@ -74,7 +74,7 @@ h1 {
     cursor: pointer;
 }
 
-.password-container, .password-container1 {
+.password-container, #password-container1 {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -84,7 +84,7 @@ h1 {
     position: relative;
 }
 
-.password-container1 {
+#password-container1 {
     background: var(--primary-color);
     border-radius: var(--border-radius);
     border: 2px solid var(--accent-color-1);
