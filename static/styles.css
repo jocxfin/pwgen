@@ -74,7 +74,7 @@ h1 {
     cursor: pointer;
 }
 
-.password-container {
+.password-container, .password-container1 {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -82,6 +82,12 @@ h1 {
     width: 369px;
     margin-top: 15px;
     position: relative;
+}
+
+.password-container1 {
+    background: var(--primary-color);
+    border-radius: var(--border-radius);
+    border: 2px solid var(--accent-color-1);
 }
 
 #password:focus {
@@ -115,10 +121,6 @@ button {
     grid-column-gap: 0px;
     grid-row-gap: 7px;
     width: 320px;
-    background: var(--primary-color);
-    border-radius: var(--border-radius);
-    border: 2px solid var(--accent-color-1);
-    padding: 7px;
     text-align: center;
 }
 
