@@ -12,10 +12,11 @@ async def fetch_custom_wordlist(url):
             response = await client.get(url)
         response.raise_for_status()
         word_list = response.text.splitlines()
-        return [word.strip() for word in word_list if word.strip() and len(word.strip()) <= 12]
+        return [word.strip() for word in word_list if word.strip()]
     except Exception as e:
         logging.error(f"Failed to fetch custom word list: {e}")
         raise
+
 
 def filter_homoglyphs(characters, exclude_homoglyphs=False):
     if not exclude_homoglyphs:
