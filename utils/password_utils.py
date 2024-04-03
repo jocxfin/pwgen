@@ -11,11 +11,12 @@ async def fetch_custom_wordlist(url):
         async with httpx.AsyncClient() as client:
             response = await client.get(url)
         response.raise_for_status()
-        word_list = response.text.splitlines()
-        return [word.strip() for word in word_list if word.strip()]
+        word_list = [word.replace(" ", "-").strip() for word in response.text.splitlines() if word.strip()]
+        return word_list
     except Exception as e:
         logging.error(f"Failed to fetch custom word list: {e}")
         raise
+
 
 
 def filter_homoglyphs(characters, exclude_homoglyphs=False):
