@@ -88,6 +88,7 @@ h1 {
     background: var(--primary-color);
     border-radius: var(--border-radius);
     border: 2px solid var(--accent-color-1);
+    width: 320px;
 }
 
 #password:focus {
@@ -119,7 +120,7 @@ button {
     grid-template-columns: repeat(5, 1fr);
     grid-template-rows: repeat(5, 1fr);
     grid-column-gap: 0px;
-    grid-row-gap: 7px;
+    grid-row-gap: 0px;
     text-align: center;
 }
 
