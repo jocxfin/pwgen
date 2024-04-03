@@ -158,10 +158,9 @@
                 {% if no_api_check %}
                 <p id="infotext">Offline mode enabled. No checks are ran against haveibeenpwned-API.</p>
                 {% else %}
-                <p id="infotext">All generated passwords and passphrases are ran against <a id="apilink"
+                <p id="infotext">All passwords and passphrases created are cross-referenced with<a id="apilink"
                         href="https://haveibeenpwned.com" target="_blank"
-                        rel="noopener noreferrer">haveibeenpwned</a>-API before
-                    showing them to the user.</p>
+                        rel="noopener noreferrer">haveibeenpwned</a>-API to guarantee they have not been compromised in past data breaches.</p>
                 {% endif %}
             </div>
         </div>
