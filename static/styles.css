@@ -131,6 +131,7 @@ button {
     padding: 6px;
     border-bottom: 2px solid var(--accent-color-1);
     font-size: 15px;
+    line-break: anywhere;
 }
 
 #multipw:hover {
@@ -142,6 +143,7 @@ button {
     padding: 4px;
     margin-right: -2px;
     font-size: 15px;
+    align-content: center;
 }
 
 #multipwcp:hover {
@@ -225,6 +227,7 @@ button:hover {
 .buttonwrapper {
     justify-content: center !important;
     margin-top: 13px;
+    z-index: 1;
 }
 
 .button {
@@ -279,7 +282,7 @@ button:hover {
 footer {
     width: 100%;
     text-align: center;
-    padding: 13px;
+    margin-bottom: 13px;
     font-size: 13px;
     color: var(--text-color);
     position: absolute;
@@ -454,4 +457,168 @@ footer a:hover {
     content: "Yes";
     left: 4px;
     color: #fff;
+}
+
+/* media queries */
+
+/* Extra small devices (phones, 380px and down) */
+@media only screen and (max-width: 380px) {
+    html {
+        overflow-x: hidden;
+        overflow-y: visible;
+    }
+
+    #checkbox-wrapper {
+        height: 36.5px;
+        font-size: 14px;
+    }
+
+    #wordCountContainer, #sliderContainer {
+        font-size: 14px;
+
+    }
+
+    #header1 {
+        margin-bottom: 14px;
+        font-size: 30px;
+    }
+
+    #customSeparator, #customLanguage {
+        height: 2.5px;
+        font-size: 11px;
+    }
+
+    #separator, #maxWordLength, #languageSelect {
+        height: 30px;
+        font-size: 11px;
+    }
+
+    .infotext-wrapper {
+        margin-top: 22px;
+    }
+
+    .password-container {
+        margin-top: 25px;
+        width: 334px;
+    }
+
+    #copypwd {
+        width: 338px;
+    }
+
+    .buttonwrapper {
+        margin-top: 22px;
+    }
+
+    footer {
+        padding-bottom: 13px;
+        font-size: 13px;
+        color: var(--text-color);
+        position: fixed;
+        bottom: 0%;
+        background-color: var(--background-color);
+    }
+}
+
+/* Small devices (phones, 430px and up) */
+@media only screen and (min-width: 430px) {
+    html {
+        overflow-x: hidden;
+    }
+
+    #passwordOptions {
+        width: 350px;
+        margin-top: 53px;
+    }
+
+    #passphraseOptions {
+        width: 350px;
+        margin-top: 127px;
+    }
+
+    #checkbox-wrapper {
+        height: 36.5px;
+        font-size: 16px;
+        width: 350px;
+    }
+
+    #wordCountContainer, #sliderContainer {
+        font-size: 16px;
+
+    }
+
+    #header1 {
+        margin-bottom: 0;
+        position: fixed;
+        top: 0%;
+        font-size: 38px;
+    }
+
+    #customSeparator, #customLanguage {
+        height: 12.5px;
+        font-size: 15px;
+    }
+
+    #separator, #maxWordLength, #languageSelect {
+        height: 30px;
+        font-size: 16px;
+    }
+
+    .infotext-wrapper {
+        position: absolute;
+        bottom: 7%;
+    }
+
+    .buttonwrapper {
+        margin-top: 30px;
+    }
+
+    #infotext {
+        font-size: 14px;
+    }
+
+    #password-container1 {
+        width: 350px;
+    }
+
+    .password-container {
+        margin-top: 31px;
+        width: 356px;
+    }
+
+    #copypwd {
+        width: 360px;
+    }
+
+    .parent {
+        width: 350px;
+    }
+
+    #multipw {
+        font-size: 16px;
+    }
+
+    #multipwcp {
+        font-size: 16px;
+    }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+
 }
