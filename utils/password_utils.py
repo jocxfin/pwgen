@@ -66,7 +66,7 @@ async def check_password_pwned(password):
         logging.error(f"Error checking password against HIBP API: {e}")
         return False
 
-async def generate_passphrase(word_count=4, capitalize=False, separator_type='space', max_word_length=12, user_defined_separator='', include_numbers=False, include_special_chars=False, language='en', custom_word_list=None):
+async def generate_passphrase(word_count=config.PP_WORD_COUNT, capitalize=config.PP_CAPITALIZE, separator_type=config.PP_SEPARATOR_TYPE, max_word_length=config.PP_MAX_WORD_LENGTH, user_defined_separator=config.PP_USER_DEFINED_SEPARATOR, include_numbers=config.PP_INCLUDE_NUMBERS, include_special_chars=config.PP_INCLUDE_SPECIAL_CHARS, language=config.PP_LANGUAGE, custom_word_list=config.PP_LANGUAGE_CUSTOM):
     if language == 'custom' and custom_word_list is not None:
         word_list = custom_word_list
     elif language == 'en':

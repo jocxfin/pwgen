@@ -202,6 +202,7 @@
             document.getElementById('languageSelect').onchange = function () {
                 document.getElementById('customLanguage').style.display = this.value === 'custom' ? 'block' : 'none';
             };
+            generatePassword();
         });
     </script>
     <script src="{{ url_for('static', filename='index.js') }}"></script>
