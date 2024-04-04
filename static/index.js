@@ -178,5 +178,3 @@ function copyPassword(index) {
         document.body.removeChild(textArea);
     }
 }
-
-generatePassword();
