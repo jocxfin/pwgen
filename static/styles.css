@@ -210,7 +210,7 @@ button:hover {
     height: 18px !important;
     font-family: monospace !important;
     font-size: 10px;
-    width: 373px !important;
+    width: 373px;
     border-radius: 6px 6px 0 0 !important;
     background-color: var(--accent-color-1) !important;
     text-align: end !important;
@@ -520,8 +520,8 @@ footer a:hover {
     }
 }
 
-/* Small devices (phones, 430px and up) */
-@media only screen and (min-width: 430px) {
+/* Small devices (phones, 430px-600px) */
+@media only screen and (min-width: 430px) and (max-width: 600px) {
     html {
         overflow-x: hidden;
     }
