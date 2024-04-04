@@ -497,6 +497,15 @@ footer a:hover {
         margin-top: 22px;
     }
 
+    .password-container {
+        margin-top: 25px;
+        width: 334px;
+    }
+
+    #copypwd {
+        width: 338px;
+    }
+
     .buttonwrapper {
         margin-top: 22px;
     }
@@ -571,6 +580,8 @@ footer a:hover {
     #password-container1 {
         width: 350px;
     }
+
+
 
     .parent {
         width: 350px;
