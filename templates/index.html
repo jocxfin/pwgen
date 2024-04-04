@@ -189,6 +189,8 @@
             document.getElementById('languageSelect').value = "{{ pp_settings.language }}";
             document.getElementById('wordCountValue').innerText = {{ pp_settings.word_count }};
             
+            document.getElementById('passphraseToggle').checked = {{ pw_settings.generate_pp | tojson }};
+
             document.getElementById('maxWordLength').value = {{ pp_settings.max_word_length }};
             const separatorValue = "{{ pp_settings.separator_type }}";
             document.getElementById('separator').value = separatorValue;
