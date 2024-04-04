@@ -35,11 +35,14 @@ def calculate_entropy(password):
 def get_random_separator(separator_type, user_defined_separator=''):
     if separator_type == "number":
         return str(secrets.choice(string.digits))
+    elif separator_type == "dash":
+        return '-'
     elif separator_type == "special":
         return secrets.choice(config.special_characters)
     elif separator_type == "single_character":
         return user_defined_separator
-    return '-'
+    elif separator_type == "space":
+        return ' '
 
 async def check_password_pwned(password):
     import httpx
