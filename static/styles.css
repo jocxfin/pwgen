@@ -520,8 +520,8 @@ footer a:hover {
     }
 }
 
-/* Small devices (phones, 430px and up) */
-@media only screen and (min-width: 430px) {
+/* Small devices (phones, 430px-600px) */
+@media only screen and (min-width: 430px) and (max-width: 600px) {
     html {
         overflow-x: hidden;
     }
