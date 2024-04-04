@@ -16,6 +16,7 @@ def index():
     no_api_check = config.NO_API_CHECK
     multi_gen = config.MULTI_GEN
     no_lang = config.PP_HIDE_LANG
+    generate_pp = config.GENERATE_PP
     
     pw_settings = {
         'length': config.PW_LENGTH,
@@ -37,7 +38,7 @@ def index():
         'languageCustom': config.PP_LANGUAGE_CUSTOM
     }
     
-    return render_template('index.html', no_api_check=no_api_check, pw_settings=pw_settings, pp_settings=pp_settings, multi_gen=multi_gen, no_lang=no_lang)
+    return render_template('index.html', no_api_check=no_api_check, pw_settings=pw_settings, pp_settings=pp_settings, multi_gen=multi_gen, no_lang=no_lang, generate_pp=generate_pp)
 
 @app.route('/generate-password', methods=['POST'])
 async def generate_password_route():

@@ -189,6 +189,10 @@
             document.getElementById('languageSelect').value = "{{ pp_settings.language }}";
             document.getElementById('wordCountValue').innerText = {{ pp_settings.word_count }};
             
+            document.getElementById('passphraseToggle').checked = {{ generate_pp | tojson }};
+            
+            
+
             document.getElementById('maxWordLength').value = {{ pp_settings.max_word_length }};
             const separatorValue = "{{ pp_settings.separator_type }}";
             document.getElementById('separator').value = separatorValue;
@@ -203,7 +207,13 @@
             document.getElementById('languageSelect').onchange = function () {
                 document.getElementById('customLanguage').style.display = this.value === 'custom' ? 'block' : 'none';
             };
-            generatePassword();
+            
+            if (document.getElementById('passphraseToggle').checked) {
+                togglePassphraseOptions();
+            } else {
+                generatePassword();
+            }
+
         });
     </script>
     <script src="{{ url_for('static', filename='index.js') }}"></script>
