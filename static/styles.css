@@ -581,7 +581,14 @@ footer a:hover {
         width: 350px;
     }
 
+    .password-container {
+        margin-top: 31px;
+        width: 356px;
+    }
 
+    #copypwd {
+        width: 360px;
+    }
 
     .parent {
         width: 350px;
