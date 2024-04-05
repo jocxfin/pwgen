@@ -8,6 +8,10 @@
     <meta name="description" content="Secure password generator">
     <meta name="keywords" content="Secure, haveibeenpwned, password, password-generator, password generator">
     <meta name="author" content="jocxfin">
+    {% if google_site_verification %}
+    <meta name="google-site-verification" content="{{ google_site_verification_content }}" />
+    {% else %}
+    {% endif %}
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <link rel="icon" href="{{ url_for('static', filename='favicon.png') }}" type="image/png">
     <link rel="manifest" href="/manifest.json">
