@@ -51,7 +51,7 @@ async def generate_password_route():
 
 @app.route('/robots.txt')
 def robots():
-    if config.ROBOTS_DISALLOW == 'true':
+    if config.ROBOTS_ALLOW == 'false':
         content = """
         User-agent: *
         Disallow: /
