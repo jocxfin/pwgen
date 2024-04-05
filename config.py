@@ -1,7 +1,9 @@
 import os
 
 CACHE_TYPE = 'SimpleCache'
-ROBOTS_ALLOW = os.getenv('ROBOTS_ALLOW', 'true').lower() == 'true'
+ROBOTS_ALLOW = os.getenv('ROBOTS_ALLOW', 'false').lower() == 'true'
+GOOGLE_SITE_VERIFICATION = os.getenv('GOOGLE_SITE_VERIFICATION', 'false')
+GOOGLE_SITE_VERIFICATION_CONTENT = os.getenv('GOOGLE_SITE_VERIFICATION_CONTENT', '')
 PW_LENGTH = int(os.getenv('PW_LENGTH', '12'))
 PW_INCLUDE_UPPERCASE = os.getenv('PW_INCLUDE_UPPERCASE', 'true').lower() == 'true'
 PW_INCLUDE_DIGITS = os.getenv('PW_INCLUDE_DIGITS', 'true').lower() == 'true'

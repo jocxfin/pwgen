@@ -17,6 +17,8 @@ def index():
     multi_gen = config.MULTI_GEN
     no_lang = config.PP_HIDE_LANG
     generate_pp = config.GENERATE_PP
+    google_site_verification = config.GOOGLE_SITE_VERIFICATION
+    google_site_verification_content = config.GOOGLE_SITE_VERIFICATION_CONTENT
     
     pw_settings = {
         'length': config.PW_LENGTH,
@@ -38,7 +40,7 @@ def index():
         'languageCustom': config.PP_LANGUAGE_CUSTOM
     }
     
-    return render_template('index.html', no_api_check=no_api_check, pw_settings=pw_settings, pp_settings=pp_settings, multi_gen=multi_gen, no_lang=no_lang, generate_pp=generate_pp)
+    return render_template('index.html', no_api_check=no_api_check, pw_settings=pw_settings, pp_settings=pp_settings, multi_gen=multi_gen, no_lang=no_lang, generate_pp=generate_pp, google_site_verification=google_site_verification, google_site_verification_content=google_site_verification_content)
 
 @app.route('/generate-password', methods=['POST'])
 async def generate_password_route():
