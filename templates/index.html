@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PwGen</title>
+    <meta name="description" content="Secure password generator">
+    <meta name="keywords" content="Secure, haveibeenpwned, password, password-generator, password generator">
+    <meta name="author" content="jocxfin">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <link rel="icon" href="{{ url_for('static', filename='favicon.png') }}" type="image/png">
     <link rel="manifest" href="/manifest.json">
@@ -187,6 +190,7 @@
             document.getElementById('includeNumbers').checked = {{ pp_settings.include_numbers | tojson }};
             document.getElementById('includeSpecialChars').checked = {{ pp_settings.include_special_chars | tojson }};
             document.getElementById('languageSelect').value = "{{ pp_settings.language }}";
+            document.getElementById('customLanguage').value = "{{ pp_settings.languageCustom }}";
             document.getElementById('wordCountValue').innerText = {{ pp_settings.word_count }};
             
             document.getElementById('passphraseToggle').checked = {{ generate_pp | tojson }};
@@ -207,7 +211,7 @@
             document.getElementById('languageSelect').onchange = function () {
                 document.getElementById('customLanguage').style.display = this.value === 'custom' ? 'block' : 'none';
             };
-            
+
             if (document.getElementById('passphraseToggle').checked) {
                 togglePassphraseOptions();
             } else {

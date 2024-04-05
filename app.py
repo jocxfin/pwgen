@@ -49,6 +49,20 @@ async def generate_password_route():
         response_data = await handle_generate_password_request(request.form)
     return jsonify(response_data)
 
+@app.route('/robots.txt')
+def robots():
+    if not config.ROBOTS_ALLOW:
+        content = """
+        User-agent: *
+        Disallow: /
+        """
+    else:
+        content = """
+        User-agent: *
+        Disallow:
+        """
+    return Response(content, mimetype='text/plain')
+
 @app.route('/manifest.json')
 async def serve_manifest():
     cache_key = 'manifest.json'

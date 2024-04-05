@@ -1,6 +1,7 @@
 import os
 
 CACHE_TYPE = 'SimpleCache'
+ROBOTS_ALLOW = os.getenv('ROBOTS_ALLOW', 'true').lower() == 'true'
 PW_LENGTH = int(os.getenv('PW_LENGTH', '12'))
 PW_INCLUDE_UPPERCASE = os.getenv('PW_INCLUDE_UPPERCASE', 'true').lower() == 'true'
 PW_INCLUDE_DIGITS = os.getenv('PW_INCLUDE_DIGITS', 'true').lower() == 'true'
