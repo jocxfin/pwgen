@@ -1,4 +1,4 @@
-FROM python:3.15-alpine
+FROM python:3-alpine3.15
 WORKDIR /app
 COPY requirements.txt requirements.txt
 RUN apk add --no-cache gcc musl-dev libffi-dev && \
