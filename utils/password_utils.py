@@ -5,8 +5,12 @@ import httpx
 import logging
 
 async def fetch_custom_wordlist(url):
-    if not url.startswith("https://raw.githubusercontent.com/") or not url.endswith('.txt'):
-        raise ValueError("URL must be from 'https://raw.githubusercontent.com/' and a .txt file.")
+    if config.DISABLE_URL_CHECK:
+        logging.info("URL check for custom word list is disabled by environment variable.")
+    else:
+        if not url.startswith("https://raw.githubusercontent.com/") or not url.endswith('.txt'):
+            raise ValueError("URL must be from 'https://raw.githubusercontent.com/' and a .txt file.")
+    
     try:
         async with httpx.AsyncClient() as client:
             response = await client.get(url)
@@ -16,9 +20,6 @@ async def fetch_custom_wordlist(url):
     except Exception as e:
         logging.error(f"Failed to fetch custom word list: {e}")
         raise
-    
-
-
 
 def filter_homoglyphs(characters, exclude_homoglyphs=False):
     if not exclude_homoglyphs:
@@ -45,7 +46,6 @@ def get_random_separator(separator_type, user_defined_separator=''):
         return ' '
 
 async def check_password_pwned(password):
-    import httpx
     import hashlib
     import logging
     
