@@ -21,6 +21,7 @@ NO_API_CHECK = os.getenv('NO_API_CHECK', 'false').lower() == 'true'
 MULTI_GEN = os.getenv('MULTI_GEN', 'false').lower() == 'true'
 PP_HIDE_LANG = os.getenv('PP_HIDE_LANG', 'false').lower() == 'true'
 GENERATE_PP = os.getenv('GENERATE_PP', 'false').lower() == 'true'
+DISABLE_URL_CHECK = os.getenv('DISABLE_URL_CHECK', 'false').lower() == 'true'
 
 special_characters = "!£$%^&*(){},./;:#*-+"
 
