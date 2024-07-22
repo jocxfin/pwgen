@@ -1,5 +1,3 @@
-const BASE_PATH = '{{ base_path }}';
-
 const passphraseToggle = document.getElementById('passphraseToggle');
 const capitalizeWords = document.getElementById('capitalizeWords');
 const wordCountSlider = document.getElementById('wordCountSlider');
