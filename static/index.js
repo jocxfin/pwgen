@@ -34,7 +34,6 @@ document.querySelectorAll('input, select').forEach(element => {
     }
 });
 
-
 async function generatePassword() {
     const formData = new FormData();
     formData.append('length', lengthSlider.value);
@@ -82,7 +81,6 @@ async function generatePassword() {
     });
 }
 
-
 function scrambleAnimation(finalPassword) {
     let scrambled = Array.from({ length: finalPassword.length }, () => getRandomCharacter());
     passwordInput.value = scrambled.join('');
@@ -116,6 +114,7 @@ wordCountSlider.oninput = function () {
 lengthSlider.oninput = function () {
     lengthValue.innerText = this.value;
 }
+
 function copyPassword(index) {
     let password;
     if (index === 100) {
