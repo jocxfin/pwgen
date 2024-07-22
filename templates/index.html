@@ -11,14 +11,15 @@
     {% if google_site_verification %}
     <meta name="google-site-verification" content="{{ google_site_verification }}" />
     {% endif %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    <link rel="icon" href="{{ url_for('static', filename='favicon.png') }}" type="image/png">
-    <link rel="manifest" href="/manifest.json">
+    <link rel="stylesheet" href="{{ base_path }}static/styles.css">
+    <link rel="icon" href="{{ base_path }}static/favicon.png" type="image/png">
+    <link rel="manifest" href="{{ base_path }}manifest.json">
     <meta name="theme-color" content="#2A3850">
     <script>
+        const BASE_PATH = "{{ base_path }}";
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/service-worker.js')
+                navigator.serviceWorker.register(`${BASE_PATH}/service-worker.js`)
                     .then(reg => console.log('Service Worker registered', reg))
                     .catch(err => console.log('Service Worker registration failed', err));
             });
@@ -223,7 +224,7 @@
 
         });
     </script>
-    <script src="{{ url_for('static', filename='index.js') }}"></script>
+    <script src="{{ base_path }}static/index.js"></script>
 </body>
 
 </html>

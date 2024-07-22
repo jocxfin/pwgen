@@ -1,3 +1,5 @@
+const BASE_PATH = '{{ base_path }}';
+
 const passphraseToggle = document.getElementById('passphraseToggle');
 const capitalizeWords = document.getElementById('capitalizeWords');
 const wordCountSlider = document.getElementById('wordCountSlider');
@@ -57,7 +59,7 @@ async function generatePassword() {
         formData.append('languageCustom', customLanguage.value);
     }
 
-    fetch('/generate-password', {
+    fetch(`${BASE_PATH}/generate-password`, {
         method: 'POST',
         body: formData
     })
