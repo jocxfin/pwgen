@@ -64,6 +64,7 @@ docker run -d -p 5069:5069 \\
   -e PP_HIDE_LANG=false \\
   -e PP_LANGUAGE_CUSTOM='' \\
   -e MULTI_GEN=true \\
+  -e GENERATE_PP \\
   jocxfin/pwgen:latest
 ```
 ## Requirements
