@@ -3,23 +3,23 @@
   "name": "Secure Password Generator",
   "icons": [
     {
-      "src": "/static/favicon.png",
+      "src": "./static/favicon.png",  
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/png"
     },
     {
-      "src": "/static/favicon.png",
+      "src": "./static/favicon.png",  
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "/static/favicon.png",
+      "src": "./static/favicon.png",  
       "type": "image/png",
       "sizes": "512x512"
     }
   ],
-  "start_url": "/",
-  "scope": "/",
+  "start_url": "./",  
+  "scope": "./",      
   "display": "standalone",
   "theme_color": "#41436A",
   "background_color": "#2A3850"

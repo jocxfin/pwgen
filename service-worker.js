@@ -1,10 +1,9 @@
-const BASE_PATH = '{{ base_path }}';
 const CACHE_NAME = 'pwgen-cache-v1';
 const urlsToCache = [
-  `${BASE_PATH}/`,
-  `${BASE_PATH}/static/styles.css`,
-  `${BASE_PATH}/static/favicon.png`,
-  `${BASE_PATH}/manifest.json`
+  './',                     
+  './static/styles.css',    
+  './static/favicon.png',   
+  './manifest.json'         
 ];
 
 self.addEventListener('install', (event) => {

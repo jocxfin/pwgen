@@ -16,6 +16,7 @@ const includeSpecialChars = document.getElementById('includeSpecialChars');
 const excludeHomoglyphs = document.getElementById('excludeHomoglyphs');
 const refreshpw = document.getElementById('refreshpw');
 const languageSelect = document.getElementById('languageSelect');
+const BASE_PATH = window.BASE_PATH || '';
 
 separator.onchange = () => customSeparator.style.display = separator.value === 'custom' ? 'block' : 'none';
 
@@ -56,7 +57,7 @@ async function generatePassword() {
         formData.append('languageCustom', customLanguage.value);
     }
 
-    fetch(`${BASE_PATH}/generate-password`, {
+    fetch(`${BASE_PATH}generate-password`, {
         method: 'POST',
         body: formData
     })
