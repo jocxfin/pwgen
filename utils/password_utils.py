@@ -3,23 +3,33 @@ import secrets
 import config
 import httpx
 import logging
+import os
 
-async def fetch_custom_wordlist(url):
-    if config.DISABLE_URL_CHECK:
-        logging.info("URL check for custom word list is disabled by environment variable.")
+async def fetch_custom_wordlist(source):
+    if source.startswith('http://') or source.startswith('https://'):
+        if not config.DISABLE_URL_CHECK:
+            if not source.startswith("https://raw.githubusercontent.com/") or not source.endswith('.txt'):
+                raise ValueError("URL must be from 'https://raw.githubusercontent.com/' and a .txt file.")
+        try:
+            async with httpx.AsyncClient() as client:
+                response = await client.get(source)
+            response.raise_for_status()
+            word_list = [word.replace(" ", "-").strip() for word in response.text.splitlines() if word.strip()]
+            return word_list
+        except Exception as e:
+            logging.error(f"Failed to fetch custom word list: {e}")
+            raise
     else:
-        if not url.startswith("https://raw.githubusercontent.com/") or not url.endswith('.txt'):
-            raise ValueError("URL must be from 'https://raw.githubusercontent.com/' and a .txt file.")
-    
-    try:
-        async with httpx.AsyncClient() as client:
-            response = await client.get(url)
-        response.raise_for_status()
-        word_list = [word.replace(" ", "-").strip() for word in response.text.splitlines() if word.strip()]
-        return word_list
-    except Exception as e:
-        logging.error(f"Failed to fetch custom word list: {e}")
-        raise
+        # Treat as local file path
+        try:
+            if not os.path.exists(source):
+                raise FileNotFoundError(f"Custom word list file not found: {source}")
+            with open(source, 'r') as file:
+                word_list = [line.strip().replace(" ", "-") for line in file if line.strip()]
+            return word_list
+        except Exception as e:
+            logging.error(f"Failed to read custom word list from file: {e}")
+            raise
 
 def filter_homoglyphs(characters, exclude_homoglyphs=False):
     if not exclude_homoglyphs:
@@ -69,7 +79,7 @@ async def check_password_pwned(password):
         logging.error(f"Error checking password against HIBP API: {e}")
         return False
 
-async def generate_passphrase(word_count=config.PP_WORD_COUNT, capitalize=config.PP_CAPITALIZE, separator_type=config.PP_SEPARATOR_TYPE, max_word_length=config.PP_MAX_WORD_LENGTH, user_defined_separator=config.PP_USER_DEFINED_SEPARATOR, include_numbers=config.PP_INCLUDE_NUMBERS, include_special_chars=config.PP_INCLUDE_SPECIAL_CHARS, language=config.PP_LANGUAGE, custom_word_list=config.PP_LANGUAGE_CUSTOM):
+async def generate_passphrase(word_count=config.PP_WORD_COUNT, capitalize=config.PP_CAPITALIZE, separator_type=config.PP_SEPARATOR_TYPE, max_word_length=config.PP_MAX_WORD_LENGTH, user_defined_separator=config.PP_USER_DEFINED_SEPARATOR, include_numbers=config.PP_INCLUDE_NUMBERS, include_special_chars=config.PP_INCLUDE_SPECIAL_CHARS, language=config.PP_LANGUAGE, custom_word_list=None):
     if language == 'custom' and custom_word_list is not None:
         word_list = custom_word_list
     elif language == 'en':
@@ -77,7 +87,7 @@ async def generate_passphrase(word_count=config.PP_WORD_COUNT, capitalize=config
     elif language == 'fi':
         word_list = config.word_list_fi
     else:
-        word_list = config.word_list_en    
+        word_list = config.word_list_en   
     
     separator = get_random_separator(separator_type, user_defined_separator)
 

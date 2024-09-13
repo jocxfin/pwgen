@@ -26,7 +26,7 @@ async def handle_generate_password_request(request_form):
     include_special_chars = get_bool(request_form, 'include_special_chars', config.PP_INCLUDE_SPECIAL_CHARS)
 
     custom_word_list = None
-    if language not in ['en', 'fi']:
+    if language == 'custom' and languageCustom:
         try:
             custom_word_list = await fetch_custom_wordlist(languageCustom)
         except Exception as e:
