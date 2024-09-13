@@ -5,20 +5,20 @@ import logging
 import config
 import string
 import secrets
-from utils.password_utils import (calculate_entropy, check_password_pwned,generate_passphrase, get_random_separator, filter_homoglyphs)
+from utils.password_utils import (calculate_entropy, check_password_pwned, generate_passphrase, get_random_separator, filter_homoglyphs)
 from handlers.request_handler import handle_generate_password_request
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path=config.BASE_PATH + 'static')  
 cache = Cache(app, config={'CACHE_TYPE': config.CACHE_TYPE})
 
-@app.route('/')
+@app.route(config.BASE_PATH + '/')  
 def index():
     no_api_check = config.NO_API_CHECK
     multi_gen = config.MULTI_GEN
     no_lang = config.PP_HIDE_LANG
     generate_pp = config.GENERATE_PP
     google_site_verification = config.GOOGLE_SITE_VERIFICATION
-    
+
     pw_settings = {
         'length': config.PW_LENGTH,
         'include_uppercase': config.PW_INCLUDE_UPPERCASE,
@@ -26,7 +26,7 @@ def index():
         'include_special': config.PW_INCLUDE_SPECIAL,
         'exclude_homoglyphs': config.PW_EXCLUDE_HOMOGLYPHS
     }
-    
+
     pp_settings = {
         'word_count': config.PP_WORD_COUNT,
         'capitalize': config.PP_CAPITALIZE,
@@ -38,10 +38,12 @@ def index():
         'language': config.PP_LANGUAGE,
         'languageCustom': config.PP_LANGUAGE_CUSTOM
     }
-    
-    return render_template('index.html', no_api_check=no_api_check, pw_settings=pw_settings, pp_settings=pp_settings, multi_gen=multi_gen, no_lang=no_lang, generate_pp=generate_pp, google_site_verification=google_site_verification)
 
-@app.route('/generate-password', methods=['POST'])
+    return render_template('index.html', no_api_check=no_api_check, pw_settings=pw_settings, pp_settings=pp_settings,
+                           multi_gen=multi_gen, no_lang=no_lang, generate_pp=generate_pp,
+                           google_site_verification=google_site_verification, base_path=config.BASE_PATH)
+
+@app.route(config.BASE_PATH + '/generate-password', methods=['POST'])  
 async def generate_password_route():
     if config.MULTI_GEN:
         passwords = [await handle_generate_password_request(request.form) for _ in range(5)]
@@ -50,7 +52,7 @@ async def generate_password_route():
         response_data = await handle_generate_password_request(request.form)
     return jsonify(response_data)
 
-@app.route('/robots.txt')
+@app.route(config.BASE_PATH + '/robots.txt')  
 def robots():
     if not config.ROBOTS_ALLOW:
         content = """
@@ -64,19 +66,12 @@ def robots():
         """
     return Response(content, mimetype='text/plain')
 
-@app.route('/manifest.json')
-async def serve_manifest():
-    cache_key = 'manifest.json'
-    cached_content = cache.get(cache_key)
-    if cached_content is None:
-        with open('manifest.json', 'r') as file:
-            content = file.read()
-            cache.set(cache_key, content, timeout=3600)
-            cached_content = content
-    return Response(cached_content, mimetype='application/manifest+json')
+@app.route(config.BASE_PATH + '/manifest.json')  
+def serve_manifest():
+    return send_file('manifest.json', mimetype='application/manifest+json')
 
-@app.route('/service-worker.js')
-async def serve_sw():
+@app.route(config.BASE_PATH + '/service-worker.js')  
+def serve_sw():
     return send_file('service-worker.js', mimetype='application/javascript')
 
 app_asgi = WsgiToAsgi(app)

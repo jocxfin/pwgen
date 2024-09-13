@@ -22,6 +22,7 @@ MULTI_GEN = os.getenv('MULTI_GEN', 'false').lower() == 'true'
 PP_HIDE_LANG = os.getenv('PP_HIDE_LANG', 'false').lower() == 'true'
 GENERATE_PP = os.getenv('GENERATE_PP', 'false').lower() == 'true'
 DISABLE_URL_CHECK = os.getenv('DISABLE_URL_CHECK', 'false').lower() == 'true'
+BASE_PATH = os.getenv('BASE_PATH', '/')
 
 special_characters = "!£$%^&*(){},./;:#*-+"
 

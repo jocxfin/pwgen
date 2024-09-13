@@ -16,6 +16,7 @@ const includeSpecialChars = document.getElementById('includeSpecialChars');
 const excludeHomoglyphs = document.getElementById('excludeHomoglyphs');
 const refreshpw = document.getElementById('refreshpw');
 const languageSelect = document.getElementById('languageSelect');
+const BASE_PATH = window.BASE_PATH || '';
 
 separator.onchange = () => customSeparator.style.display = separator.value === 'custom' ? 'block' : 'none';
 
@@ -33,7 +34,6 @@ document.querySelectorAll('input, select').forEach(element => {
         element.addEventListener('change', generatePassword);
     }
 });
-
 
 async function generatePassword() {
     const formData = new FormData();
@@ -57,7 +57,7 @@ async function generatePassword() {
         formData.append('languageCustom', customLanguage.value);
     }
 
-    fetch('/generate-password', {
+    fetch(`${BASE_PATH}generate-password`, {
         method: 'POST',
         body: formData
     })
@@ -81,7 +81,6 @@ async function generatePassword() {
         console.error('Error generating password:', error);
     });
 }
-
 
 function scrambleAnimation(finalPassword) {
     let scrambled = Array.from({ length: finalPassword.length }, () => getRandomCharacter());
@@ -116,6 +115,7 @@ wordCountSlider.oninput = function () {
 lengthSlider.oninput = function () {
     lengthValue.innerText = this.value;
 }
+
 function copyPassword(index) {
     let password;
     if (index === 100) {
