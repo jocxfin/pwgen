@@ -55,7 +55,7 @@ docker run -d -p 5069:5069 \\
   -e PW_EXCLUDE_HOMOGLYPHS=true \\
   -e PP_WORD_COUNT=4 \\
   -e PP_CAPITALIZE=false \\
-  -e PP_SEPARATOR_TYPE=space \\
+  -e PP_SEPARATOR_TYPE=dash \\
   -e PP_USER_DEFINED_SEPARATOR='' \\
   -e PP_MAX_WORD_LENGTH=12 \\
   -e PP_INCLUDE_NUMBERS=false \\
@@ -64,7 +64,11 @@ docker run -d -p 5069:5069 \\
   -e PP_HIDE_LANG=false \\
   -e PP_LANGUAGE_CUSTOM='' \\
   -e MULTI_GEN=true \\
-  -e GENERATE_PP \\
+  -e GENERATE_PP=true \\
+  -e ROBOTS_ALLOW=false \\
+  -e GOOGLE_SITE_VERIFICATION='' \\
+  -e DISABLE_URL_CHECK=false \\
+  -e BASE_PATH='' \\
   jocxfin/pwgen:latest
 ```
 ## Requirements
