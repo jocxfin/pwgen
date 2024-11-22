@@ -21,7 +21,7 @@ A demo of the software is available on [https://pwgen.joonatanh.com](https://pwg
 - **Comprehensive Password Generation Options**: Includes uppercase letters, digits, and special characters, with an option to exclude homoglyphs.
 - **Flexible Passphrase Generation**: Offers capitalization of words, choice of separators (space, number, special character, or user-defined character), and inclusion of numbers or special characters.
 - **User Interface**: Features a user-friendly interface with clipboard copy functionality for easy password and passphrase use.
-- **Language Support**: Supports English and Finnish word lists for passphrase generation.
+- **Language Support**: Supports English, Finnish and French word lists for passphrase generation.
 - **Custom Word Lists**: Supports fetching custom word lists from specified URLs, facilitating personalized passphrase generation. Requires URLs to start with `https://raw.githubusercontent.com/` and point to `.txt` files.
 
 

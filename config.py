@@ -36,4 +36,8 @@ word_list_fi = []
 with open('wordlist_fi.txt', 'r') as file:
     word_list_fi = [line.strip() for line in file.readlines() if len(line.strip()) <= 12]
 
+word_list_fr = []
+with open('wordlist_fr.txt', 'r') as file:
+    word_list_fr = [line.strip() for line in file.readlines()]
+
 haveibeenpwnedapi = 'https://api.pwnedpasswords.com/range/'
