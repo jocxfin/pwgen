@@ -30,9 +30,13 @@ special_characters = "!£$%^&*(){},./;:#*-+"
 homoglyphs = {'o', '0', 'O', 'l', '1', 'I'}
 
 with open('wordlist.txt', 'r') as file:
-    word_list_en = [line.strip() for line in file.readlines() if len(line.strip()) <= 12]
+    word_list_en = [line.strip() for line in file.readlines() if len(line.strip()) <= 30]
 
 with open('wordlist_fi.txt', 'r') as file:
-    word_list_fi = [line.strip() for line in file.readlines() if len(line.strip()) <= 12]
+    word_list_fi = [line.strip() for line in file.readlines() if len(line.strip()) <= 30]
+
+with open('wordlist_fr.txt', 'r') as file:
+    word_list_fr = [line.strip() for line in file.readlines() if len(line.strip()) <= 30]
+
 
 haveibeenpwnedapi = 'https://api.pwnedpasswords.com/range/'

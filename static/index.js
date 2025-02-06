@@ -90,7 +90,6 @@ function scrambleAnimation(finalPassword) {
 
   finalPassword.split('').forEach((char, index) => {
     let delay = Math.random() * maxDelay;
-
     setTimeout(() => {
       scrambled[index] = char;
       passwordInput.value = scrambled.join('');
@@ -128,7 +127,6 @@ function copyPassword(index) {
     if (index === 100) {
       const button = document.querySelector('.password-container #copypwd');
       button.innerHTML = "copied!";
-      
       setTimeout(() => {
         button.innerHTML = 'copy password';
       }, 1500);
@@ -136,7 +134,6 @@ function copyPassword(index) {
       const buttons = document.querySelectorAll(`.multipwcp${index}`);
       buttons.forEach(button => {
         button.innerHTML = "copied!";
-        
         setTimeout(() => {
           button.innerHTML = 'copy';
         }, 1500);
@@ -162,11 +159,9 @@ function copyPassword(index) {
     textArea.style.top = "0";
     textArea.style.left = "0";
     textArea.style.position = "fixed";
-
     document.body.appendChild(textArea);
     textArea.focus();
     textArea.select();
-
     try {
       const successful = document.execCommand('copy');
       console.log(`Fallback: Copying text command was ${successful ? 'successful' : 'unsuccessful'}`);
@@ -174,7 +169,6 @@ function copyPassword(index) {
     } catch (err) {
       console.error('Fallback: Oops, unable to copy', err);
     }
-
     document.body.removeChild(textArea);
   }
 }

@@ -80,19 +80,21 @@ async def generate_passphrase(
     language=config.PP_LANGUAGE,
     custom_word_list=config.PP_LANGUAGE_CUSTOM
 ):
-    if language == 'custom' and custom_word_list is not None:
-        word_list = custom_word_list
-    elif language == 'en':
-        word_list = config.word_list_en
-    elif language == 'fi':
-        word_list = config.word_list_fi
-    else:
-        word_list = config.word_list_en    
-    
+    match language:
+        case 'custom' if custom_word_list is not None:
+            word_list = custom_word_list
+        case 'en':
+            word_list = config.word_list_en
+        case 'fi':
+            word_list = config.word_list_fi
+        case 'fr':
+            word_list = config.word_list_fr
+        case _:
+            word_list = config.word_list_en
+
     separator = get_random_separator(separator_type, user_defined_separator)
 
     passphrase_elements = []
-    # Valitaan sanoja, jotka eivät ylitä max_word_length
     for _ in range(word_count): 
         word = secrets.choice([w for w in word_list if len(w) <= max_word_length])
         if capitalize:
