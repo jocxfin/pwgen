@@ -69,7 +69,17 @@ async def check_password_pwned(password):
         logging.error(f"Error checking password against HIBP API: {e}")
         return False
 
-async def generate_passphrase(word_count=config.PP_WORD_COUNT, capitalize=config.PP_CAPITALIZE, separator_type=config.PP_SEPARATOR_TYPE, max_word_length=config.PP_MAX_WORD_LENGTH, user_defined_separator=config.PP_USER_DEFINED_SEPARATOR, include_numbers=config.PP_INCLUDE_NUMBERS, include_special_chars=config.PP_INCLUDE_SPECIAL_CHARS, language=config.PP_LANGUAGE, custom_word_list=config.PP_LANGUAGE_CUSTOM):
+async def generate_passphrase(
+    word_count=config.PP_WORD_COUNT,
+    capitalize=config.PP_CAPITALIZE,
+    separator_type=config.PP_SEPARATOR_TYPE,
+    max_word_length=config.PP_MAX_WORD_LENGTH,
+    user_defined_separator=config.PP_USER_DEFINED_SEPARATOR,
+    include_numbers=config.PP_INCLUDE_NUMBERS,
+    include_special_chars=config.PP_INCLUDE_SPECIAL_CHARS,
+    language=config.PP_LANGUAGE,
+    custom_word_list=config.PP_LANGUAGE_CUSTOM
+):
     if language == 'custom' and custom_word_list is not None:
         word_list = custom_word_list
     elif language == 'en':
@@ -82,6 +92,7 @@ async def generate_passphrase(word_count=config.PP_WORD_COUNT, capitalize=config
     separator = get_random_separator(separator_type, user_defined_separator)
 
     passphrase_elements = []
+    # Valitaan sanoja, jotka eivät ylitä max_word_length
     for _ in range(word_count): 
         word = secrets.choice([w for w in word_list if len(w) <= max_word_length])
         if capitalize:

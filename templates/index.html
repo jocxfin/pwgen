@@ -11,14 +11,15 @@
     {% if google_site_verification %}
     <meta name="google-site-verification" content="{{ google_site_verification }}" />
     {% endif %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    <link rel="icon" href="{{ url_for('static', filename='favicon.png') }}" type="image/png">
-    <link rel="manifest" href="/manifest.json">
+    <link rel="stylesheet" href="{{ base_path }}static/styles.css">  
+    <link rel="icon" href="{{ base_path }}static/favicon.png" type="image/png">  
+    <link rel="manifest" href="{{ base_path }}manifest.json">  
     <meta name="theme-color" content="#2A3850">
     <script>
+        window.BASE_PATH = "{{ base_path }}";
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/service-worker.js')
+                navigator.serviceWorker.register(`${window.BASE_PATH}service-worker.js`)
                     .then(reg => console.log('Service Worker registered', reg))
                     .catch(err => console.log('Service Worker registration failed', err));
             });
@@ -110,18 +111,21 @@
                     </select>
                     <input type="text" id="customSeparator" placeholder="Enter custom separator" style="display: none;">
                 </div>
+                {% set default_options = [3, 5, 6, 7, 9, 12, 16] %}
+                {% if pp_settings.max_word_length not in default_options %}
+                  {% set default_options = default_options + [pp_settings.max_word_length] %}
+                {% endif %}
+                {% set default_options = default_options | sort %}
                 <div id="checkbox-wrapper">
-                    <label for="maxWordLength">Max Word Length:</label>
-                    <select id="maxWordLength">
-                        <option value="3">3</option>
-                        <option value="5">5</option>
-                        <option value="5">6</option>
-                        <option value="7">7</option>
-                        <option value="9">9</option>
-                        <option value="12">12</option>
-                        <option value="16">16</option>
-                    </select>
-                </div>
+                  <label for="maxWordLength">Max Word Length:</label>
+                  <select id="maxWordLength">
+                    {% for option in default_options %}
+                      <option value="{{ option }}" {% if option == pp_settings.max_word_length %}selected{% endif %}>
+                        {{ option }}
+                      </option>
+                    {% endfor %}
+                  </select>
+                </div>                
                 <div id="wordCountContainer">
                     <label for="wordCountSlider">Word Count: <span id="wordCountValue"></span></label>
                     <input type="range" id="wordCountSlider" name="wordCount" min="2" max="10" value="">
@@ -223,7 +227,7 @@
 
         });
     </script>
-    <script src="{{ url_for('static', filename='index.js') }}"></script>
+     <script src="{{ base_path }}static/index.js"></script>
 </body>
 
 </html>
