@@ -28,7 +28,7 @@ jobs:
 
       - name: Extract version from tag
         if: startsWith(github.ref, 'refs/tags/')
-        shell: pwsh
+        shell: powershell
         run: |
           $TAG_VERSION = $env:GITHUB_REF -replace '^refs/tags/', ''
           Add-Content -Path $env:GITHUB_ENV -Value "TAG_VERSION=$TAG_VERSION"
