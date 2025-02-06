@@ -28,7 +28,16 @@ jobs:
 
       - name: Extract version from tag
         if: startsWith(github.ref, 'refs/tags/')
-        run: echo "TAG_VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+        run: |
+          TAG_VERSION=${GITHUB_REF#refs/tags/}
+          echo "TAG_VERSION=${TAG_VERSION}" >> $GITHUB_ENV
+          echo "Using TAG_VERSION=${TAG_VERSION}"
+
+      - name: Fail if TAG_VERSION is empty
+        if: startsWith(github.ref, 'refs/tags/') && env.TAG_VERSION == ''
+        run: |
+          echo "Error: TAG_VERSION is empty!"
+          exit 1
 
       - name: Build and push (main branch)
         if: github.ref == 'refs/heads/main'
@@ -39,7 +48,7 @@ jobs:
           tags: jocxfin/pwgen:latest
 
       - name: Build and push (tags)
-        if: startsWith(github.ref, 'refs/tags/')
+        if: startsWith(github.ref, 'refs/tags/') && env.TAG_VERSION != ''
         uses: docker/build-push-action@v5
         with:
           push: true
