@@ -40,7 +40,8 @@ def index():
         'include_numbers': config.PP_INCLUDE_NUMBERS,
         'include_special_chars': config.PP_INCLUDE_SPECIAL_CHARS,
         'language': config.PP_LANGUAGE,
-        'languageCustom': config.PP_LANGUAGE_CUSTOM
+        'languageCustom': config.PP_LANGUAGE_CUSTOM,
+        'wordListLocal': config.PP_LOCAL_WORDLIST
     }
 
     return render_template(
