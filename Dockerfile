@@ -6,4 +6,4 @@ RUN apk update && apk upgrade --no-cache && \
     pip install --no-cache-dir -r requirements.txt
 COPY . .
 EXPOSE 5069
-CMD ["gunicorn", "-w", "2", "-t", "4", "-k", "uvicorn.workers.UvicornWorker", "-b", "0.0.0.0:5069", "app:app_asgi"]
+CMD ["sh", "-c", "rm -rf /app/__pycache__ && gunicorn -w 2 -t 4 -k uvicorn.workers.UvicornWorker -b 0.0.0.0:5069 app:app_asgi"]

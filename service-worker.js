@@ -55,7 +55,9 @@ self.addEventListener('fetch', (event) => {
 
           caches.open(CACHE_NAME)
             .then((cache) => {
-              cache.put(event.request, responseToCache);
+              if (responseToCache) {
+                cache.put(event.request, responseToCache);
+              }
             });
 
           return response;
@@ -63,3 +65,10 @@ self.addEventListener('fetch', (event) => {
       })
   );
 });
+
+function hardReload() {
+  self.skipWaiting();
+  clients.matchAll({ type: 'window' }).then(windowClients => {
+    windowClients.forEach(windowClient => windowClient.navigate(windowClient.url));
+  });
+}
