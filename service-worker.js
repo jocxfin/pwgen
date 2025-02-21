@@ -1,6 +1,5 @@
 const CACHE_NAME = 'pwgen-cache-v1';
 const urlsToCache = [
-  './',                     
   './static/styles.css',    
   './static/favicon.png',   
   './manifest.json'         
@@ -33,6 +32,11 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
+  if (event.request.mode === 'navigate') {
+    event.respondWith(fetch(event.request));
+    return;
+  }
+  
   if (event.request.method !== 'GET') {
     return fetch(event.request);
   }
