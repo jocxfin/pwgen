@@ -76,8 +76,10 @@ async function generatePassword() {
           }
         });
       } else {
-        passwordInput.value = data.password;
-        scrambleAnimation(data.password);
+        if (passwordInput) {
+          passwordInput.value = data.password;
+          scrambleAnimation(data.password);
+        }
         refreshpw.classList.remove('loading');
       }
     })
@@ -88,14 +90,18 @@ async function generatePassword() {
 
 function scrambleAnimation(finalPassword) {
   let scrambled = Array.from({ length: finalPassword.length }, () => getRandomCharacter());
-  passwordInput.value = scrambled.join('');
+  if (passwordInput) {
+    passwordInput.value = scrambled.join('');
+  }
   const maxDelay = 300;
 
   finalPassword.split('').forEach((char, index) => {
     let delay = Math.random() * maxDelay;
     setTimeout(() => {
       scrambled[index] = char;
-      passwordInput.value = scrambled.join('');
+      if (passwordInput) {
+        passwordInput.value = scrambled.join('');
+      }
     }, delay);
   });
 }
@@ -174,4 +180,16 @@ function copyPassword(index) {
     }
     document.body.removeChild(textArea);
   }
+}
+
+function hardReload() {
+  if (navigator.serviceWorker && navigator.serviceWorker.controller) {
+    navigator.serviceWorker.controller.postMessage({ action: 'hard-reload' });
+  } else {
+    window.location.reload(true);
+  }
+}
+
+if (!navigator.serviceWorker || !navigator.serviceWorker.controller) {
+  hardReload();
 }
