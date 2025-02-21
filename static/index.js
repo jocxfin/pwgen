@@ -68,7 +68,10 @@ async function generatePassword() {
       if (data.passwords && Array.isArray(data.passwords)) {
         data.passwords.forEach((pwd, index) => {
           if (index < 5) {
-            document.querySelector(`.multipw${index}`).textContent = pwd;
+            const element = document.querySelector(`.multipw${index}`);
+            if (element) {
+              element.textContent = pwd;
+            }
             refreshpw.classList.remove('loading');
           }
         });
