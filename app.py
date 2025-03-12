@@ -129,7 +129,9 @@ def serve_manifest():
 
 @app.route(config.BASE_PATH + '/service-worker.js')
 def serve_sw():
-    return send_file('service-worker.js', mimetype='application/javascript')
+    response = send_file('service-worker.js', mimetype='application/javascript')
+    response.headers['Cache-Control'] = 'no-store'
+    return response
 
 
 if HAS_REACT_BUILD:
