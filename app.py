@@ -17,7 +17,7 @@ from handlers.request_handler import handle_generate_password_request
 app = Flask(__name__, static_url_path=config.BASE_PATH + 'static', static_folder='static')
 cache = Cache(app, config={'CACHE_TYPE': config.CACHE_TYPE})
 
-# Check if we have a React build folder
+
 REACT_BUILD_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'frontend', 'build')
 HAS_REACT_BUILD = os.path.exists(REACT_BUILD_FOLDER)
 
@@ -26,7 +26,7 @@ def index():
     if HAS_REACT_BUILD:
         return send_from_directory(REACT_BUILD_FOLDER, 'index.html')
     
-    # Fallback to old template if React build is not available
+
     no_api_check = config.NO_API_CHECK
     multi_gen = config.MULTI_GEN
     no_lang = config.PP_HIDE_LANG
@@ -131,7 +131,7 @@ def serve_manifest():
 def serve_sw():
     return send_file('service-worker.js', mimetype='application/javascript')
 
-# Serve React static files if available
+
 if HAS_REACT_BUILD:
     @app.route(config.BASE_PATH + '/static/js/<path:path>')
     def serve_react_js(path):

@@ -1,0 +1,39 @@
+# Git
+.git
+.gitignore
+
+# Docker
+.docker
+docker-compose.yml
+
+# Python
+**/__pycache__/
+**/*.py[cod]
+**/venv
+**/.env
+**/.venv
+**/.python-version
+
+# Node
+**/node_modules/
+**/npm-debug.log
+**/yarn-debug.log
+**/yarn-error.log
+
+# Environment
+.env*
+!.env.example
+
+# Build
+**/build/
+**/dist/
+**/coverage/
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

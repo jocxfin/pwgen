@@ -1,24 +1,12 @@
 {
   "name": "pwgen-frontend",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "private": true,
   "homepage": ".",
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-scripts": "5.0.1"
-  },
-  "overrides": {
-    "@babel/plugin-transform-private-property-in-object": "^7.22.11",
-    "@babel/plugin-transform-private-methods": "^7.22.5",
-    "@babel/plugin-transform-nullish-coalescing-operator": "^7.22.5",
-    "@babel/plugin-transform-numeric-separator": "^7.22.5",
-    "@babel/plugin-transform-optional-chaining": "^7.22.5",
-    "@babel/plugin-transform-class-properties": "^7.22.5",
-    "eslint": "^8.57.1",
-    "svgo": "^3.2.0",
-    "glob": "^10.3.10",
-    "rimraf": "^5.0.5"
+    "react-scripts": "^5.0.1"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.14",

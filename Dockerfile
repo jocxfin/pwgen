@@ -1,7 +1,7 @@
 FROM node:18-alpine AS frontend
 WORKDIR /app/frontend
 COPY frontend/package.json ./
-RUN npm install
+RUN npm install --silent --no-audit --no-fund
 COPY frontend/ ./
 RUN npm run build
 
@@ -15,4 +15,13 @@ COPY . .
 
 COPY --from=frontend /app/frontend/build /app/frontend/build
 EXPOSE 5069
-CMD ["gunicorn", "-w", "1", "-t", "60", "-k", "uvicorn.workers.UvicornWorker", "-b", "0.0.0.0:5069", "app:app_asgi"]
+CMD ["gunicorn", \
+     "-w", "1", \
+     "-t", "120", \
+     "--keep-alive", "65", \
+     "--worker-tmp-dir", "/dev/shm", \
+     "-k", "uvicorn.workers.UvicornWorker", \
+     "--timeout", "120", \
+     "--graceful-timeout", "60", \
+     "-b", "0.0.0.0:5069", \
+     "app:app_asgi"]
