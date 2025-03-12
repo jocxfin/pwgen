@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, render_template, request, send_file, Response, send_from_directory
 from asgiref.wsgi import WsgiToAsgi
 from flask_caching import Cache
+import asyncio
 import os
 import logging
 import config
@@ -97,12 +98,16 @@ def get_config():
 
 @app.route(config.BASE_PATH + '/generate-password', methods=['POST'])
 async def generate_password_route():
-    if config.MULTI_GEN:
-        passwords = [await handle_generate_password_request(request.form) for _ in range(5)]
-        response_data = {"passwords": [pwd["password"] for pwd in passwords]}
-    else:
-        response_data = await handle_generate_password_request(request.form)
-    return jsonify(response_data)
+    try:
+        if config.MULTI_GEN:
+            passwords = [await handle_generate_password_request(request.form) for _ in range(5)]
+            response_data = {"passwords": [pwd["password"] for pwd in passwords]}
+        else:
+            response_data = await handle_generate_password_request(request.form)
+        return jsonify(response_data)
+    except Exception as e:
+        logging.error(f"Error generating password: {e}")
+        return jsonify({"password": "Error generating password", "entropy": 0})
 
 @app.route(config.BASE_PATH + '/robots.txt')
 def robots():
