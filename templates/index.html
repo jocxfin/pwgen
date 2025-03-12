@@ -11,14 +11,15 @@
     {% if google_site_verification %}
     <meta name="google-site-verification" content="{{ google_site_verification }}" />
     {% endif %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    <link rel="icon" href="{{ url_for('static', filename='favicon.png') }}" type="image/png">
-    <link rel="manifest" href="/manifest.json">
+    <link rel="stylesheet" href="{{ base_path }}static/styles.css">  
+    <link rel="icon" href="{{ base_path }}static/favicon.png" type="image/png">  
+    <link rel="manifest" href="{{ base_path }}manifest.json">  
     <meta name="theme-color" content="#2A3850">
     <script>
+        window.BASE_PATH = "{{ base_path }}";
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/service-worker.js')
+                navigator.serviceWorker.register(`${window.BASE_PATH}service-worker.js`)
                     .then(reg => console.log('Service Worker registered', reg))
                     .catch(err => console.log('Service Worker registration failed', err));
             });
@@ -33,29 +34,29 @@
             <div id="checkbox-wrapper">
                 <p>Include Uppercase Letters</p>
                 <div class="checkbox-kaare">
-                    <input class='tgl toggle-omena' type="checkbox" id="includeUppercase">
-                    <label class='tgl-btn' for="includeUppercase"></label>
+                    <input class="tgl toggle-omena" type="checkbox" id="includeUppercase">
+                    <label class="tgl-btn" for="includeUppercase"></label>
                 </div>
             </div>
             <div id="checkbox-wrapper">
                 <p>Include Digits</p>
                 <div class="checkbox-kaare">
-                    <input class='tgl toggle-omena' type="checkbox" id="includeDigits">
-                    <label class='tgl-btn' for="includeDigits"></label>
+                    <input class="tgl toggle-omena" type="checkbox" id="includeDigits">
+                    <label class="tgl-btn" for="includeDigits"></label>
                 </div>
             </div>
             <div id="checkbox-wrapper">
                 <p>Include Special Characters</p>
                 <div class="checkbox-kaare">
-                    <input class='tgl toggle-omena' type="checkbox" id="includeSpecial">
-                    <label class='tgl-btn' for="includeSpecial"></label>
+                    <input class="tgl toggle-omena" type="checkbox" id="includeSpecial">
+                    <label class="tgl-btn" for="includeSpecial"></label>
                 </div>
             </div>
             <div id="checkbox-wrapper">
                 <p>Exclude Homoglyphs</p>
                 <div class="checkbox-kaare">
-                    <input class='tgl toggle-omena' type="checkbox" id="excludeHomoglyphs">
-                    <label class='tgl-btn' for="excludeHomoglyphs"></label>
+                    <input class="tgl toggle-omena" type="checkbox" id="excludeHomoglyphs">
+                    <label class="tgl-btn" for="excludeHomoglyphs"></label>
                 </div>
             </div>
             <div id="sliderContainer">
@@ -67,116 +68,122 @@
             <div id="checkbox-wrapper">
                 <p>Capitalize Words</p>
                 <div class="checkbox-kaare">
-                    <input class='tgl toggle-omena' type="checkbox" id="capitalizeWords">
-                    <label class='tgl-btn' for="capitalizeWords"></label>
+                    <input class="tgl toggle-omena" type="checkbox" id="capitalizeWords">
+                    <label class="tgl-btn" for="capitalizeWords"></label>
                 </div>
             </div>
             <div id="checkbox-wrapper">
                 <p>Include Numbers</p>
                 <div class="checkbox-kaare">
-                    <input class='tgl toggle-omena' type="checkbox" id="includeNumbers">
-                    <label class='tgl-btn' for="includeNumbers"></label>
+                    <input class="tgl toggle-omena" type="checkbox" id="includeNumbers">
+                    <label class="tgl-btn" for="includeNumbers"></label>
                 </div>
             </div>
             <div id="checkbox-wrapper">
                 <p>Include Special Characters</p>
                 <div class="checkbox-kaare">
-                    <input class='tgl toggle-omena' type="checkbox" id="includeSpecialChars">
-                    <label class='tgl-btn' for="includeSpecialChars"></label>
+                    <input class="tgl toggle-omena" type="checkbox" id="includeSpecialChars">
+                    <label class="tgl-btn" for="includeSpecialChars"></label>
                 </div>
             </div>
             {% if no_lang %}
             <div id="checkbox-wrapper" style="display: none !important;">
-                {% else %}
-                <div id="checkbox-wrapper">
-                    {% endif %}
-                    <label for="languageSelect">Language:</label>
-                    <select id="languageSelect">
-                        <option value="en">English</option>
-                        <option value="fi">Finnish</option>
-                        <option value="custom">Custom list</option>
-                    </select>
-                    <input type="text" id="customLanguage" placeholder="Enter custom url for text file"
-                        style="display: none;">
-                </div>
-                <div id="checkbox-wrapper">
-                    <label for="separator">Separator:</label>
-                    <select id="separator">
-                        <option value="dash">Dash</option>
-                        <option value="number">Random Number</option>
-                        <option value="special">Random Special Character</option>
-                        <option value="space">Space</option>
-                        <option value="custom">User Defined</option>
-                    </select>
-                    <input type="text" id="customSeparator" placeholder="Enter custom separator" style="display: none;">
-                </div>
-                <div id="checkbox-wrapper">
-                    <label for="maxWordLength">Max Word Length:</label>
-                    <select id="maxWordLength">
-                        <option value="3">3</option>
-                        <option value="5">5</option>
-                        <option value="5">6</option>
-                        <option value="7">7</option>
-                        <option value="9">9</option>
-                        <option value="12">12</option>
-                        <option value="16">16</option>
-                    </select>
-                </div>
-                <div id="wordCountContainer">
-                    <label for="wordCountSlider">Word Count: <span id="wordCountValue"></span></label>
-                    <input type="range" id="wordCountSlider" name="wordCount" min="2" max="10" value="">
-                </div>
-            </div>
-            <div id="passphrase-wrapper">
-                <div id="checkbox-wrapper">
-                    <p>Generate Passphrase</p>
-                    <div class="checkbox-kaare">
-                        <input class='tgl toggle-omena' type="checkbox" id="passphraseToggle">
-                        <label class='tgl-btn' for="passphraseToggle"></label>
-                    </div>
-                </div>
-            </div>
-            {% if multi_gen %}
-            <div id="password-container1">
-                <div class="parent">
-                    <div id="multipw" class="multipw0"></div>
-                    <div id="multipw" class="multipw1"></div>
-                    <div id="multipw" class="multipw2"></div>
-                    <div id="multipw" class="multipw3"></div>
-                    <div id="multipw" class="multipw4"></div>
-                    <div id="multipwcp" class="multipwcp0" onclick="copyPassword(0)">copy</div>
-                    <div id="multipwcp" class="multipwcp1" onclick="copyPassword(1)">copy</div>
-                    <div id="multipwcp" class="multipwcp2" onclick="copyPassword(2)">copy</div>
-                    <div id="multipwcp" class="multipwcp3" onclick="copyPassword(3)">copy</div>
-                    <div id="multipwcp" class="multipwcp4" onclick="copyPassword(4)">copy</div>
-                </div>
-            </div>
             {% else %}
-            <div class="password-container" style="display: flex;">
-                <input type="text" id="password" oncopy="onCopy()" readonly>
-                <button id="copypwd" onclick="copyPassword(100)">copy password</button>
-            </div>
+            <div id="checkbox-wrapper">
             {% endif %}
-
-            <div id="checkbox-wrapper" class="buttonwrapper">
-                <button id="refreshpw" class="button">Generate</button>
+                <label for="languageSelect">Language:</label>
+                <select id="languageSelect">
+                    <option value="en">English</option>
+                    <option value="fi">Finnish</option>
+                    <option value="fr">French</option>
+                    <option value="custom">Custom list</option>
+            {% if pp_settings.wordListLocal %}
+                    <option value="" selected disabled>Local list</option>
+            {% endif %}
+                </select>
+                <input type="text" id="customLanguage" placeholder="Enter custom url for text file" style="display: none;">
             </div>
-            <div id="passphrase-wrapper" class="infotext-wrapper">
-                <div id="checkbox-wrapper">
-                    {% if no_api_check %}
-                    <p id="infotext">Offline mode enabled. No checks are ran against haveibeenpwned-API.</p>
-                    {% else %}
-                    <p id="infotext">All passwords and passphrases created are cross-referenced with <a id="apilink"
-                            href="https://haveibeenpwned.com" target="_blank"
-                            rel="noopener noreferrer">haveibeenpwned</a>-API to guarantee they have not been compromised
-                        in past data breaches.</p>
-                    {% endif %}
+            <div id="checkbox-wrapper">
+                <label for="separator">Separator:</label>
+                <select id="separator">
+                    <option value="dash">Dash</option>
+                    <option value="number">Random Number</option>
+                    <option value="special">Random Special Character</option>
+                    <option value="space">Space</option>
+                    <option value="custom">User Defined</option>
+                </select>
+                <input type="text" id="customSeparator" placeholder="Enter custom separator" style="display: none;">
+            </div>
+            {% set default_options = [3, 5, 6, 7, 9, 12, 16] %}
+            {% if pp_settings.max_word_length not in default_options %}
+              {% set default_options = default_options + [pp_settings.max_word_length] %}
+            {% endif %}
+            {% set default_options = default_options | sort %}
+            <div id="checkbox-wrapper">
+              <label for="maxWordLength">Max Word Length:</label>
+              <select id="maxWordLength">
+                {% for option in default_options %}
+                  <option value="{{ option }}" {% if option == pp_settings.max_word_length %}selected{% endif %}>
+                    {{ option }}
+                  </option>
+                {% endfor %}
+              </select>
+            </div>                
+            <div id="wordCountContainer">
+                <label for="wordCountSlider">Word Count: <span id="wordCountValue"></span></label>
+                <input type="range" id="wordCountSlider" name="wordCount" min="2" max="10" value="">
+            </div>
+        </div>
+        <div id="passphrase-wrapper">
+            <div id="checkbox-wrapper">
+                <p>Generate Passphrase</p>
+                <div class="checkbox-kaare">
+                    <input class="tgl toggle-omena" type="checkbox" id="passphraseToggle">
+                    <label class="tgl-btn" for="passphraseToggle"></label>
                 </div>
             </div>
         </div>
+        {% if multi_gen %}
+        <div id="password-container1">
+            <div class="parent">
+                <div id="multipw" class="multipw0"></div>
+                <div id="multipw" class="multipw1"></div>
+                <div id="multipw" class="multipw2"></div>
+                <div id="multipw" class="multipw3"></div>
+                <div id="multipw" class="multipw4"></div>
+                <div id="multipwcp" class="multipwcp0" onclick="copyPassword(0)">copy</div>
+                <div id="multipwcp" class="multipwcp1" onclick="copyPassword(1)">copy</div>
+                <div id="multipwcp" class="multipwcp2" onclick="copyPassword(2)">copy</div>
+                <div id="multipwcp" class="multipwcp3" onclick="copyPassword(3)">copy</div>
+                <div id="multipwcp" class="multipwcp4" onclick="copyPassword(4)">copy</div>
+            </div>
+        </div>
+        {% else %}
+        <div class="password-container" style="display: flex;">
+            <input type="text" id="password" oncopy="onCopy()" readonly>
+            <button id="copypwd" onclick="copyPassword(100)">copy password</button>
+        </div>
+        {% endif %}
+
+        <div id="checkbox-wrapper" class="buttonwrapper">
+            <button id="refreshpw" class="button">Generate</button>
+        </div>
+        <div id="passphrase-wrapper" class="infotext-wrapper">
+            <div id="checkbox-wrapper">
+                {% if no_api_check %}
+                <p id="infotext">Offline mode enabled. No checks are ran against haveibeenpwned-API.</p>
+                {% else %}
+                <p id="infotext">
+                    All passwords and passphrases created are cross-referenced with 
+                    <a id="apilink" href="https://haveibeenpwned.com" target="_blank" rel="noopener noreferrer">
+                        haveibeenpwned
+                    </a>-API to guarantee they have not been compromised in past data breaches.
+                </p>
+                {% endif %}
+            </div>
+        </div>
         <footer>
-            <p>Simple password generator made by <a href="https://github.com/jocxfin/pwgen" target="_blank"
-                    rel="noopener noreferrer">jocxFIN</a></p>
+            <p>Simple password generator made by <a href="https://github.com/jocxfin/pwgen" target="_blank" rel="noopener noreferrer">jocxFIN</a></p>
         </footer>
     </div>
     <script>
@@ -198,8 +205,6 @@
             
             document.getElementById('passphraseToggle').checked = {{ generate_pp | tojson }};
             
-            
-
             document.getElementById('maxWordLength').value = {{ pp_settings.max_word_length }};
             const separatorValue = "{{ pp_settings.separator_type }}";
             document.getElementById('separator').value = separatorValue;
@@ -220,10 +225,8 @@
             } else {
                 generatePassword();
             }
-
         });
     </script>
-    <script src="{{ url_for('static', filename='index.js') }}"></script>
+    <script src="{{ base_path }}static/index.js"></script>
 </body>
-
 </html>

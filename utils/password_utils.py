@@ -5,8 +5,12 @@ import httpx
 import logging
 
 async def fetch_custom_wordlist(url):
-    if not url.startswith("https://raw.githubusercontent.com/") or not url.endswith('.txt'):
-        raise ValueError("URL must be from 'https://raw.githubusercontent.com/' and a .txt file.")
+    if config.DISABLE_URL_CHECK:
+        logging.info("URL check for custom word list is disabled by environment variable.")
+    else:
+        if not url.startswith("https://raw.githubusercontent.com/") or not url.endswith('.txt'):
+            raise ValueError("URL must be from 'https://raw.githubusercontent.com/' and a .txt file.")
+    
     try:
         async with httpx.AsyncClient() as client:
             response = await client.get(url)
@@ -16,9 +20,6 @@ async def fetch_custom_wordlist(url):
     except Exception as e:
         logging.error(f"Failed to fetch custom word list: {e}")
         raise
-    
-
-
 
 def filter_homoglyphs(characters, exclude_homoglyphs=False):
     if not exclude_homoglyphs:
@@ -45,7 +46,6 @@ def get_random_separator(separator_type, user_defined_separator=''):
         return ' '
 
 async def check_password_pwned(password):
-    import httpx
     import hashlib
     import logging
     
@@ -69,16 +69,29 @@ async def check_password_pwned(password):
         logging.error(f"Error checking password against HIBP API: {e}")
         return False
 
-async def generate_passphrase(word_count=config.PP_WORD_COUNT, capitalize=config.PP_CAPITALIZE, separator_type=config.PP_SEPARATOR_TYPE, max_word_length=config.PP_MAX_WORD_LENGTH, user_defined_separator=config.PP_USER_DEFINED_SEPARATOR, include_numbers=config.PP_INCLUDE_NUMBERS, include_special_chars=config.PP_INCLUDE_SPECIAL_CHARS, language=config.PP_LANGUAGE, custom_word_list=config.PP_LANGUAGE_CUSTOM):
-    if language == 'custom' and custom_word_list is not None:
-        word_list = custom_word_list
-    elif language == 'en':
-        word_list = config.word_list_en
-    elif language == 'fi':
-        word_list = config.word_list_fi
-    else:
-        word_list = config.word_list_en    
-    
+async def generate_passphrase(
+    word_count=config.PP_WORD_COUNT,
+    capitalize=config.PP_CAPITALIZE,
+    separator_type=config.PP_SEPARATOR_TYPE,
+    max_word_length=config.PP_MAX_WORD_LENGTH,
+    user_defined_separator=config.PP_USER_DEFINED_SEPARATOR,
+    include_numbers=config.PP_INCLUDE_NUMBERS,
+    include_special_chars=config.PP_INCLUDE_SPECIAL_CHARS,
+    language=config.PP_LANGUAGE,
+    custom_word_list=config.PP_LANGUAGE_CUSTOM
+):
+    match language:
+        case 'custom' if custom_word_list is not None:
+            word_list = custom_word_list
+        case 'en':
+            word_list = config.word_list_en
+        case 'fi':
+            word_list = config.word_list_fi
+        case 'fr':
+            word_list = config.word_list_fr
+        case _:
+            word_list = config.word_list_en
+
     separator = get_random_separator(separator_type, user_defined_separator)
 
     passphrase_elements = []

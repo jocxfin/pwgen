@@ -2,8 +2,13 @@ import config
 import string
 import secrets
 from utils.password_utils import (
-    calculate_entropy, check_password_pwned, generate_passphrase,
-    get_random_separator, filter_homoglyphs, fetch_custom_wordlist)
+    calculate_entropy,
+    check_password_pwned,
+    generate_passphrase,
+    get_random_separator,
+    filter_homoglyphs,
+    fetch_custom_wordlist
+)
 
 def get_bool(request_form, field_name, default):
     return request_form.get(field_name, str(default)).lower() == 'true'
@@ -26,7 +31,7 @@ async def handle_generate_password_request(request_form):
     include_special_chars = get_bool(request_form, 'include_special_chars', config.PP_INCLUDE_SPECIAL_CHARS)
 
     custom_word_list = None
-    if language not in ['en', 'fi']:
+    if language not in ['en', 'fi', 'fr']:
         try:
             custom_word_list = await fetch_custom_wordlist(languageCustom)
         except Exception as e:
@@ -44,18 +49,28 @@ async def handle_generate_password_request(request_form):
         characters += config.special_characters if not exclude_homoglyphs else filter_homoglyphs(config.special_characters, True)
 
     if generate_type == 'passphrase':
-        password = await generate_passphrase(word_count, capitalize, separator_type, max_word_length, user_defined_separator, include_numbers, include_special_chars, language, custom_word_list)
+        attempt = 0
+        password = await generate_passphrase(
+            word_count, capitalize, separator_type, max_word_length,
+            user_defined_separator, include_numbers, include_special_chars,
+            language, custom_word_list
+        )
         while True:
             passphrase_is_pwned = await check_password_pwned(password)
-            if not passphrase_is_pwned or attempt > 10:
+            if not passphrase_is_pwned or attempt >= 10:
                 break
+            password = await generate_passphrase(
+                word_count, capitalize, separator_type, max_word_length,
+                user_defined_separator, include_numbers, include_special_chars,
+                language, custom_word_list
+            )
             attempt += 1
     else:
-        password = ''.join(secrets.choice(characters) for _ in range(length))
         attempt = 0
+        password = ''.join(secrets.choice(characters) for _ in range(length))
         while True:
             password_is_pwned = await check_password_pwned(password)
-            if not password_is_pwned or attempt > 10:
+            if not password_is_pwned or attempt >= 10:
                 break
             password = ''.join(secrets.choice(characters) for _ in range(length))
             attempt += 1

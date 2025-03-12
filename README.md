@@ -21,8 +21,8 @@ A demo of the software is available on [https://pwgen.joonatanh.com](https://pwg
 - **Comprehensive Password Generation Options**: Includes uppercase letters, digits, and special characters, with an option to exclude homoglyphs.
 - **Flexible Passphrase Generation**: Offers capitalization of words, choice of separators (space, number, special character, or user-defined character), and inclusion of numbers or special characters.
 - **User Interface**: Features a user-friendly interface with clipboard copy functionality for easy password and passphrase use.
-- **Language Support**: Supports English and Finnish word lists for passphrase generation.
-- **Custom Word Lists**: Supports fetching custom word lists from specified URLs, facilitating personalized passphrase generation. Requires URLs to start with `https://raw.githubusercontent.com/` and point to `.txt` files.
+- **Language Support**: Supports English, Finnish and French word lists for passphrase generation.
+- **Custom Word Lists**: Supports fetching custom word lists from specified URLs and local files, facilitating personalized passphrase generation. By default URLs are required to start with `https://raw.githubusercontent.com/` and point to `.txt` files, but this can be disabled to allow other sources as well.
 
 
 
@@ -55,7 +55,7 @@ docker run -d -p 5069:5069 \\
   -e PW_EXCLUDE_HOMOGLYPHS=true \\
   -e PP_WORD_COUNT=4 \\
   -e PP_CAPITALIZE=false \\
-  -e PP_SEPARATOR_TYPE=space \\
+  -e PP_SEPARATOR_TYPE=dash \\
   -e PP_USER_DEFINED_SEPARATOR='' \\
   -e PP_MAX_WORD_LENGTH=12 \\
   -e PP_INCLUDE_NUMBERS=false \\
@@ -64,6 +64,13 @@ docker run -d -p 5069:5069 \\
   -e PP_HIDE_LANG=false \\
   -e PP_LANGUAGE_CUSTOM='' \\
   -e MULTI_GEN=true \\
+  -e GENERATE_PP=true \\
+  -e ROBOTS_ALLOW=false \\
+  -e GOOGLE_SITE_VERIFICATION='' \\
+  -e DISABLE_URL_CHECK=false \\
+  -e BASE_PATH='' \\
+  -e PP_LOCAL_WORDLIST=/app/custom_wordlist.txt \\
+  -v "A:\german.txt:/app/custom_wordlist.txt" \\
   jocxfin/pwgen:latest
 ```
 ## Requirements
