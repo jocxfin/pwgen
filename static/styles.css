@@ -340,7 +340,7 @@ footer a:hover {
     color: var(--accent-color-2);
 }
 
-/* toggle button*/
+
 
 .checkbox-kaare {
     --blue: #f64668;
@@ -459,9 +459,9 @@ footer a:hover {
     color: #fff;
 }
 
-/* media queries */
 
-/* Extra small devices (phones, 380px and down) */
+
+
 @media only screen and (max-width: 380px) {
     html {
         overflow-x: hidden;
@@ -520,7 +520,7 @@ footer a:hover {
     }
 }
 
-/* Small devices (phones, 430px-600px) */
+
 @media only screen and (min-width: 430px) and (max-width: 600px) {
     html {
         overflow-x: hidden;
@@ -603,22 +603,22 @@ footer a:hover {
     }
 }
 
-/* Small devices (portrait tablets and large phones, 600px and up) */
+
 @media only screen and (min-width: 600px) {
 
 }
 
-/* Medium devices (landscape tablets, 768px and up) */
+
 @media only screen and (min-width: 768px) {
 
 }
 
-/* Large devices (laptops/desktops, 992px and up) */
+
 @media only screen and (min-width: 992px) {
 
 }
 
-/* Extra large devices (large laptops and desktops, 1200px and up) */
+
 @media only screen and (min-width: 1200px) {
 
 }

@@ -55,25 +55,24 @@ async def handle_generate_password_request(request_form):
             user_defined_separator, include_numbers, include_special_chars,
             language, custom_word_list
         )
-        while True:
-            passphrase_is_pwned = await check_password_pwned(password)
-            if not passphrase_is_pwned or attempt >= 10:
-                break
-            password = await generate_passphrase(
-                word_count, capitalize, separator_type, max_word_length,
-                user_defined_separator, include_numbers, include_special_chars,
-                language, custom_word_list
-            )
-            attempt += 1
-    else:
-        attempt = 0
-        password = ''.join(secrets.choice(characters) for _ in range(length))
-        while True:
+        
+        if not config.NO_API_CHECK:
             password_is_pwned = await check_password_pwned(password)
-            if not password_is_pwned or attempt >= 10:
-                break
-            password = ''.join(secrets.choice(characters) for _ in range(length))
-            attempt += 1
+            if password_is_pwned:
+
+                password = await generate_passphrase(
+                    word_count, capitalize, separator_type, max_word_length,
+                    user_defined_separator, include_numbers, include_special_chars,
+                    language, custom_word_list
+                )
+    else:
+        password = ''.join(secrets.choice(characters) for _ in range(length))
+        
+        if not config.NO_API_CHECK:
+            password_is_pwned = await check_password_pwned(password)
+            if password_is_pwned:
+
+                password = ''.join(secrets.choice(characters) for _ in range(length))
 
     entropy = calculate_entropy(password)
     return {"password": password, "entropy": entropy}

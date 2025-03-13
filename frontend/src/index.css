@@ -1,0 +1,108 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    font-family: 'Inter', 'Segoe UI', 'system-ui', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    @apply bg-gradient-to-br from-bgColor to-altBg text-textColor min-h-screen;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold;
+  }
+}
+
+@layer components {
+  .card {
+    @apply bg-primary bg-opacity-80 backdrop-blur-sm rounded-2xl shadow-soft border border-white/5 overflow-hidden transition-all duration-300;
+  }
+
+  .card-hover {
+    @apply hover:shadow-glow hover:border-accent/30 hover:scale-[1.01] transition-all duration-300;
+  }
+
+  .btn {
+    @apply px-6 py-3 rounded-xl font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-bgColor disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-primary {
+    @apply btn bg-accent hover:bg-accent-secondary text-white;
+  }
+
+  .btn-outline {
+    @apply btn border-2 border-accent text-accent hover:bg-accent hover:text-white;
+  }
+
+  .input-field {
+    @apply w-full bg-primary-dark border-2 border-white/10 focus:border-accent/70 text-textColor rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent/30;
+  }
+
+  .glass-effect {
+    @apply bg-white/5 backdrop-blur-lg border border-white/10;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(359deg);
+  }
+}
+
+@keyframes grow {
+  to {
+    width: 14px;
+    height: 14px;
+    margin-top: -8px;
+    right: 13px;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+.animate-stagger-1 { animation-delay: 0.1s; }
+.animate-stagger-2 { animation-delay: 0.2s; }
+.animate-stagger-3 { animation-delay: 0.3s; }
+.animate-stagger-4 { animation-delay: 0.4s; }
+.animate-stagger-5 { animation-delay: 0.5s; }
+
+.line-password {
+  position: relative;
+}
+
+.line-password::after {
+  content: '';
+  position: absolute;
+  height: 2px;
+  background: linear-gradient(to right, transparent, rgba(139, 92, 246, 0.8), transparent);
+  bottom: -5px;
+  left: 0;
+  width: 100%;
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.3s ease-out;
+}
+
+.line-password:hover::after {
+  transform: scaleX(1);
+}
