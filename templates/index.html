@@ -159,12 +159,21 @@
             </div>
         </div>
         {% else %}
-        <div class="password-container" style="display: flex;">
+        <div class="password-container" id="password-container" style="display: flex;">
             <input type="text" id="password" oncopy="onCopy()" readonly>
             <button id="copypwd" onclick="copyPassword(100)">copy password</button>
         </div>
         {% endif %}
 
+        {% if show_save_settings %}
+        <div id="checkbox-wrapper">
+            <p>Save settings</p>
+            <div class="checkbox-kaare">
+                <input class="tgl toggle-omena" type="checkbox" id="saveSettings">
+                <label class="tgl-btn" for="saveSettings"></label>
+            </div>
+        </div>
+        {% endif %}
         <div id="checkbox-wrapper" class="buttonwrapper">
             <button id="refreshpw" class="button">Generate</button>
         </div>

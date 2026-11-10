@@ -1,0 +1,70 @@
+name: docker-publish
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - v*
+concurrency:
+  group: docker-publish-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: self-hosted
+    strategy:
+      matrix:
+        include:
+          - platform: linux/amd64
+            arch: amd64
+          - platform: linux/arm64
+            arch: arm64
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-qemu-action@v3
+        with:
+          platforms: ${{ matrix.platform }}
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      - id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: jocxfin/pwgen
+          tags: |
+            type=raw,value=${{ matrix.arch }}
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./Dockerfile
+          platforms: ${{ matrix.platform }}
+          push: true
+          provenance: true
+          sbom: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha,scope=pwgen-${{ matrix.arch }}
+          cache-to: type=gha,scope=pwgen-${{ matrix.arch }},mode=max
+  manifest:
+    needs: build
+    runs-on: self-hosted
+    steps:
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      - id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: jocxfin/pwgen
+          flavor: latest=true
+          tags: |
+            type=semver,pattern={{version}},enable={{is_tag}}
+            type=semver,pattern={{major}}.{{minor}},enable={{is_tag}}
+      - run: |
+          docker buildx imagetools create \
+            $(echo "${{ steps.meta.outputs.tags }}" | tr ',' '\n' | xargs -I {} echo --tag {}) \
+            jocxfin/pwgen:amd64 \
+            jocxfin/pwgen:arm64

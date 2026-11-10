@@ -1,15 +1,8 @@
-group "default" {
-  targets = ["image-manifest"]
+group "image-manifest" {
+  targets = ["pwgen-dev"]
 }
 
-target "image-manifest" {
-  inherits = ["_common"]
+target "pwgen-dev" {
   platforms = ["linux/amd64", "linux/arm64"]
-}
-
-target "_common" {
-  pull = true
-  args = {
-    BASE_IMAGE = "jocxfin/pwgen-dev"
-  }
+  tags      = ["jocxfin/pwgen-dev:latest"]
 }

@@ -22,6 +22,7 @@ def index():
     no_lang = config.PP_HIDE_LANG
     generate_pp = config.GENERATE_PP
     google_site_verification = config.GOOGLE_SITE_VERIFICATION
+    show_save_settings = config.SHOW_SAVE_SETTINGS
 
     pw_settings = {
         'length': config.PW_LENGTH,
@@ -53,6 +54,7 @@ def index():
         no_lang=no_lang,
         generate_pp=generate_pp,
         google_site_verification=google_site_verification,
+        show_save_settings=show_save_settings,
         base_path=config.BASE_PATH
     )
 

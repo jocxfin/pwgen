@@ -13,6 +13,7 @@ A demo of the software is available on [https://pwgen.joonatanh.com](https://pwg
 - **Offline Mode**: Added a feature to disable checking passwords against the haveibeenpwned API, suitable for instances running in isolated networks or where external API access is unnecessary.
 - **Environment Variable Configuration for Password/Passphrase Defaults**: Functionality to allow users to define default settings for password and passphrase generation using environment variables.
 - - **Environment Variable Customization**: Configure default settings for password and passphrase generation through environment variables.
+- **Local Settings Storage**: Ability to save all generation settings in a browser cookie for persistence between visits. This can be toggled on or off by the user.
 - **Security Checks**: Validates all generated passwords and passphrases against the haveibeenpwned database to ensure they haven't been previously compromised.
 - **Offline Mode**: Provides an option to disable online checks against the haveibeenpwned API, ideal for isolated networks or enhanced privacy needs.
 - **Multiple Generation**: Generates up to 5 passwords or passphrases simultaneously, configurable via an environment variable (`MULTI_GEN=true`).
@@ -65,6 +66,7 @@ docker run -d -p 5069:5069 \\
   -e PP_LANGUAGE_CUSTOM='' \\
   -e MULTI_GEN=true \\
   -e GENERATE_PP=true \\
+  -e SHOW_SAVE_SETTINGS=true \\
   -e ROBOTS_ALLOW=false \\
   -e GOOGLE_SITE_VERIFICATION='' \\
   -e DISABLE_URL_CHECK=false \\
