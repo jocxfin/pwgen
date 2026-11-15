@@ -1,0 +1,34 @@
+name: pwgen
+services:
+    pwgen:
+        ports:
+            - 5069:5069
+        environment:
+            - NO_API_CHECK=${NO_API_CHECK:-false}
+            - PW_LENGTH=${PW_LENGTH:-12}
+            - PW_INCLUDE_UPPERCASE=${PW_INCLUDE_UPPERCASE:-true}
+            - PW_INCLUDE_DIGITS=${PW_INCLUDE_DIGITS:-true}
+            - PW_INCLUDE_SPECIAL=${PW_INCLUDE_SPECIAL:-true}
+            - PW_EXCLUDE_HOMOGLYPHS=${PW_EXCLUDE_HOMOGLYPHS:-true}
+            - PP_WORD_COUNT=${PP_WORD_COUNT:-4}
+            - PP_CAPITALIZE=${PP_CAPITALIZE:-false}
+            - PP_SEPARATOR_TYPE=${PP_SEPARATOR_TYPE:-dash}
+            - PP_USER_DEFINED_SEPARATOR=${PP_USER_DEFINED_SEPARATOR:-}
+            - PP_MAX_WORD_LENGTH=${PP_MAX_WORD_LENGTH:-12}
+            - PP_INCLUDE_NUMBERS=${PP_INCLUDE_NUMBERS:-false}
+            - PP_INCLUDE_SPECIAL_CHARS=${PP_INCLUDE_SPECIAL_CHARS:-false}
+            - PP_LANGUAGE=${PP_LANGUAGE:-en}
+            - PP_HIDE_LANG=${PP_HIDE_LANG:-false}
+            - PP_LANGUAGE_CUSTOM=${PP_LANGUAGE_CUSTOM:-}
+            - MULTI_GEN=${MULTI_GEN:-true}
+            - GENERATE_PP=${GENERATE_PP:-true}
+            - SHOW_SAVE_SETTINGS=${SHOW_SAVE_SETTINGS:-true}
+            - ROBOTS_ALLOW=${ROBOTS_ALLOW:-false}
+            - GOOGLE_SITE_VERIFICATION=${GOOGLE_SITE_VERIFICATION:-}
+            - DISABLE_URL_CHECK=${DISABLE_URL_CHECK:-false}
+            - BASE_PATH=${BASE_PATH:-/}
+            - PP_LOCAL_WORDLIST=${PP_LOCAL_WORDLIST:-/app/wordlist.txt}
+        volumes:
+            - ./wordlist.txt:/app/wordlist.txt
+        image: jocxfin/pwgen:latest
+    
