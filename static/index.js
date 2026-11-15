@@ -17,7 +17,87 @@ const includeSpecialChars = document.getElementById('includeSpecialChars');
 const excludeHomoglyphs = document.getElementById('excludeHomoglyphs');
 const refreshpw = document.getElementById('refreshpw');
 const languageSelect = document.getElementById('languageSelect');
+const customLanguage = document.getElementById('customLanguage');
 const BASE_PATH = window.BASE_PATH || '';
+
+const UI_DEFAULT_LANGUAGE = 'en';
+let uiTranslations = {};
+let uiFallbackTranslations = {};
+
+function translate(key) {
+  return uiTranslations[key] ?? uiFallbackTranslations[key] ?? key;
+}
+
+function detectBrowserLanguages() {
+  const languages = [...(navigator.languages || []), navigator.language]
+    .filter(Boolean)
+    .flatMap(language => {
+      const normalized = language.toLowerCase();
+      const shortCode = normalized.split('-')[0];
+      return normalized === shortCode ? [shortCode] : [normalized, shortCode];
+    });
+
+  return [...new Set([...languages, UI_DEFAULT_LANGUAGE])];
+}
+
+async function fetchLanguageFile(languageCode) {
+  try {
+    const response = await fetch(`${BASE_PATH}static/languages/${languageCode}.json`);
+    if (!response.ok) {
+      return null;
+    }
+    return await response.json();
+  } catch (error) {
+    console.error(`Error loading language file '${languageCode}':`, error);
+    return null;
+  }
+}
+
+function applyTranslations() {
+  document.querySelectorAll('[data-i18n]').forEach(element => {
+    element.textContent = translate(element.dataset.i18n);
+  });
+
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
+    element.setAttribute('placeholder', translate(element.dataset.i18nPlaceholder));
+  });
+
+  document.querySelectorAll('[data-i18n-content]').forEach(element => {
+    element.setAttribute('content', translate(element.dataset.i18nContent));
+  });
+
+  const titleElement = document.getElementById('pageTitle');
+  if (titleElement) {
+    document.title = translate(titleElement.dataset.i18n);
+  }
+
+  document.documentElement.style.setProperty('--tgl-no-text', `"${translate('ui.toggleNo')}"`);
+  document.documentElement.style.setProperty('--tgl-yes-text', `"${translate('ui.toggleYes')}"`);
+}
+
+async function initializeLocalization() {
+  const browserLanguages = detectBrowserLanguages();
+  let resolvedLanguage = UI_DEFAULT_LANGUAGE;
+
+  uiFallbackTranslations = await fetchLanguageFile(UI_DEFAULT_LANGUAGE) || {};
+
+  uiTranslations = uiFallbackTranslations;
+  for (const language of browserLanguages) {
+    if (language === UI_DEFAULT_LANGUAGE) {
+      break;
+    }
+
+    const languageTranslations = await fetchLanguageFile(language);
+    if (languageTranslations) {
+      uiTranslations = languageTranslations;
+      resolvedLanguage = language;
+      break;
+    }
+  }
+
+  applyTranslations();
+  document.documentElement.lang = resolvedLanguage;
+}
 
 separator.onchange = () => {
   customSeparator.style.display = separator.value === 'custom' ? 'block' : 'none';
@@ -140,16 +220,16 @@ function copyPassword(index) {
   function updateButtonText(isFallback = false) {
     if (index === 100) {
       const button = document.querySelector('.password-container #copypwd');
-      button.innerHTML = "copied!";
+      button.innerHTML = translate('ui.copied');
       setTimeout(() => {
-        button.innerHTML = 'copy password';
+        button.innerHTML = translate('ui.copyPassword');
       }, 1500);
     } else {
       const buttons = document.querySelectorAll(`.multipwcp${index}`);
       buttons.forEach(button => {
-        button.innerHTML = "copied!";
+        button.innerHTML = translate('ui.copied');
         setTimeout(() => {
-          button.innerHTML = 'copy';
+          button.innerHTML = translate('ui.copy');
         }, 1500);
       });
     }
@@ -241,8 +321,8 @@ function loadSettings() {
       maxWordLength.value = settings.maxWordLength;
       languageSelect.value = settings.language;
       if (languageSelect.value === 'custom') {
-        document.getElementById('customLanguage').style.display = 'block';
-        document.getElementById('customLanguage').value = settings.customLanguage;
+        customLanguage.style.display = 'block';
+        customLanguage.value = settings.customLanguage;
       }
       if (saveSettingsCheckbox) {
         saveSettingsCheckbox.checked = true;
@@ -254,5 +334,9 @@ function loadSettings() {
     }
   }
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+  initializeLocalization();
+});
 
 window.addEventListener('load', loadSettings);

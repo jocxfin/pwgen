@@ -9,6 +9,8 @@
     --text-color: #e0e0e0;
     --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     --border-radius: 8px;
+    --tgl-no-text: "No";
+    --tgl-yes-text: "Yes";
 }
 
 html {
@@ -427,7 +429,7 @@ footer a:hover {
 }
 
 .checkbox-kaare .toggle-omena+.tgl-btn:before {
-    content: "No";
+    content: var(--tgl-no-text);
     left: 28px;
     color: var(--g04);
     transition: left 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -454,7 +456,7 @@ footer a:hover {
 }
 
 .checkbox-kaare .toggle-omena:checked+.tgl-btn:before {
-    content: "Yes";
+    content: var(--tgl-yes-text);
     left: 4px;
     color: #fff;
 }
