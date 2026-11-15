@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PwGen</title>
-    <meta name="description" content="Secure password generator">
-    <meta name="keywords" content="Secure, haveibeenpwned, password, password-generator, password generator">
+    <title id="pageTitle" data-i18n="ui.pageTitle">ui.pageTitle</title>
+    <meta id="metaDescription" name="description" data-i18n-content="ui.metaDescription" content="ui.metaDescription">
+    <meta id="metaKeywords" name="keywords" data-i18n-content="ui.metaKeywords" content="ui.metaKeywords">
     <meta name="author" content="jocxfin">
     {% if google_site_verification %}
     <meta name="google-site-verification" content="{{ google_site_verification }}" />
@@ -29,58 +29,58 @@
 
 <body>
     <div class="container">
-        <h1 id="header1">Generate a Secure Password</h1>
+        <h1 id="header1" data-i18n="ui.header">ui.header</h1>
         <div id="passwordOptions">
             <div id="checkbox-wrapper">
-                <p>Include Uppercase Letters</p>
+                <p data-i18n="ui.includeUppercase">ui.includeUppercase</p>
                 <div class="checkbox-kaare">
                     <input class="tgl toggle-omena" type="checkbox" id="includeUppercase">
                     <label class="tgl-btn" for="includeUppercase"></label>
                 </div>
             </div>
             <div id="checkbox-wrapper">
-                <p>Include Digits</p>
+                <p data-i18n="ui.includeDigits">ui.includeDigits</p>
                 <div class="checkbox-kaare">
                     <input class="tgl toggle-omena" type="checkbox" id="includeDigits">
                     <label class="tgl-btn" for="includeDigits"></label>
                 </div>
             </div>
             <div id="checkbox-wrapper">
-                <p>Include Special Characters</p>
+                <p data-i18n="ui.includeSpecialCharacters">ui.includeSpecialCharacters</p>
                 <div class="checkbox-kaare">
                     <input class="tgl toggle-omena" type="checkbox" id="includeSpecial">
                     <label class="tgl-btn" for="includeSpecial"></label>
                 </div>
             </div>
             <div id="checkbox-wrapper">
-                <p>Exclude Homoglyphs</p>
+                <p data-i18n="ui.excludeHomoglyphs">ui.excludeHomoglyphs</p>
                 <div class="checkbox-kaare">
                     <input class="tgl toggle-omena" type="checkbox" id="excludeHomoglyphs">
                     <label class="tgl-btn" for="excludeHomoglyphs"></label>
                 </div>
             </div>
             <div id="sliderContainer">
-                <label for="lengthSlider">Length: <span id="lengthValue"></span></label>
+                <label for="lengthSlider"><span data-i18n="ui.length">ui.length</span>: <span id="lengthValue"></span></label>
                 <input type="range" id="lengthSlider" name="length" min="1" max="69" value="">
             </div>
         </div>
         <div id="passphraseOptions" style="display: none;">
             <div id="checkbox-wrapper">
-                <p>Capitalize Words</p>
+                <p data-i18n="ui.capitalizeWords">ui.capitalizeWords</p>
                 <div class="checkbox-kaare">
                     <input class="tgl toggle-omena" type="checkbox" id="capitalizeWords">
                     <label class="tgl-btn" for="capitalizeWords"></label>
                 </div>
             </div>
             <div id="checkbox-wrapper">
-                <p>Include Numbers</p>
+                <p data-i18n="ui.includeNumbers">ui.includeNumbers</p>
                 <div class="checkbox-kaare">
                     <input class="tgl toggle-omena" type="checkbox" id="includeNumbers">
                     <label class="tgl-btn" for="includeNumbers"></label>
                 </div>
             </div>
             <div id="checkbox-wrapper">
-                <p>Include Special Characters</p>
+                <p data-i18n="ui.includeSpecialCharacters">ui.includeSpecialCharacters</p>
                 <div class="checkbox-kaare">
                     <input class="tgl toggle-omena" type="checkbox" id="includeSpecialChars">
                     <label class="tgl-btn" for="includeSpecialChars"></label>
@@ -91,28 +91,28 @@
             {% else %}
             <div id="checkbox-wrapper">
             {% endif %}
-                <label for="languageSelect">Language:</label>
+                <label for="languageSelect" data-i18n="ui.language">ui.language</label>
                 <select id="languageSelect">
-                    <option value="en">English</option>
-                    <option value="fi">Finnish</option>
-                    <option value="fr">French</option>
-                    <option value="custom">Custom list</option>
+                    <option value="en" data-i18n="ui.languageEnglish">ui.languageEnglish</option>
+                    <option value="fi" data-i18n="ui.languageFinnish">ui.languageFinnish</option>
+                    <option value="fr" data-i18n="ui.languageFrench">ui.languageFrench</option>
+                    <option value="custom" data-i18n="ui.languageCustomList">ui.languageCustomList</option>
             {% if pp_settings.wordListLocal %}
-                    <option value="" selected disabled>Local list</option>
+                    <option value="" selected disabled data-i18n="ui.localList">ui.localList</option>
             {% endif %}
                 </select>
-                <input type="text" id="customLanguage" placeholder="Enter custom url for text file" style="display: none;">
+                <input type="text" id="customLanguage" data-i18n-placeholder="ui.customLanguagePlaceholder" placeholder="ui.customLanguagePlaceholder" style="display: none;">
             </div>
             <div id="checkbox-wrapper">
-                <label for="separator">Separator:</label>
+                <label for="separator" data-i18n="ui.separator">ui.separator</label>
                 <select id="separator">
-                    <option value="dash">Dash</option>
-                    <option value="number">Random Number</option>
-                    <option value="special">Random Special Character</option>
-                    <option value="space">Space</option>
-                    <option value="custom">User Defined</option>
+                    <option value="dash" data-i18n="ui.separatorDash">ui.separatorDash</option>
+                    <option value="number" data-i18n="ui.separatorRandomNumber">ui.separatorRandomNumber</option>
+                    <option value="special" data-i18n="ui.separatorRandomSpecialCharacter">ui.separatorRandomSpecialCharacter</option>
+                    <option value="space" data-i18n="ui.separatorSpace">ui.separatorSpace</option>
+                    <option value="custom" data-i18n="ui.separatorUserDefined">ui.separatorUserDefined</option>
                 </select>
-                <input type="text" id="customSeparator" placeholder="Enter custom separator" style="display: none;">
+                <input type="text" id="customSeparator" data-i18n-placeholder="ui.customSeparatorPlaceholder" placeholder="ui.customSeparatorPlaceholder" style="display: none;">
             </div>
             {% set default_options = [3, 5, 6, 7, 9, 12, 16] %}
             {% if pp_settings.max_word_length not in default_options %}
@@ -120,7 +120,7 @@
             {% endif %}
             {% set default_options = default_options | sort %}
             <div id="checkbox-wrapper">
-              <label for="maxWordLength">Max Word Length:</label>
+              <label for="maxWordLength" data-i18n="ui.maxWordLength">ui.maxWordLength</label>
               <select id="maxWordLength">
                 {% for option in default_options %}
                   <option value="{{ option }}" {% if option == pp_settings.max_word_length %}selected{% endif %}>
@@ -130,13 +130,13 @@
               </select>
             </div>                
             <div id="wordCountContainer">
-                <label for="wordCountSlider">Word Count: <span id="wordCountValue"></span></label>
+                <label for="wordCountSlider"><span data-i18n="ui.wordCount">ui.wordCount</span>: <span id="wordCountValue"></span></label>
                 <input type="range" id="wordCountSlider" name="wordCount" min="2" max="10" value="">
             </div>
         </div>
         <div id="passphrase-wrapper">
             <div id="checkbox-wrapper">
-                <p>Generate Passphrase</p>
+                <p data-i18n="ui.generatePassphrase">ui.generatePassphrase</p>
                 <div class="checkbox-kaare">
                     <input class="tgl toggle-omena" type="checkbox" id="passphraseToggle">
                     <label class="tgl-btn" for="passphraseToggle"></label>
@@ -151,23 +151,23 @@
                 <div id="multipw" class="multipw2"></div>
                 <div id="multipw" class="multipw3"></div>
                 <div id="multipw" class="multipw4"></div>
-                <div id="multipwcp" class="multipwcp0" onclick="copyPassword(0)">copy</div>
-                <div id="multipwcp" class="multipwcp1" onclick="copyPassword(1)">copy</div>
-                <div id="multipwcp" class="multipwcp2" onclick="copyPassword(2)">copy</div>
-                <div id="multipwcp" class="multipwcp3" onclick="copyPassword(3)">copy</div>
-                <div id="multipwcp" class="multipwcp4" onclick="copyPassword(4)">copy</div>
+                <div id="multipwcp" class="multipwcp0" onclick="copyPassword(0)" data-i18n="ui.copy">ui.copy</div>
+                <div id="multipwcp" class="multipwcp1" onclick="copyPassword(1)" data-i18n="ui.copy">ui.copy</div>
+                <div id="multipwcp" class="multipwcp2" onclick="copyPassword(2)" data-i18n="ui.copy">ui.copy</div>
+                <div id="multipwcp" class="multipwcp3" onclick="copyPassword(3)" data-i18n="ui.copy">ui.copy</div>
+                <div id="multipwcp" class="multipwcp4" onclick="copyPassword(4)" data-i18n="ui.copy">ui.copy</div>
             </div>
         </div>
         {% else %}
         <div class="password-container" id="password-container" style="display: flex;">
             <input type="text" id="password" oncopy="onCopy()" readonly>
-            <button id="copypwd" onclick="copyPassword(100)">copy password</button>
+            <button id="copypwd" onclick="copyPassword(100)" data-i18n="ui.copyPassword">ui.copyPassword</button>
         </div>
         {% endif %}
 
         {% if show_save_settings %}
         <div id="checkbox-wrapper">
-            <p>Save settings</p>
+            <p data-i18n="ui.saveSettings">ui.saveSettings</p>
             <div class="checkbox-kaare">
                 <input class="tgl toggle-omena" type="checkbox" id="saveSettings">
                 <label class="tgl-btn" for="saveSettings"></label>
@@ -175,24 +175,24 @@
         </div>
         {% endif %}
         <div id="checkbox-wrapper" class="buttonwrapper">
-            <button id="refreshpw" class="button">Generate</button>
+            <button id="refreshpw" class="button" data-i18n="ui.generate">ui.generate</button>
         </div>
         <div id="passphrase-wrapper" class="infotext-wrapper">
             <div id="checkbox-wrapper">
                 {% if no_api_check %}
-                <p id="infotext">Offline mode enabled. No checks are ran against haveibeenpwned-API.</p>
+                <p id="infotext" data-i18n="ui.offlineInfo">ui.offlineInfo</p>
                 {% else %}
                 <p id="infotext">
-                    All passwords and passphrases created are cross-referenced with 
+                    <span data-i18n="ui.onlineInfoBefore">ui.onlineInfoBefore</span>
                     <a id="apilink" href="https://haveibeenpwned.com" target="_blank" rel="noopener noreferrer">
                         haveibeenpwned
-                    </a>-API to guarantee they have not been compromised in past data breaches.
+                    </a><span data-i18n="ui.onlineInfoAfter">ui.onlineInfoAfter</span>
                 </p>
                 {% endif %}
             </div>
         </div>
         <footer>
-            <p>Simple password generator made by <a href="https://github.com/jocxfin/pwgen" target="_blank" rel="noopener noreferrer">jocxFIN</a></p>
+            <p><span data-i18n="ui.footerMadeBy">ui.footerMadeBy</span> <a href="https://github.com/jocxfin/pwgen" target="_blank" rel="noopener noreferrer">jocxFIN</a></p>
         </footer>
     </div>
     <script>
