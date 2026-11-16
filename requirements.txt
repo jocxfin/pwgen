@@ -1,4 +1,4 @@
-asgiref==3.8.1
+asgiref==3.13.0
 httpx==0.28.1
 flask-caching==2.3.0
 Flask[async]==3.1.3
